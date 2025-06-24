@@ -19,8 +19,10 @@ services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: 2997924581668719
       MYSQL_DATABASE: corposup
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 2997924581668719
     ports:
       - "3307:3306"
     volumes:
