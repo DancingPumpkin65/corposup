@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import authService from '../services/authService';
-import logo from '../assets/SignIn.png';
+import img from '../assets/SignIn.png';
+import logoWhite from '../assets/LogoWhite.svg';
+import logoColored from '../assets/LogoColored.svg';
 
 const SignIn = () => {
     const [formData, setFormData] = useState({email: '', password: ''});
@@ -39,24 +41,62 @@ const SignIn = () => {
   return (
     <div className="sm:rounded-lg flex h-screen">
         {/* Image */}
-        <div className="w-2/5 h-screen hidden lg:block">
+        <div className="w-2/5 h-screen hidden lg:block relative">
+            {/* Logo White - Top Left on Large Screens */}
+            <div className="absolute top-12 left-6 z-10">
+                <img 
+                    src={logoWhite} 
+                    alt="Logo" 
+                    className="h-8 w-auto"
+                />
+            </div>
+            
+            {/* Promotional Text - Bottom Left on Large Screens */}
+            <div className="absolute bottom-12 left-6 z-10 text-white">
+                <h2 className="text-3xl tracking-wider leading-tight space-y-10">
+                    Multipurpose<br />
+                    tool to succeed<br />
+                    your business
+                </h2>
+            </div>
+            
             <img 
-                src={logo} 
+                src={img} 
                 alt="Login Image" 
-                className="object-cover w-full h-full rounded"
+                className="object-cover w-full h-full"
             />
         </div>
 
         {/* Form */}
         <div className="w-full flex flex-col justify-between mx-10">
-            {/* Sign Up Link */}
-            <div className="flex justify-end p-4">
-                <Link 
-                    className="text-xl text-gray-600 hover:text-gray-900 pt-10 pr-6 pb-0" 
-                    to="/signup"
-                >
-                    Déjà inscrit ?<span className="text-blue-500">S'inscrire</span>
-                </Link>
+            {/* Header Section - Different layout for large vs small screens */}
+            <div className="p-4">
+                {/* Large screens: Only sign-up link on the right */}
+                <div className="hidden lg:flex justify-end">
+                    <Link 
+                        className="text-sm md:text-xl text-gray-600 hover:text-gray-900 pt-10 pb-0" 
+                        to="/signup"
+                    >
+                        Déjà inscrit ? <span className="text-blue-500">S'inscrire</span>
+                    </Link>
+                </div>
+                
+                {/* Small/Medium screens: Logo on left, sign-up link on right */}
+                <div className="lg:hidden flex justify-between items-center">
+                    <div className="pt-10">
+                        <img 
+                            src={logoColored} 
+                            alt="Logo" 
+                            className="h-8 w-auto"
+                        />
+                    </div>
+                    <Link 
+                        className="text-sm md:text-xl text-gray-600 hover:text-gray-900 pt-9 pb-0" 
+                        to="/signup"
+                    >
+                        Déjà inscrit ? <span className="text-blue-500">S'inscrire</span>
+                    </Link>
+                </div>
             </div>
 
             {/* Login Form */}
