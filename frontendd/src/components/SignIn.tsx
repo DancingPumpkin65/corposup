@@ -77,7 +77,7 @@ const SignIn = () => {
                         className="text-sm md:text-xl text-gray-600 hover:text-gray-900 pt-10 pb-0" 
                         to="/signup"
                     >
-                        Déjà inscrit ? <span className="text-blue-500">S'inscrire</span>
+                        Nouveau ici ? <span className="text-blue-500">S'inscrire</span>
                     </Link>
                 </div>
                 
@@ -94,7 +94,7 @@ const SignIn = () => {
                         className="text-sm md:text-xl text-gray-600 hover:text-gray-900 pt-9 pb-0" 
                         to="/signup"
                     >
-                        Déjà inscrit ? <span className="text-blue-500">S'inscrire</span>
+                        Nouveau ici ? <span className="text-blue-500">S'inscrire</span>
                     </Link>
                 </div>
             </div>

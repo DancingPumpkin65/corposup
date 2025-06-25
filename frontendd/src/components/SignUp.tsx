@@ -210,7 +210,7 @@ const SignUp = () => {
                         <label className="block font-medium text-sm text-gray-700">
                             Vous êtes ici en tant que
                         </label>
-                        <div className="flex flex-wrap gap-4 justify-center mt-2">
+                        <div className="flex flex-wrap gap-4 mt-2">
                             <div className="flex items-center gap-2">
                                 <input 
                                     id="buyer" 
