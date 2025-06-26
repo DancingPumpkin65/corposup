@@ -95,14 +95,14 @@ const SignUp = () => {
                         <img 
                             src={logoColored} 
                             alt="Logo" 
-                            className="h-8 w-auto"
+                            className="h-6 w-auto"
                         />
                     </div>
                     <Link 
                         className="text-sm md:text-xl text-gray-600 hover:text-gray-900 pt-9 pb-0" 
                         to="/signin"
                     >
-                        Déjà inscrit ? <span className="text-blue-500">Se connecter</span>
+                        Déjà inscrit? <span className="text-blue-500">Se connecter</span>
                     </Link>
                 </div>
             </div>

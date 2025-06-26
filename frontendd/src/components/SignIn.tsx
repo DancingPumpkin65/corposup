@@ -87,14 +87,14 @@ const SignIn = () => {
                         <img 
                             src={logoColored} 
                             alt="Logo" 
-                            className="h-8 w-auto"
+                            className="h-6 w-auto"
                         />
                     </div>
                     <Link 
                         className="text-sm md:text-xl text-gray-600 hover:text-gray-900 pt-9 pb-0" 
                         to="/signup"
                     >
-                        Nouveau ici ? <span className="text-blue-500">S'inscrire</span>
+                        Nouveau ici? <span className="text-blue-500">S'inscrire</span>
                     </Link>
                 </div>
             </div>
