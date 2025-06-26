@@ -13,6 +13,7 @@ use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProductGalleryController;
+use App\Http\Controllers\UserController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -80,6 +81,9 @@ Route::middleware('auth:sanctum')->group(function () {
 // Public endpoints
 Route::get('/stores', [StoreController::class, 'publicIndex']);
 Route::apiResource('/categories', CategoryController::class)->only(['index', 'show']);
+// Add public users endpoint for frontend display
+Route::get('/users', [UserController::class, 'index']);
+
 
 // show shippings for all users
 

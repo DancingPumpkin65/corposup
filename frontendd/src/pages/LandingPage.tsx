@@ -1,13 +1,155 @@
 import { MainLayout } from '../components/layouts/MainLayout';
+import { useState, useEffect } from 'react';
+import userService from '../services/userService';
 import img1 from '../assets/MaskGroup.png';
+import icon0 from '../assets/Headphone.svg';
+import icon1 from '../assets/Security.svg';
+import icon2 from '../assets/Return.svg';
+import backgroundImg0 from '../assets/Background0.png';
+import backgroundImg1 from '../assets/Background1.png';
+import backgroundImg2 from '../assets/Background2.png';
+import industryWorkerImg from '../assets/Decouvrir.png';
+import memberNbr from '../assets/Membres.svg';
+import itemPrd from '../assets/Item.jpg';
+import itemPrd2 from '../assets/Item2.jpg';
+
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
+import { Separator } from "../components/ui/separator";
+
+interface User {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  photo_profile?: string;
+}
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  original_price?: number;
+  main_image?: string;
+  category?: {
+    name: string;
+  };
+  reviews_avg_rating?: number;
+  reviews_count?: number;
+}
 
 const LandingPage = () => {
+  const [users, setUsers] = useState<User[]>([]);
+
+  // Static products data
+  const products: Product[] = [
+    {
+      id: 1,
+      name: 'Équipement Industriel Premium',
+      price: 1250,
+      original_price: 1500,
+      main_image: itemPrd,
+      category: { name: 'Électronique' },
+      reviews_avg_rating: 4.5,
+      reviews_count: 128
+    },
+    {
+      id: 2,
+      name: 'Machine de Production Avancée',
+      price: 2800,
+      original_price: 3200,
+      main_image: itemPrd,
+      category: { name: 'Machines' },
+      reviews_avg_rating: 4.8,
+      reviews_count: 89
+    },
+    {
+      id: 3,
+      name: 'Outil Professionnel Haute Qualité',
+      price: 450,
+      original_price: 550,
+      main_image: itemPrd,
+      category: { name: 'Outils' },
+      reviews_avg_rating: 4.2,
+      reviews_count: 203
+    },
+    {
+      id: 4,
+      name: 'Matériel de Construction',
+      price: 890,
+      original_price: 1100,
+      main_image: itemPrd,
+      category: { name: 'Matériaux' },
+      reviews_avg_rating: 4.6,
+      reviews_count: 156
+    }
+  ];
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const userData = await userService.getFirstThreeUsers();
+        console.log('Fetched user data:', userData); // Debug log
+        setUsers(userData);
+      } catch (error) {
+        console.error('Error loading users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  const getInitials = (firstname: string, lastname: string): string => {
+    return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
+  };
+
+  const getProfileImageUrl = (photo_profile?: string): string => {
+    if (!photo_profile) return industryWorkerImg;
+    
+    // If it's already a full HTTP URL, use it as is
+    if (photo_profile.startsWith('http')) {
+      return photo_profile;
+    }
+    
+    // If the path contains filesystem paths or is corrupted, use fallback
+    if (photo_profile.includes('\\') || photo_profile.includes('C:') || photo_profile.includes('assets')) {
+      return photo_profile;
+    }
+    
+    // Normal case: relative path from storage
+    return `http://127.0.0.1:8000/storage/${photo_profile}`;
+  };
+
+  const getProductImageUrl = (imagePath?: string): string => {
+    if (!imagePath) {
+      return itemPrd;
+    }
+    
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    
+    // For local images imported as modules, return as is
+    return imagePath;
+  };
+
+  const renderStars = (rating: number = 0) => {
+    return Array.from({ length: 5 }).map((_, index) => (
+      <svg 
+        key={index} 
+        className={`w-4 h-4 ${index < Math.floor(rating) ? 'text-yellow-400' : 'text-gray-300'} fill-current`}
+        viewBox="0 0 20 20"
+      >
+        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+      </svg>
+    ));
+  };
+
   return (
     <MainLayout>
       {/* Hero Section */}
       <section className="relative w-full h-[685px] bg-no-repeat bg-cover bg-center flex items-end justify-start" 
                style={{backgroundImage: `url(${img1})`}}>
-        <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-blue-600/30 to-transparent rounded-[15px]"></div>
         
         <div className="relative w-full max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 pb-10">
           <div className="w-full md:w-3/4 lg:w-1/2 text-white">
@@ -17,7 +159,7 @@ const LandingPage = () => {
             <p className="text-base lg:w-[700px] sm:text-lg md:text-lg opacity-80 mb-4">
               Bienvenue sur CORPOSUP, découvrez un espace unique regroupant une vaste sélection d'équipements et d'articles issus de différents secteurs d'activités.
             </p>
-            <a href="#" className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg text-lg">
+            <a href="#" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg text-lg">
               En savoir plus
             </a>
           </div>
@@ -25,82 +167,76 @@ const LandingPage = () => {
       </section>
 
       {/* Features Section */}
-      <div className="flex justify-center items-center w-full min-h-full px-4 py-6">
-        <div className="w-full max-w-screen-lg mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          <div className="flex items-center space-x-3">
-            <svg className="w-10 h-10 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
-            <div>
+      <div className="flex justify-center items-center w-full min-h-full px-4 py-16">
+        <div className="w-full max-w-screen-lg mx-auto p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+          <div className="flex items-center space-x-3 justify-center">
+            <img src={icon0} alt="Support Icon" className="w-10 h-10 text-blue-600 flex-shrink-0 mt-1"/>
+            <div className="text-left">
               <h2 className="text-blue-600 font-montserrat text-lg font-bold">Réactif</h2>
               <p className="text-gray-900 tracking-wide text-sm">Service client disponible 24h/24 et 7j/7</p>
             </div>
           </div>
 
-          <div className="flex items-center space-x-3">
-            <svg className="w-10 h-10 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1M10 17L6 13L7.41 11.59L10 14.17L16.59 7.58L18 9L10 17Z"/>
-            </svg>
-            <div>
+          <div className="flex items-center space-x-3 justify-center">
+            <img src={icon1} alt="Support Icon" className="w-10 h-10 text-blue-600 flex-shrink-0 mt-1"/>
+            <div className="text-left">
               <h2 className="text-blue-600 font-montserrat text-lg font-bold">Sécurisé</h2>
-              <p className="text-gray-900 tracking-wide text-sm">Marketplace certifiée depuis 2023</p>
+              <p className="text-gray-900 tracking-wide text-sm">Marketplace certifiée depuis 2023&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
             </div>
           </div>
 
-          <div className="flex items-center space-x-3">
-            <svg className="w-10 h-10 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
-            </svg>
-            <div>
+          <div className="flex items-center space-x-3 justify-center">
+            <img src={icon2} alt="Support Icon" className="w-10 h-10 text-blue-600 flex-shrink-0 mt-1"/>
+            <div className="text-left">
               <h2 className="text-blue-600 font-montserrat text-lg font-bold">Transparent</h2>
-              <p className="text-gray-900 tracking-wide text-sm">Politique de retour sans tracas</p>
+              <p className="text-gray-900 tracking-wide text-sm">Politique de retour sans tracas&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Cards Section */}
-      <div className="flex justify-center items-center w-full min-h-full p-5">
-        <div className="flex flex-col md:flex-row md:w-[70%] mx-auto md:p-10 gap-6 md:gap-6">
+      <div className="flex justify-center items-center w-full min-h-full px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row md:w-[85%] lg:w-[70%] mx-auto p-4 md:p-6 lg:p-5 gap-4 sm:gap-6 md:gap-8">
           
-          <div className="relative w-full max-w-md md:w-[400px] md:h-[685px] mx-auto">
-            <img src="/images/fournisseur.png" alt="Fournisseur image" className="rounded-[15px] w-full h-auto md:h-full object-cover"/>
-            <div className="absolute inset-0 bg-black bg-opacity-40 rounded-[15px]"></div>
+          <div className="relative w-full md:w-[55%] lg:w-[600px] md:h-[700px]">
+            <img src={backgroundImg0} alt="Fournisseur image" className="rounded-[15px] w-full h-auto md:h-full object-cover"/>
+            <div className="absolute inset-0 rounded-[15px] bg-[linear-gradient(to_top,_rgba(0,0,0,0.7)_0%,_rgba(0,0,0,0.5)_20%,_transparent_60%)]"></div>
             
             <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white w-[90%] md:w-[85%] px-4 md:px-6">
-              <h2 className="text-lg md:text-2xl font-bold tracking-wide leading-tight">
+              <h2 className="text-lg md:text-3xl lg:text-4xl font-semibold tracking-wide leading-tight">
                 Devenez le fournisseur de milliers d'entreprises
               </h2>
-              <a href="#" className="mt-4 inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg">
-                Commencer maintenant
+              <a href="#" className="mt-4 inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded-lg">
+                Inscrivez votre entreprise
               </a>
             </div>
           </div>
 
-          <div className="flex flex-col md:w-[50%] space-y-4">
+          <div className="flex flex-col md:w-[45%] space-y-4">
             <div className="relative h-auto md:h-[342px] w-full">
-              <img src="/images/africanFournissuer.png" alt="Fournisseur image" className="rounded-[15px] w-full h-auto md:h-full object-cover"/>
-              <div className="absolute inset-0 bg-black bg-opacity-40 rounded-[15px]"></div>
+              <img src={backgroundImg1} alt="Fournisseur image" className="rounded-[15px] w-full h-auto md:h-full object-cover"/>
+              <div className="absolute inset-0 rounded-[15px] bg-[linear-gradient(to_top,_rgba(0,0,0,0.7)_0%,_rgba(0,0,0,0.5)_20%,_transparent_60%)]"></div>
               
-              <div className="absolute bottom-1 left-4 text-white p-5">
-                <h2 className="text-lg md:text-2xl font-bold tracking-wide">
+              <div className="absolute bottom-1 left-4 text-white p-3 md:p-5">
+                <h2 className="text-lg md:text-1xl lg:text-2xl font-semibold tracking-wide">
                   Trouvez les meilleurs fournisseurs et prix
                 </h2>
-                <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded mt-2">
+                <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded mt-2">
                   Commencez à faire des économies !
                 </button>
               </div>
             </div>
             
             <div className="relative h-auto md:h-[342px] w-full">
-              <img src="/images/teamWork.png" alt="Team work" className="rounded-[15px] w-full h-auto md:h-full object-cover"/>
-              <div className="absolute inset-0 bg-black bg-opacity-40 rounded-[15px]"></div>
+              <img src={backgroundImg2} alt="Team work" className="rounded-[15px] w-full h-auto md:h-full object-cover"/>
+              <div className="absolute inset-0 rounded-[15px] bg-[linear-gradient(to_top,_rgba(0,0,0,0.7)_0%,_rgba(0,0,0,0.5)_20%,_transparent_60%)]"></div>
               
-              <div className="absolute bottom-1 left-4 text-white p-5">
-                <h2 className="text-lg md:text-2xl font-bold tracking-wide">
+              <div className="absolute bottom-1 left-4 text-white p-3 md:p-5">
+                <h2 className="text-lg md:text-1xl lg:text-2xl font-semibold tracking-wide">
                   Des milliers de produits à des prix imbattables
                 </h2>
-                <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded mt-2">
+                <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded mt-2">
                   Voir offres
                 </button>
               </div>
@@ -110,19 +246,53 @@ const LandingPage = () => {
       </div>
 
       {/* Blue Section with Worker */}
-      <div className="flex flex-col justify-center md:flex-row w-full h-auto bg-blue-600 p-10 items-center">
-        <div className="md:w-1/2 ml-8">
-          <div className="relative">
-            <img src="/images/industryWorker.png" alt="Industry worker" className="rounded-xl shadow-lg"/>
-            <div className="absolute -bottom-8 md:-bottom-16 left-10 flex items-center">
-              <div className="bg-white rounded-lg p-3 shadow-lg">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <span className="text-blue-600 font-bold text-sm">👥</span>
+      <div className="flex flex-col justify-center md:flex-row w-full h-auto bg-blue-600 p-4 sm:p-6 md:p-10 items-center">
+        <div className="md:w-1/2 flex justify-center items-center px-4">
+          <div className="relative inline-block max-w-full">
+            <img src={industryWorkerImg} alt="Industry worker" className="rounded-xl shadow-lg w-full h-auto max-w-sm md:max-w-md lg:max-w-lg" />
+
+            {/* Avatar section positioned relative to image - responsive sizing */}
+            <div className="absolute bottom-0 right-0 transform translate-x-2 sm:translate-x-4 md:translate-x-6 lg:translate-x-8 translate-y-1 sm:translate-y-2">
+              <div className="bg-white rounded-lg p-2 sm:p-2 md:p-4 shadow-lg">
+                <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3 h-12 sm:h-14 md:h-16">
+                  <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 sm:-space-x-3 *:data-[slot=avatar]:ring-1 sm:*:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+                    {users.length > 0 ? (
+                      users.map((user) => (
+                        <Avatar key={user.id} className="h-8 w-8 sm:h-12 sm:w-12 md:h-16 md:w-16 lg:h-20 lg:w-20">
+                          <AvatarImage 
+                            src={getProfileImageUrl(user.photo_profile)} 
+                            alt={`@${user.firstname.toLowerCase()}`}
+                          />
+                          <AvatarFallback className="text-xs sm:text-sm">
+                            {getInitials(user.firstname, user.lastname)}
+                          </AvatarFallback>
+                        </Avatar>
+                      ))
+                    ) : (
+                      <>
+                        <Avatar className="h-8 w-8 sm:h-12 sm:w-12 md:h-16 md:w-16">
+                          <AvatarImage src={industryWorkerImg} alt="@user1" />
+                          <AvatarFallback className="text-xs sm:text-sm">U1</AvatarFallback>
+                        </Avatar>
+                        <Avatar className="h-8 w-8 sm:h-12 sm:w-12 md:h-16 md:w-16">
+                          <AvatarImage src={industryWorkerImg} alt="@user2" />
+                          <AvatarFallback className="text-xs sm:text-sm">U2</AvatarFallback>
+                        </Avatar>
+                        <Avatar className="h-8 w-8 sm:h-12 sm:w-12 md:h-16 md:w-16">
+                          <AvatarImage src={industryWorkerImg} alt="@user3" />
+                          <AvatarFallback className="text-xs sm:text-sm">U3</AvatarFallback>
+                        </Avatar>
+                      </>
+                    )}
+                    <Avatar className="h-8 w-8 sm:h-12 sm:w-12 md:h-16 md:w-16 lg:h-20 lg:w-20">
+                      <AvatarImage src={memberNbr} alt="@user1" />
+                      <AvatarFallback className="text-xs sm:text-sm">U1</AvatarFallback>
+                    </Avatar>
                   </div>
-                  <div>
-                    <p className="text-gray-800 font-semibold text-sm">+3200 clients satisfaits</p>
-                    <p className="text-gray-500 text-xs">Et ça continue de grandir</p>
+                  <Separator orientation="vertical" className="bg-gray-300 h-8 sm:h-10 md:h-12" />
+                  <div className="text-center px-1 sm:px-2 md:px-2">
+                    <p className="text-blue-600 font-semibold text-lg sm:text-2xl md:text-3xl lg:text-3xl">99%</p>
+                    <p className="text-gray-500 text-xs sm:text-sm md:text-base lg:text-sm">Client Satisfaction</p>
                   </div>
                 </div>
               </div>
@@ -130,7 +300,7 @@ const LandingPage = () => {
           </div>
         </div>
 
-        <div className="md:w-1/2 text-white mt-10 md:mt-0 md:ml-12">
+        <div className="md:w-1/2 text-white mt-6 sm:mt-8 md:mt-10 lg:mt-0 md:ml-6 lg:ml-12 px-4">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-wide leading-tight max-w-lg">
             Découvrez des milliers d'offres adaptées aux besoins de votre entreprise
           </h2>
@@ -163,6 +333,80 @@ const LandingPage = () => {
               <span className="text-lg">Bénéficiez de notre expertise à travers notre assistance 24H/24H</span>
             </li>
           </ul>
+        </div>
+      </div>
+
+      {/* Products Section */}
+      <div className="w-full py-16 px-4">
+        <div className="container mx-auto">
+          <div className="flex flex-col items-center text-center mb-8">
+            <h2 className="text-3xl md:text-5xl font-semibold py-6">Nos Produits Populaires</h2>
+            <p className="text-gray-600 max-w-lg text-base md:text-lg">
+              Découvrez notre sélection de produits les plus demandés
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            {products.map((product) => (
+              <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div className="relative">
+                  {/* Product Image */}
+                  <div className="aspect-square relative overflow-hidden ">
+                    <img 
+                      src={getProductImageUrl(product.main_image)} 
+                      alt={product.name}
+                      className="w-full h-full object-cover rounded-lg p-3"
+                      onError={(e) => {
+                        e.currentTarget.src = itemPrd;
+                      }}
+                    />
+                    {/* Discount Badge */}
+                    {product.original_price && product.original_price > product.price && (
+                      <div className="absolute top-2 right-2 bg-orange-100 text-orange-600 px-4 py-2 rounded-lg text-xs font-semibold">
+                        {Math.round(((product.original_price - product.price) / product.original_price) * 100)}%
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="p-4">
+                  {/* Category */}
+                  <p className="text-sm text-blue-600 font-medium mb-1">
+                    {product.category?.name || 'Général'}
+                  </p>
+                  
+                  {/* Product Name */}
+                  <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+                    {product.name}
+                  </h3>
+                  
+                  {/* Reviews Stars */}
+                  <div className="flex items-center mb-2">
+                    <div className="flex">
+                      {renderStars(product.reviews_avg_rating || 0)}
+                    </div>
+                    <span className="text-sm text-gray-600 ml-2">
+                      ({product.reviews_count || 0})
+                    </span>
+                  </div>
+                  
+                  {/* Price */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-lg font-bold text-gray-900">
+                        {new Intl.NumberFormat('fr-FR').format(product.price)}€
+                      </span>
+                      {product.original_price && product.original_price > product.price && (
+                        <span className="text-sm text-gray-500 line-through">
+                          {new Intl.NumberFormat('fr-FR').format(product.original_price)}€
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
