@@ -57,8 +57,8 @@ const BlueSection = () => {
         <div className="relative inline-block max-w-full">
           <img src={industryWorkerImg} alt="Industry worker" className="rounded-xl shadow-lg w-full h-auto max-w-sm md:max-w-md lg:max-w-lg" />
 
-          <div className="absolute bottom-0 right-0 transform translate-x-2 sm:translate-x-4 md:translate-x-6 lg:translate-x-8 translate-y-1 sm:translate-y-2 rotate-3 sm:rotate-0">
-            <div className="bg-white rounded-lg p-2 sm:p-2 md:p-4 shadow-lg">
+          <div className="absolute bottom-0 right-0 transform translate-x-2 sm:translate-x-4 md:translate-x-6 lg:translate-x-8 translate-y-8 sm:translate-y-2 rotate-3 sm:rotate-0">
+            <div className="bg-white rounded-lg p-1 sm:p-2 md:p-4 shadow-lg">
               
               {/* Single Layout - Transforms based on screen size */}
               <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-1 md:space-x-3 h-auto sm:h-12 md:h-14 lg:h-16">
@@ -75,13 +75,13 @@ const BlueSection = () => {
                 
                 {/* Avatars group - appears last on mobile, first on desktop */}
                 <div className="order-3 sm:order-1 flex flex-col sm:flex-row -space-y-3 sm:space-y-0 sm:-space-x-2 md:-space-x-3">
-                  <Avatar className="h-16 w-16 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
+                  <Avatar className="h-16 w-16 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-20 lg:w-20">
                     <AvatarImage src={memberNbr} alt="@user4" />
                     <AvatarFallback className="text-sm sm:text-base md:text-lg">U4</AvatarFallback>
                   </Avatar>
                   {users.length > 0 ? (
                     users.map((user) => (
-                      <Avatar key={user.id} className="h-16 w-16 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
+                      <Avatar key={user.id} className="h-14 w-14 sm:h-14 sm:w-14 md:h-18 md:w-18 lg:h-20 lg:w-20">
                         <AvatarImage 
                           src={getProfileImageUrl(user.photo_profile)} 
                           alt={`@${user.firstname.toLowerCase()}`}
@@ -93,15 +93,15 @@ const BlueSection = () => {
                     ))
                   ) : (
                     <>
-                      <Avatar className="h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
+                      <Avatar className="h-16 w-16 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-20 lg:w-20">
                         <AvatarImage src={Membres2} alt="@user1" />
                         <AvatarFallback className="text-sm sm:text-base md:text-lg">U1</AvatarFallback>
                       </Avatar>
-                      <Avatar className="h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
+                      <Avatar className="h-16 w-16 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-20 lg:w-20">
                         <AvatarImage src={Membres3} alt="@user2" />
                         <AvatarFallback className="text-sm sm:text-base md:text-lg">U2</AvatarFallback>
                       </Avatar>
-                      <Avatar className="h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
+                      <Avatar className="h-16 w-16 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-20 lg:w-20">
                         <AvatarImage src={Membres1} alt="@user3" />
                         <AvatarFallback className="text-sm sm:text-base md:text-lg">U3</AvatarFallback>
                       </Avatar>
@@ -115,7 +115,7 @@ const BlueSection = () => {
       </div>
 
       <div className="md:w-1/2 text-white mt-6 sm:mt-8 md:mt-10 lg:mt-0 md:ml-6 lg:ml-12 px-4">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-wide leading-tight max-w-lg">
+        <h2 className="text-3xl sm:text-4xl md:text-6xl font-semibold tracking-wide leading-tight max-w-lg mt-2">
           Découvrez des milliers d'offres adaptées aux besoins de votre entreprise
         </h2>
 

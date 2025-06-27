@@ -59,7 +59,7 @@ const ProductsSection = () => {
     },
     {
       id: 5,
-      name: 'Équipement Électrique Professionnel',
+      name: 'Équipement Électrique ',
       price: 2150,
       original_price: 2500,
       main_image: itemPrd,
