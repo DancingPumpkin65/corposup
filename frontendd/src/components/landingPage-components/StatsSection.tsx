@@ -25,8 +25,8 @@ const StatsSection = () => {
           key={index}
           className="flex justify-center flex-col items-center w-full h-[88px]"
         >
-          <p className="text-[50px] font-semibold">{stat.number}</p>
-          <p className="text-[16px]">{stat.label}</p>
+          <p className="text-[40px] font-semibold sm:text-[60px]">{stat.number}</p>
+          <p className="text-[13px]">{stat.label}</p>
         </div>
       ))}
     </div>
