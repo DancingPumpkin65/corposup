@@ -72,7 +72,7 @@ const Navbar = () => {
 
       {/* Main Navigation */}
       <div className="max-w-7xl mx-auto w-full flex flex-col">
-        <div className="flex items-center justify-between h-16 bg-white px-2 mt-2 lg:px-8 w-full">
+        <div className="flex items-center gap-2 justify-between h-16 bg-white px-2 mt-2 lg:px-8 w-full">
           {/* Mobile Menu Button */}
           <MobileMenu />
 
@@ -105,9 +105,9 @@ const Navbar = () => {
 
             <Link 
               to="/signin" 
-              className="w-[110px] h-[40px] lg:w-[170px] lg:h-[40px] bg-blue-600 text-white text-sm lg:text-base font-semibold flex items-center justify-center rounded-lg shadow-lg hover:bg-blue-700 transition duration-150 ease-in-out"
+              className="w-[95px] h-[40px] lg:w-[170px] lg:h-[40px] bg-blue-600 text-white text-sm lg:text-base font-semibold flex items-center justify-center rounded-lg hover:bg-blue-700 transition duration-150 ease-in-out"
             >
-              Mon Compte
+              Compte
             </Link>
           </div>
         </div>
