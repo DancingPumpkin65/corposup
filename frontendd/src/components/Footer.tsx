@@ -36,7 +36,7 @@ const Footer = () => {
           </div>
 
           {/* Categories Section - Full width on mobile, centered on desktop */}
-          <div className="sm:col-span-2 lg:col-start-4 lg:col-span-6 pl-7">
+          <div className="sm:col-span-2 lg:col-start-5 lg:col-span-6">
             <h3 className="text-white text-lg font-semibold mb-3">Catégories</h3>
             <ul className="text-gray-300 space-y-1.5 text-sm grid grid-cols-1 lg:grid-cols-2 gap-x-0">
               {categories.map((category) => (
