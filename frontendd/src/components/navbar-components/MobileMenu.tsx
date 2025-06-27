@@ -18,7 +18,7 @@ const MobileMenu = () => {
           <NavigationMenuItem>
             <NavigationMenuTrigger className="flex items-center p-0 bg-transparent border-0 hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
               <img className="w-[18px]" src={menuIcon} alt="Menu" />
-              <span className="ml-[12px] text-xl text-black font-semibold">Menu</span>
+              <span className="ml-[10px] text-base text-black font-semibold">Menu</span>
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid gap-2 w-[300px] lg:grid-cols-[.75fr_1fr] p-4">

@@ -61,7 +61,7 @@ const TopBar = ({ currency, setCurrency, language, setLanguage }: TopBarProps) =
                 <SelectTrigger className="w-[70px] border-0 text-white text-sm hover:bg-blue-700 focus:ring-0 focus:ring-offset-0">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="min-w-[70px]">
+                <SelectContent className="min-w-[70px] translate-x-1">
                   <SelectGroup>
                     <SelectLabel>Langue</SelectLabel>
                     <SelectItem value="fr">FR</SelectItem>

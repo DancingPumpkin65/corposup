@@ -1,12 +1,36 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import logoWhite from '../assets/LogoWhite.svg';
+
+interface Category {
+  id: number;
+  name: string;
+}
 
 const Footer = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/categories');
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
     <footer className="w-full">
       <div className="mx-auto px-6 bg-blue-600 pt-16 pb-4 z-auto">
         <div className="grid md:grid-cols-5 grid-cols-1 gap-7">
+          {/* Company Info */}
           <div>
-            <img src="/images/logo5.png" alt="" className="w-[200px]"/>
+            <img src={logoWhite} alt="CorpoSup Logo" className="w-[200px]"/>
             <ul className="mt-6 text-gray-300">
               <li className="flex justify-start items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
@@ -34,29 +58,56 @@ const Footer = () => {
           <div>
             <h1 className="text-white text-xl font-bold">Links</h1>
             <ul className="mt-6 text-gray-300 space-y-2">
-              <li><Link to="/products">Products List</Link></li>
-              <li><Link to="/tracking">Order Tracking</Link></li>
-              <li><Link to="/guide">Products Guide</Link></li>
-              <li><Link to="/cart">Shopping Cart</Link></li>
-              <li><Link to="/blog">Tech Blog</Link></li>
+              <li><Link to="/all-products" className="hover:text-blue-500 transition-colors duration-200 block py-2">Products List</Link></li>
+              <li><Link to="/tracking" className="hover:text-blue-500 transition-colors duration-200 block py-2">Order Tracking</Link></li>
+              <li><Link to="/guide" className="hover:text-blue-500 transition-colors duration-200 block py-2">Products Guide</Link></li>
+              <li><Link to="/cart" className="hover:text-blue-500 transition-colors duration-200 block py-2">Shopping Cart</Link></li>
+              <li><Link to="/blog" className="hover:text-blue-500 transition-colors duration-200 block py-2">Tech Blog</Link></li>
+            </ul>
+          </div>
+
+          {/* Supports Section */}
+          <div>
+            <h1 className="text-white text-xl font-bold">Supports</h1>
+            <ul className="mt-6 text-gray-300 space-y-2">
+              <li><Link to="/about" className="hover:text-blue-500 transition-colors duration-200 block py-2">About Us</Link></li>
+              <li><Link to="/privacy" className="hover:text-blue-500 transition-colors duration-200 block py-2">Privacy Policy</Link></li>
+              <li><Link to="/returns" className="hover:text-blue-500 transition-colors duration-200 block py-2">Return Policy</Link></li>
+              <li><Link to="/help" className="hover:text-blue-500 transition-colors duration-200 block py-2">Help Centre</Link></li>
             </ul>
           </div>
           
-          {/* ...existing code... (other footer sections) */}
-          
+          {/* Categories Section */}
+          <div>
+            <h1 className="text-white text-xl font-bold">Categories</h1>
+            <ul className="mt-6 text-gray-300 space-y-2">
+              {categories.slice(0, 8).map((category) => (
+                <li key={category.id} className="relative group">
+                  <Link 
+                    to={`/categories/${category.id}/products`}
+                    className="hover:text-blue-500 transition-colors duration-200 block py-2"
+                  >
+                    {category.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Payments & Social */}
           <div>
             <h1 className="text-white text-xl font-bold">Payments</h1>
             <div className="flex justify-between items-center mt-4">
-              <img src="/images/visa.png" alt="Visa"/>
-              <img src="/images/mestercard.png" alt="Mastercard"/>
-              <img src="/images/pay.png" alt="Pay"/>
-              <img src="/images/paypal.png" alt="Paypal"/>
+              <img src="https://corposup.pro/images/visa.png" alt="Visa"/>
+              <img src="https://corposup.pro/images/mestercard.png" alt="Mastercard"/>
+              <img src="https://corposup.pro/images/pay.png" alt="Pay"/>
+              <img src="https://corposup.pro/images/paypal.png" alt="Paypal"/>
             </div>
             <h1 className="text-white text-xl font-bold mt-6">Follow Us</h1>
             <ul className="mt-6 text-gray-300 space-y-2">
-              <li>Twitter</li>
-              <li>Instagram</li>
-              <li>Facebook</li>
+              <li><a href="https://twitter.com/corposup" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors duration-200">Twitter</a></li>
+              <li><a href="https://www.instagram.com/corposup/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors duration-200">Instagram</a></li>
+              <li><a href="https://web.facebook.com/share/r/1BH6bRUzNT/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors duration-200">Facebook</a></li>
             </ul>
           </div>
         </div>

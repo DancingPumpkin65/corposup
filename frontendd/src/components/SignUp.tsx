@@ -47,7 +47,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="sm:rounded-lg flex h-screen">
+    <div className="sm:rounded-lg flex h-screen overflow-x-hidden">
         {/* Image */}
         <div className="w-2/5 h-screen hidden lg:block relative">
             {/* Logo White - Top Left on Large Screens */}
@@ -76,9 +76,9 @@ const SignUp = () => {
         </div>
 
         {/* Form */}
-        <div className="w-full flex flex-col justify-between mx-10">
+        <div className="w-full flex flex-col justify-between mx-4 sm:mx-10 overflow-x-hidden">
             {/* Header Section - Different layout for large vs small screens */}
-            <div className="p-4">
+            <div className="p-2 sm:p-4">
                 {/* Large screens: Only sign-in link on the right */}
                 <div className="hidden lg:flex justify-end">
                     <Link 
@@ -91,15 +91,15 @@ const SignUp = () => {
                 
                 {/* Small/Medium screens: Logo on left, sign-in link on right */}
                 <div className="lg:hidden flex justify-between items-center">
-                    <div className="pt-10">
+                    <div className="pt-6 sm:pt-10">
                         <img 
                             src={logoColored} 
                             alt="Logo" 
-                            className="h-6 w-auto"
+                            className="h-5 sm:h-6 w-auto"
                         />
                     </div>
                     <Link 
-                        className="text-sm md:text-xl text-gray-600 hover:text-gray-900 pt-9 pb-0" 
+                        className="text-xs sm:text-sm md:text-xl text-gray-600 hover:text-gray-900 pt-5 sm:pt-9 pb-0" 
                         to="/signin"
                     >
                         Déjà inscrit? <span className="text-blue-500">Se connecter</span>
@@ -108,8 +108,8 @@ const SignUp = () => {
             </div>
 
             {/* Login Form */}
-            <div className="flex flex-grow items-center justify-center px-4 sm:px-8">
-                <form onSubmit={handleSubmit} className="w-full sm:w-3/5 lg:w-2/5 mx-auto">
+            <div className="flex flex-grow items-center justify-center px-2 sm:px-4 md:px-8">
+                <form onSubmit={handleSubmit} className="w-full sm:w-3/5 lg:w-2/5 mx-auto max-w-sm sm:max-w-none">
                     {/* Title */}
                     <div className="">
                         <h1 className="font-black text-4xl text-gray-900">Créer un compte</h1>
