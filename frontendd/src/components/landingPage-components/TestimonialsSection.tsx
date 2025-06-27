@@ -31,8 +31,8 @@ const TestimonialsSection = () => {
   ];
 
   return (
-    <div className="bg-gray-50 w-full h-auto py-12">
-      <div className="container mx-auto px-4">
+    <section className="bg-white py-10 px-4">
+      <div className="max-w-7xl mx-auto">
         <div className="flex flex-col items-center text-center">
           <h2 className="text-3xl md:text-5xl font-semibold py-6">Ce que disent nos clients</h2>
           <p className="text-gray-600 max-w-lg text-base md:text-lg">
@@ -53,7 +53,7 @@ const TestimonialsSection = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

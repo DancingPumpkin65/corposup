@@ -6,20 +6,20 @@ const StatsSection = () => {
     },
     {
       number: "+2500",
-      label: "produits",
+      label: "Produits",
     },
     {
       number: "+150",
-      label: "fournisseurs",
+      label: "Fournisseurs",
     },
     {
       number: "+3200",
-      label: "devis",
+      label: "Devis",
     },
   ];
 
   return (
-    <div className="w-full h-auto px-6 py-8 grid grid-cols-2 justify-center items-center bg-blue-600 text-white gap-6">
+    <div className="w-full h-auto px-6 py-8 grid grid-cols-2 lg:grid-cols-4 justify-center items-center bg-blue-600 text-white gap-6">
       {stats.map((stat, index) => (
         <div
           key={index}
