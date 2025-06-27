@@ -1,91 +1,49 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/LogoWhite.svg';
 
-interface Category {
-  id: number;
-  name: string;
-}
-
 const Footer = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:8000/api/categories');
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
+  // Manual categories list without API
+  const categories = [
+    { id: 1, name: "Agriculture et alimentation" },
+    { id: 2, name: "Machine et outils" },
+    { id: 3, name: "Métallurgie, chimie et plastiques" },
+    { id: 4, name: "Emballage, publicité et bureaux" },
+    { id: 5, name: "Maison, éclairage et construction" },
+    { id: 6, name: "Vêtements textiles et accessoires de mode" },
+    { id: 7, name: "Électronique et appareils électroménagers" },
+    { id: 8, name: "Équipement électrique, composants et télécommunication" }
+  ];
 
   return (
     <footer className="w-full">
-      <div className="mx-auto px-6 bg-blue-600 pt-16 pb-4 z-auto">
-        <div className="grid md:grid-cols-5 grid-cols-1 gap-7">
-          {/* Company Info */}
-          <div>
-            <img src={logoWhite} alt="CorpoSup Logo" className="w-[200px]"/>
+      <div className="mx-auto pl-10 pr-10 sm:px-6 bg-blue-600 pt-8 sm:pt-12 pb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-12 gap-6 lg:gap-8">
+          {/* Company Info - Full width on mobile, 3 columns on desktop */}
+          <div className="sm:col-span-4 lg:col-span-3">
+            <img src={logoWhite} alt="CorpoSup Logo" className="w-full"/>
             <ul className="mt-6 text-gray-300">
-              <li className="flex justify-start items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
-                  <path fillRule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clipRule="evenodd"></path>
-                </svg>
-                <p className="p-2">+212 661 368 103</p>
-              </li>
-              <li className="flex justify-start items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
-                  <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z"></path>
-                  <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z"></path>
-                </svg>
-                <p className="px-2">contact@corposup.com</p>
-              </li>
-              <li className="flex justify-start items-start py-2">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
-                  <path fillRule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clipRule="evenodd"></path>
-                </svg>
-                <p className="px-2">77 RUE MOHAMED SMIHA, ETAGE 10 N°57 - CASABLANCA</p>
-              </li>
-            </ul>
-          </div>
-          
-          {/* Links Section */}
-          <div>
-            <h1 className="text-white text-xl font-bold">Links</h1>
-            <ul className="mt-6 text-gray-300 space-y-2">
-              <li><Link to="/all-products" className="hover:text-blue-500 transition-colors duration-200 block py-2">Products List</Link></li>
-              <li><Link to="/tracking" className="hover:text-blue-500 transition-colors duration-200 block py-2">Order Tracking</Link></li>
-              <li><Link to="/guide" className="hover:text-blue-500 transition-colors duration-200 block py-2">Products Guide</Link></li>
-              <li><Link to="/cart" className="hover:text-blue-500 transition-colors duration-200 block py-2">Shopping Cart</Link></li>
-              <li><Link to="/blog" className="hover:text-blue-500 transition-colors duration-200 block py-2">Tech Blog</Link></li>
-            </ul>
+                    
+                    
+                    <li className="flex justify-start items-start py-2">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
+                                <path fill-rule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd"></path>
+                            </svg>
+                        </span>
+                        <span><p className="px-2">77 RUE MOHAMED SMIHA, ETAGE 10 N°57 - CASABLANCA</p></span>
+                    </li>
+                </ul>
           </div>
 
-          {/* Supports Section */}
-          <div>
-            <h1 className="text-white text-xl font-bold">Supports</h1>
-            <ul className="mt-6 text-gray-300 space-y-2">
-              <li><Link to="/about" className="hover:text-blue-500 transition-colors duration-200 block py-2">About Us</Link></li>
-              <li><Link to="/privacy" className="hover:text-blue-500 transition-colors duration-200 block py-2">Privacy Policy</Link></li>
-              <li><Link to="/returns" className="hover:text-blue-500 transition-colors duration-200 block py-2">Return Policy</Link></li>
-              <li><Link to="/help" className="hover:text-blue-500 transition-colors duration-200 block py-2">Help Centre</Link></li>
-            </ul>
-          </div>
-          
-          {/* Categories Section */}
-          <div>
-            <h1 className="text-white text-xl font-bold">Categories</h1>
-            <ul className="mt-6 text-gray-300 space-y-2">
-              {categories.slice(0, 8).map((category) => (
-                <li key={category.id} className="relative group">
+          {/* Categories Section - Full width on mobile, centered on desktop */}
+          <div className="sm:col-span-2 lg:col-start-4 lg:col-span-6 pl-7">
+            <h3 className="text-white text-lg font-semibold mb-3">Catégories</h3>
+            <ul className="text-gray-300 space-y-1.5 text-sm grid grid-cols-1 lg:grid-cols-2 gap-x-0">
+              {categories.map((category) => (
+                <li key={category.id}>
                   <Link 
                     to={`/categories/${category.id}/products`}
-                    className="hover:text-blue-500 transition-colors duration-200 block py-2"
+                    className="hover:text-white transition-colors duration-200 leading-tight"
                   >
                     {category.name}
                   </Link>
@@ -94,28 +52,39 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Payments & Social */}
-          <div>
-            <h1 className="text-white text-xl font-bold">Payments</h1>
-            <div className="flex justify-between items-center mt-4">
-              <img src="https://corposup.pro/images/visa.png" alt="Visa"/>
-              <img src="https://corposup.pro/images/mestercard.png" alt="Mastercard"/>
-              <img src="https://corposup.pro/images/pay.png" alt="Pay"/>
-              <img src="https://corposup.pro/images/paypal.png" alt="Paypal"/>
+          {/* Links and Support - Side by side on mobile, separate columns on desktop */}
+          <div className="grid grid-cols-2 gap-4 sm:col-span-2 lg:contents">
+            {/* Links Section */}
+            <div className="lg:col-start-11 lg:col-span-1">
+              <h3 className="text-white text-lg font-semibold mb-3">Links</h3>
+              <ul className="text-gray-300 space-y-1.5 text-sm">
+                <li><Link to="/all-products" className="hover:text-white transition-colors duration-200">Products List</Link></li>
+                <li><Link to="/tracking" className="hover:text-white transition-colors duration-200">Order Tracking</Link></li>
+                <li><Link to="/guide" className="hover:text-white transition-colors duration-200">Products Guide</Link></li>
+                <li><Link to="/cart" className="hover:text-white transition-colors duration-200">Shopping Cart</Link></li>
+                <li><Link to="/blog" className="hover:text-white transition-colors duration-200">Tech Blog</Link></li>
+              </ul>
             </div>
-            <h1 className="text-white text-xl font-bold mt-6">Follow Us</h1>
-            <ul className="mt-6 text-gray-300 space-y-2">
-              <li><a href="https://twitter.com/corposup" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors duration-200">Twitter</a></li>
-              <li><a href="https://www.instagram.com/corposup/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors duration-200">Instagram</a></li>
-              <li><a href="https://web.facebook.com/share/r/1BH6bRUzNT/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors duration-200">Facebook</a></li>
-            </ul>
+
+            {/* Supports Section */}
+            <div className="lg:col-start-12 lg:col-span-1">
+              <h3 className="text-white text-lg font-semibold mb-3">Support</h3>
+              <ul className="text-gray-300 space-y-1.5 text-sm">
+                <li><Link to="/about" className="hover:text-white transition-colors duration-200">About Us</Link></li>
+                <li><Link to="/privacy" className="hover:text-white transition-colors duration-200">Privacy Policy</Link></li>
+                <li><Link to="/returns" className="hover:text-white transition-colors duration-200">Return Policy</Link></li>
+                <li><Link to="/help" className="hover:text-white transition-colors duration-200">Help Centre</Link></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
       
-      <div className="flex flex-col md:flex-row justify-between mx-auto w-full items-center p-4 text-gray-300 text-sm bg-black font-light">
-        <p>© 2024 Corposup. All Rights Reserved.</p>
-        <p>Privacy Policy | Terms & Condition | Sitemap</p>
+      <div className="bg-slate-800 px-4 sm:px-6 py-3">
+        <div className="flex flex-col sm:flex-row justify-between items-center text-gray-400 text-xs sm:text-sm">
+          <p>© 2024 Corposup. All Rights Reserved.</p>
+          <p className="mt-1 sm:mt-0">Privacy Policy | Terms & Conditions</p>
+        </div>
       </div>
     </footer>
   );

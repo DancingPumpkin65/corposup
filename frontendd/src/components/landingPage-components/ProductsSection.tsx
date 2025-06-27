@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import itemPrd from '../../assets/Item.jpg';
 
 interface Product {
@@ -54,8 +56,30 @@ const ProductsSection = () => {
       category: { name: 'Matériaux' },
       reviews_avg_rating: 4.6,
       reviews_count: 156
+    },
+    {
+      id: 5,
+      name: 'Équipement Électrique Professionnel',
+      price: 2150,
+      original_price: 2500,
+      main_image: itemPrd,
+      category: { name: 'Électronique' },
+      reviews_avg_rating: 4.7,
+      reviews_count: 95
+    },
+    {
+      id: 6,
+      name: 'Système de Sécurité Avancé',
+      price: 1850,
+      original_price: 2200,
+      main_image: itemPrd,
+      category: { name: 'Sécurité' },
+      reviews_avg_rating: 4.4,
+      reviews_count: 167
     }
   ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const getProductImageUrl = (imagePath?: string): string => {
     if (!imagePath) {
@@ -82,9 +106,9 @@ const ProductsSection = () => {
   };
 
   const ProductCard = ({ product }: { product: Product }) => (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-72 md:w-auto">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-72 min-w-72">
       <div className="relative">
-        <div className="aspect-square relative overflow-hidden ">
+        <div className="aspect-square relative overflow-hidden">
           <img 
             src={getProductImageUrl(product.main_image)} 
             alt={product.name}
@@ -122,11 +146,11 @@ const ProductsSection = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <span className="text-lg font-bold text-gray-900">
-              {new Intl.NumberFormat('fr-FR').format(product.price)}€
+              {new Intl.NumberFormat('fr-FR').format(product.price)} DH
             </span>
             {product.original_price && product.original_price > product.price && (
               <span className="text-sm text-gray-500 line-through">
-                {new Intl.NumberFormat('fr-FR').format(product.original_price)}€
+                {new Intl.NumberFormat('fr-FR').format(product.original_price)} DH
               </span>
             )}
           </div>
@@ -135,26 +159,97 @@ const ProductsSection = () => {
     </div>
   );
 
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex + 1 >= products.length - 3 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? Math.max(0, products.length - 4) : prevIndex - 1
+    );
+  };
+
   return (
-    <div className="w-full pt-8 pb-12">
-      <div className="container mx-auto">
-        <div className="flex flex-col items-start text-start mb-8 pl-3">
-          <h2 className="text-3xl md:text-5xl font-semibold py-6">Nouveaux Produits</h2>
-        </div>
+    <div className="py-16 px-4">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-12">Nouveaux Produits</h2>
+        
+        {/* Large screens: 4 items visible with navigation */}
+        <div className="hidden xl:block">
+          <div className="relative">
+            {/* Navigation Buttons */}
+            <button 
+              onClick={prevSlide}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-colors"
+              style={{ marginLeft: '-20px' }}
+            >
+              <ChevronLeft className="w-6 h-6 text-gray-600" />
+            </button>
+            
+            <button 
+              onClick={nextSlide}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-colors"
+              style={{ marginRight: '-20px' }}
+            >
+              <ChevronRight className="w-6 h-6 text-gray-600" />
+            </button>
 
-        {/* Desktop Grid */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+            {/* Products Container - 4 items visible */}
+            <div className="overflow-hidden">
+              <div 
+                className="flex transition-transform duration-300 ease-in-out gap-6"
+                style={{ 
+                  transform: `translateX(-${currentIndex * 25}%)`,
+                }}
+              >
+                {products.map((product) => (
+                  <div 
+                    key={product.id}
+                    className="flex-shrink-0"
+                    style={{ width: 'calc(25% - 18px)' }}
+                  >
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
-        {/* Mobile Horizontal Scroll */}
-        <div className="md:hidden overflow-x-auto">
-          <div className="flex space-x-4 pb-4 pl-3" style={{ width: 'max-content' }}>
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+          {/* Dots Indicator */}
+          <div className="flex justify-center mt-6 space-x-2">
+            {Array.from({ length: Math.max(1, products.length - 3) }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  index === currentIndex ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
+              />
             ))}
+          </div>
+        </div>
+
+        {/* Medium to Large screens: Horizontal scroll */}
+        <div className="hidden md:block xl:hidden">
+          <div className="overflow-x-auto scrollbar-hide">
+            <div className="flex space-x-6 pb-4" style={{ width: 'max-content' }}>
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Small screens: Horizontal scroll */}
+        <div className="md:hidden">
+          <div className="overflow-x-auto scrollbar-hide">
+            <div className="flex space-x-4 pb-4 px-4" style={{ width: 'max-content' }}>
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
