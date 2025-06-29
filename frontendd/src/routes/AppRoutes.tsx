@@ -1,11 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
-import SignIn from '../components/SignIn';
-import SignUp from '../components/SignUp';
-import AdminPage from '../pages/AdminPage';
-import BuyerPage from '../pages/BuyerPage';
-import SellerPage from '../pages/SellerPage';
-import LandingPage from '../pages/LandingPage';
+import { SignIn, SignUp, AdminPage, BuyerPage, SellerPage, LandingPage } from '../pages';
 import RoleBasedRedirect from '../components/RoleBasedRedirect';
 import { USER_ROLES } from '../utils/constants';
 

@@ -44,11 +44,7 @@ const SignIn = () => {
         <div className="w-2/5 h-screen hidden lg:block relative">
             {/* Logo White - Top Left on Large Screens */}
             <div className="absolute top-12 left-6 z-10">
-                <img 
-                    src={logoWhite} 
-                    alt="Logo" 
-                    className="h-8 w-auto"
-                />
+                <img src={logoWhite} alt="Logo" className="h-8 w-auto" />
             </div>
             
             {/* Promotional Text - Bottom Left on Large Screens */}
@@ -60,11 +56,7 @@ const SignIn = () => {
                 </h2>
             </div>
             
-            <img 
-                src={img} 
-                alt="Login Image" 
-                className="object-cover w-full h-full"
-            />
+            <img src={img} alt="Login Image" className="object-cover w-full h-full" />
         </div>
 
         {/* Form */}
