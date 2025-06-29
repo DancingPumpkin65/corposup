@@ -5,7 +5,7 @@ import { resolve } from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  root: './frontendd', // Point to the frontend directory
+  root: './frontend', // Point to the frontend directory
   base: '/corposup/', // Replace 'corposup' with your GitHub repository name
   build: {
     outDir: '../dist', // Output to dist folder in root
@@ -13,7 +13,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, './frontendd/src')
+      '@': resolve(__dirname, './frontend/src')
     }
   }
 })

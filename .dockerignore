@@ -1,8 +1,0 @@
-node_modules
-.git
-.env
-backend/vendor
-backend/node_modules
-frontendd/node_modules
-frontendd/dist
-*.log
