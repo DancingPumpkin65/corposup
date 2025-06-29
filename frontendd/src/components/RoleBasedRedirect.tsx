@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks';
 import { USER_ROLES } from '../utils/constants';
 
 const RoleBasedRedirect = () => {

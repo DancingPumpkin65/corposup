@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import workImage from '../../assets/work.webp';
-import rectangleOverlay from '../../assets/Rectangle.webp';
+import workImage from '../../../assets/work.webp';
+import rectangleOverlay from '../../../assets/Rectangle.webp';
 
 const NewsletterSection = () => {
   const [email, setEmail] = useState('');

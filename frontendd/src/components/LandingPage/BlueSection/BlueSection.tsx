@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Separator } from "../ui/separator";
-import userService from '../../services/userService';
-import industryWorkerImg from '../../assets/Decouvrir.png';
-import memberNbr from '../../assets/Membres.svg';
-import Membres1 from '../../assets/Membres1.png';
-import Membres2 from '../../assets/Membres2.png';
-import Membres3 from '../../assets/Membres3.png';
+import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
+import { Separator } from "../../ui/separator";
+import userService from '../../../services/userService';
+import industryWorkerImg from '../../../assets/Decouvrir.png';
+import memberNbr from '../../../assets/Membres.svg';
+import Membres1 from '../../../assets/Membres1.png';
+import Membres2 from '../../../assets/Membres2.png';
+import Membres3 from '../../../assets/Membres3.png';
 
 interface User {
   id: number;
@@ -21,13 +21,8 @@ const BlueSection = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      try {
-        const userData = await userService.getFirstThreeUsers();
-        console.log('Fetched user data:', userData);
-        setUsers(userData);
-      } catch (error) {
-        console.error('Error loading users:', error);
-      }
+      const userData = await userService.getFirstThreeUsers();
+      setUsers(userData);
     };
 
     fetchUsers();
@@ -40,15 +35,23 @@ const BlueSection = () => {
   const getProfileImageUrl = (photo_profile?: string): string => {
     if (!photo_profile) return industryWorkerImg;
     
+    // If it's already a full HTTP URL, use it
     if (photo_profile.startsWith('http')) {
       return photo_profile;
     }
     
-    if (photo_profile.includes('\\') || photo_profile.includes('C:') || photo_profile.includes('assets')) {
-      return photo_profile;
+    // Handle specific member images
+    switch (photo_profile) {
+      case 'Membres1.png':
+        return Membres1;
+      case 'Membres2.png':
+        return Membres2;
+      case 'Membres3.png':
+        return Membres3;
+      default:
+        // Handle storage paths from Laravel
+        return `http://127.0.0.1:8000/storage/${photo_profile}`;
     }
-    
-    return `http://127.0.0.1:8000/storage/${photo_profile}`;
   };
 
   return (
@@ -79,34 +82,17 @@ const BlueSection = () => {
                     <AvatarImage src={memberNbr} alt="@user4" />
                     <AvatarFallback className="text-sm sm:text-base md:text-lg">U4</AvatarFallback>
                   </Avatar>
-                  {users.length > 0 ? (
-                    users.map((user) => (
-                      <Avatar key={user.id} className="h-14 w-14 sm:h-14 sm:w-14 md:h-18 md:w-18 lg:h-20 lg:w-20">
-                        <AvatarImage 
-                          src={getProfileImageUrl(user.photo_profile)} 
-                          alt={`@${user.firstname.toLowerCase()}`}
-                        />
-                        <AvatarFallback className="text-sm sm:text-base md:text-lg">
-                          {getInitials(user.firstname, user.lastname)}
-                        </AvatarFallback>
-                      </Avatar>
-                    ))
-                  ) : (
-                    <>
-                      <Avatar className="h-16 w-16 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-20 lg:w-20">
-                        <AvatarImage src={Membres2} alt="@user1" />
-                        <AvatarFallback className="text-sm sm:text-base md:text-lg">U1</AvatarFallback>
-                      </Avatar>
-                      <Avatar className="h-16 w-16 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-20 lg:w-20">
-                        <AvatarImage src={Membres3} alt="@user2" />
-                        <AvatarFallback className="text-sm sm:text-base md:text-lg">U2</AvatarFallback>
-                      </Avatar>
-                      <Avatar className="h-16 w-16 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-20 lg:w-20">
-                        <AvatarImage src={Membres1} alt="@user3" />
-                        <AvatarFallback className="text-sm sm:text-base md:text-lg">U3</AvatarFallback>
-                      </Avatar>
-                    </>
-                  )}
+                  {users.map((user) => (
+                    <Avatar key={user.id} className="h-16 w-16 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-20 lg:w-20">
+                      <AvatarImage 
+                        src={getProfileImageUrl(user.photo_profile)} 
+                        alt={`@${user.firstname.toLowerCase()}`}
+                      />
+                      <AvatarFallback className="text-sm sm:text-base md:text-lg">
+                        {getInitials(user.firstname, user.lastname)}
+                      </AvatarFallback>
+                    </Avatar>
+                  ))}
                 </div>
               </div>
             </div>

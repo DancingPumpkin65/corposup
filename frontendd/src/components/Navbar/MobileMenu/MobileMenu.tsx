@@ -6,9 +6,9 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "../ui/navigation-menu";
-import logoColored from '../../assets/LogoColored.svg';
-import menuIcon from '../../assets/Menu.svg';
+} from "../../ui/navigation-menu";
+import logoColored from '../../../assets/LogoColored.svg';
+import menuIcon from '../../../assets/Menu.svg';
 
 const MobileMenu = () => {
   return (

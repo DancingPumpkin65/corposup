@@ -1,12 +1,12 @@
 import { MainLayout } from '../components/layouts/MainLayout';
-import HeroSection from '../components/landingPage-components/HeroSection';
-import FeaturesSection from '../components/landingPage-components/FeaturesSection';
-import CardsSection from '../components/landingPage-components/CardsSection';
-import BlueSection from '../components/landingPage-components/BlueSection';
-import ProductsSection from '../components/landingPage-components/ProductsSection';
-import StatsSection from '../components/landingPage-components/StatsSection';
-import TestimonialsSection from '../components/landingPage-components/TestimonialsSection';
-import NewsletterSection from '../components/landingPage-components/NewsletterSection';
+import HeroSection from '../components/LandingPage/HeroSection';
+import FeaturesSection from '../components/LandingPage/FeaturesSection';
+import CardsSection from '../components/LandingPage/CardsSection';
+import BlueSection from '../components/LandingPage/BlueSection';
+import ProductsSection from '../components/LandingPage/ProductsSection';
+import StatsSection from '../components/LandingPage/StatsSection/StatsSection';
+import TestimonialsSection from '../components/LandingPage/TestimonialsSection';
+import NewsletterSection from '../components/LandingPage/NewsletterSection';
 
 const LandingPage = () => {
   return (

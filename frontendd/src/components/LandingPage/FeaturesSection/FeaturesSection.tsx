@@ -1,6 +1,6 @@
-import icon0 from '../../assets/Headphone.svg';
-import icon1 from '../../assets/Security.svg';
-import icon2 from '../../assets/Return.svg';
+import icon0 from '../../../assets/Headphone.svg';
+import icon1 from '../../../assets/Security.svg';
+import icon2 from '../../../assets/Return.svg';
 
 const FeaturesSection = () => {
   return (

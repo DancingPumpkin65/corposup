@@ -1,64 +1,18 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logoColored from '../assets/LogoColored.svg';
-import TopBar from './navbar-components/TopBar';
-import MobileMenu from './navbar-components/MobileMenu';
-import CategoriesDropdown from './navbar-components/CategoriesDropdown';
-import SearchBar from './navbar-components/SearchBar';
-import DesktopNavigation from './navbar-components/DesktopNavigation';
-
-interface Category {
-  id: number;
-  name: string;
-  subcategories?: string[];
-}
+import logoColored from '../../assets/LogoColored.svg';
+import TopBar from './TopBar';
+import MobileMenu from './MobileMenu';
+import CategoriesDropdown from './CategoriesDropdown';
+import SearchBar from './SearchBar';
+import DesktopNavigation from './DesktopNavigation';
+import { useCategories } from '../../hooks';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currency, setCurrency] = useState("dh");
   const [language, setLanguage] = useState("fr");
-  const [categories] = useState<Category[]>([
-    {
-      id: 1,
-      name: "Agriculture et alimentation",
-      subcategories: ["Agriculture et élevage", "Alimentation"]
-    },
-    {
-      id: 2,
-      name: "Machine et outils",
-      subcategories: ["Machine et matériel", "Outils et quincaillerie", "Composants mécaniques", "Instrument de mesure et d'analyse"]
-    },
-    {
-      id: 3,
-      name: "Métallurgie, chimie et plastiques",
-      subcategories: ["Produits chimiques", "Plastique et caoutchouc", "Minéraux et métallurgie", "Energie"]
-    },
-    {
-      id: 4,
-      name: "Emballage, publicité et bureaux",
-      subcategories: ["Conditionnement et stockage", "Équipement de service", "Papeterie et fourniture de bureau"]
-    },
-    {
-      id: 5,
-      name: "Maison, éclairage et construction",
-      subcategories: ["Maison et jardin", "Mobilier", "Lumière et éclairage", "Bâtiment et construction"]
-    },
-    {
-      id: 6,
-      name: "Vêtements textiles et accessoires de mode",
-      subcategories: ["Vêtements", "Textile et produit de cuir", "Accessoire de mode", "Horlogerie, bijouterie et optique"]
-    },
-    {
-      id: 7,
-      name: "Électronique et appareils électroménagers",
-      subcategories: ["Image et son", "Informatique", "Appareils électroménagers", "Sécurité et protection"]
-    },
-    {
-      id: 8,
-      name: "Équipement électrique, composants et télécommunication",
-      subcategories: ["Matériel électrique", "Composant électrique", "Télécommunication"]
-    }
-  ]);
+  const { categories, loading } = useCategories();
 
   return (
     <nav className="bg-white relative z-30 shadow-navbar max-w-full mx-auto">
@@ -115,7 +69,7 @@ const Navbar = () => {
         {/* Second Bar: Categories + Search + Navigation */}
         <div className="flex items-center justify-between h-12 w-full bg-white px-2 mt-2 mb-2 lg:px-8">
           {/* Categories Button */}
-          <CategoriesDropdown categories={categories} />
+          <CategoriesDropdown categories={categories} loading={loading} />
 
           {/* Mobile Search */}
           <SearchBar isMobile />

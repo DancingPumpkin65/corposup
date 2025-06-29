@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import itemPrd from '../../assets/Item.jpg';
+import itemPrd from '../../../assets/Item.jpg';
 
 interface Product {
   id: number;

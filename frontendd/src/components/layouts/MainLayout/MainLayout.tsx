@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../../hooks';
 import { Button } from '../../common/Button';
 import styles from './MainLayout.module.css';
 

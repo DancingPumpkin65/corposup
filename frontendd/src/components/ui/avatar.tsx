@@ -4,9 +4,9 @@ interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
-interface AvatarImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {}
+type AvatarImageProps = React.ImgHTMLAttributes<HTMLImageElement>
 
-interface AvatarFallbackProps extends React.HTMLAttributes<HTMLDivElement> {}
+type AvatarFallbackProps = React.HTMLAttributes<HTMLDivElement>
 
 const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
   ({ className = "", size = 'md', ...props }, ref) => {
