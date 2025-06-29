@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
+import apiClient from './apiClient';
 
 export interface LoginData {
   email: string;
@@ -32,18 +30,28 @@ export interface AuthResponse {
 
 class AuthService {
   async login(data: LoginData): Promise<AuthResponse> {
-    const response = await axios.post(`${API_BASE_URL}/login`, data);
+    const response = await apiClient.post('/login', data);
     return response.data;
   }
 
   async register(data: RegisterData): Promise<AuthResponse> {
-    const response = await axios.post(`${API_BASE_URL}/register`, data);
+    const response = await apiClient.post('/register', data);
     return response.data;
   }
 
-  logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+  async logout(): Promise<void> {
+    try {
+      // Call the logout endpoint if user is authenticated
+      if (this.isAuthenticated()) {
+        await apiClient.post('/logout');
+      }
+    } catch (error) {
+      console.error('Logout API call failed:', error);
+    } finally {
+      // Always clear local storage regardless of API call success
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    }
   }
 
   getToken(): string | null {

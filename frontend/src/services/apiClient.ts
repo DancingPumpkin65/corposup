@@ -22,9 +22,13 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/signin';
+      // Only redirect if not in login/register pages to prevent refresh loop
+      const currentPath = window.location.pathname;
+      if (!currentPath.includes('/signin') && !currentPath.includes('/signup')) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = '/signin';
+      }
     }
     return Promise.reject(error);
   }

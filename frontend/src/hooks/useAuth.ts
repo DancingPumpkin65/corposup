@@ -39,11 +39,5 @@ export const useAuth = () => {
     window.location.href = '/';
   };
 
-  return {
-    user,
-    isAuthenticated,
-    loading,
-    login,
-    logout
-  };
+  return { user, isAuthenticated, loading, login, logout };
 };

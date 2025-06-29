@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
-import { Separator } from "../../ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "../../Shadcn/Avatar";
+import { Separator } from "../../Shadcn/Separator";
 import userService from '../../../services/userService';
 import industryWorkerImg from '../../../assets/Decouvrir.png';
 import memberNbr from '../../../assets/Membres.svg';

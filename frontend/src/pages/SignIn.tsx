@@ -1,41 +1,96 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
 import authService from '../services/authService';
+import { Alert, AlertDescription, AlertTitle } from '../components/Shadcn/Alert';
+import { Checkbox } from '../components/Shadcn/Checkbox';
+import { Label } from '../components/Shadcn/Label';
 import img from '../assets/SignIn.png';
 import logoWhite from '../assets/LogoWhite.svg';
 import logoColored from '../assets/LogoColored.svg';
 
+interface AlertState {
+  show: boolean;
+  type: 'success' | 'error';
+  title: string;
+  message: string;
+}
+
 const SignIn = () => {
     const [formData, setFormData] = useState({email: '', password: ''});
     const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState('');
+    const [alert, setAlert] = useState<AlertState>({
+        show: false,
+        type: 'success',
+        title: '',
+        message: ''
+    });
     const [rememberMe, setRememberMe] = useState(false);
+
+    const showAlert = (type: 'success' | 'error', title: string, message: string) => {
+        setAlert({ show: true, type, title, message });
+        
+        // Auto-hide success alerts after 3 seconds
+        if (type === 'success') {
+            setTimeout(() => {
+                setAlert(prev => ({ ...prev, show: false }));
+            }, 3000);
+        }
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({...formData, [e.target.name]: e.target.value});
+        // Hide alert when user starts typing
+        if (alert.show) {
+            setAlert(prev => ({ ...prev, show: false }));
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        e.stopPropagation();
+        
         setLoading(true);
-        setMessage('');
+        setAlert(prev => ({ ...prev, show: false }));
 
         try {
             const response = await authService.login(formData);
-            setMessage(`Welcome ${response.user.firstname} ${response.user.lastname}! Role: ${response.user.role}`);
+            
+            showAlert(
+                'success',
+                'Connexion réussie!',
+                `Bienvenue ${response.user.firstname} ${response.user.lastname}!`
+            );
 
             localStorage.setItem('token', response.token);
             localStorage.setItem('user', JSON.stringify(response.user));
             
             // Redirect to dashboard for role-based routing
             setTimeout(() => {
-              window.location.href = '/dashboard';
+                window.location.href = '/dashboard';
             }, 1000);
-        } catch {
-            setMessage('Erreur de connexion. Vérifiez vos identifiants.');
+        } catch (error: unknown) {
+            console.error('Login error:', error); // Debug log
+            
+            let errorMessage = 'Une erreur inattendue s\'est produite.';
+            
+            if (error && typeof error === 'object' && 'response' in error) {
+                const axiosError = error as { response?: { status: number } };
+                if (axiosError.response?.status === 401) {
+                    errorMessage = 'Email ou mot de passe incorrect.';
+                } else if (axiosError.response?.status === 422) {
+                    errorMessage = 'Veuillez vérifier vos informations de connexion.';
+                } else if (axiosError.response?.status && axiosError.response.status >= 500) {
+                    errorMessage = 'Erreur du serveur. Veuillez réessayer plus tard.';
+                } else if (!axiosError.response) {
+                    errorMessage = 'Problème de connexion réseau. Vérifiez votre connexion internet.';
+                }
+            }
+            
+            showAlert('error', 'Erreur de connexion', errorMessage);
+        } finally {
+            setLoading(false);
         }
-        
-        setLoading(false);
     };
 
   return (
@@ -100,6 +155,17 @@ const SignIn = () => {
                         <p className="text-gray-400">Bon retour ! Veuillez entrer vos informations.</p>
                     </div>
 
+                    {/* Alert */}
+                    {alert.show && (
+                        <div className="mt-4">
+                            <Alert variant={alert.type === 'error' ? 'destructive' : 'success'}>
+                                {alert.type === 'error' ? <AlertCircleIcon className="h-4 w-4" /> : <CheckCircle2Icon className="h-4 w-4" />}
+                                <AlertTitle>{alert.title}</AlertTitle>
+                                <AlertDescription>{alert.message}</AlertDescription>
+                            </Alert>
+                        </div>
+                    )}
+
                     {/* Email Address */}
                     <div className="mt-4">
                         <label className="block font-medium text-sm text-gray-700" htmlFor="email">
@@ -136,17 +202,15 @@ const SignIn = () => {
                     </div>
 
                     {/* Remember Me */}
-                    <div className="block mt-4">
-                        <label htmlFor="remember_me" className="inline-flex items-center">
-                            <input 
-                                id="remember_me" 
-                                type="checkbox" 
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" 
-                                checked={rememberMe}
-                                onChange={(e) => setRememberMe(e.target.checked)}
-                            />
-                            <span className="ml-2 text-sm text-gray-600">Se souvenir de moi</span>
-                        </label>
+                    <div className="flex items-center gap-3 mt-4">
+                        <Checkbox 
+                            id="remember_me"
+                            checked={rememberMe}
+                            onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+                        />
+                        <Label htmlFor="remember_me" className="text-sm text-gray-600 cursor-pointer">
+                            Se souvenir de moi
+                        </Label>
                     </div>
 
                     {/* Forgot Password Link */}
@@ -160,17 +224,10 @@ const SignIn = () => {
                     <button 
                         type="submit" 
                         disabled={loading}
-                        className="inline-flex items-center justify-center px-8 py-2 bg-orange-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-700 focus:bg-orange-700 active:bg-orange-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 w-full py-4 rounded focus:outline-none focus:shadow-outline mt-4"
+                        className="inline-flex items-center justify-center px-8 py-2 bg-orange-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-700 focus:bg-orange-700 active:bg-orange-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 w-full py-4 rounded focus:outline-none focus:shadow-outline mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? 'Connexion...' : 'Se connecter'}
                     </button>
-
-                    {/* Message */}
-                    {message && (
-                        <div className="mt-4 p-3 rounded bg-gray-100 text-sm">
-                            {message}
-                        </div>
-                    )}
                 </form>
             </div>
         </div>

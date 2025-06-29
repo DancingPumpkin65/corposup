@@ -1,9 +1,21 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
+import authService from '../services/authService';
+import { Alert, AlertDescription, AlertTitle } from '../components/Shadcn/Alert';
+import { Checkbox } from '../components/Shadcn/Checkbox';
+import { Label } from '../components/Shadcn/Label';
+import { RadioGroup, RadioGroupItem } from '../components/Shadcn/RadioGroup';
 import img from '../assets/SignIn.png';
 import logoWhite from '../assets/LogoWhite.svg';
 import logoColored from '../assets/LogoColored.svg';
+
+interface AlertState {
+  show: boolean;
+  type: 'success' | 'error';
+  title: string;
+  message: string;
+}
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -12,38 +24,131 @@ const SignUp = () => {
     email: '',
     password: '',
     password_confirmation: '',
-    role: 'buyer'
+    role: 'buyer' as 'buyer' | 'seller'
   });
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [alert, setAlert] = useState<AlertState>({
+    show: false,
+    type: 'success',
+    title: '',
+    message: ''
+  });
+  const [termsAccepted, setTermsAccepted] = useState(false);
+
+  const showAlert = (type: 'success' | 'error', title: string, message: string) => {
+    setAlert({ show: true, type, title, message });
+    
+    // Auto-hide success alerts after 3 seconds
+    if (type === 'success') {
+        setTimeout(() => {
+            setAlert(prev => ({ ...prev, show: false }));
+        }, 3000);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    // Hide alert when user starts typing
+    if (alert.show) {
+        setAlert(prev => ({ ...prev, show: false }));
+    }
+  };
+
+  const handleRoleChange = (value: string) => {
+    setFormData({
+      ...formData,
+      role: value as 'buyer' | 'seller'
+    });
+    // Hide alert when user changes selection
+    if (alert.show) {
+        setAlert(prev => ({ ...prev, show: false }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+    
     setLoading(true);
-    setMessage('');
+    setAlert(prev => ({ ...prev, show: false }));
+
+    // Client-side validation
+    if (!termsAccepted) {
+        showAlert('error', 'Erreur de validation', 'Vous devez accepter les termes et conditions.');
+        setLoading(false);
+        return;
+    }
 
     if (formData.password !== formData.password_confirmation) {
-      setMessage('Les mots de passe ne correspondent pas');
+      showAlert('error', 'Erreur de validation', 'Les mots de passe ne correspondent pas.');
       setLoading(false);
       return;
     }
 
-    const response = await axios.post('http://127.0.0.1:8000/api/register', formData);
-    setMessage(`Compte créé avec succès! Bienvenue ${response.data.user.firstname} ${response.data.user.lastname}`);
-    
-    if (response.data.token) {
-    localStorage.setItem('token', response.data.token);
-    localStorage.setItem('user', JSON.stringify(response.data.user));
+    if (formData.password.length < 8) {
+      showAlert('error', 'Mot de passe trop court', 'Le mot de passe doit contenir au moins 8 caractères.');
+      setLoading(false);
+      return;
     }
-    
-    setLoading(false);
+
+    try {
+      const response = await authService.register(formData);
+      
+      showAlert(
+        'success',
+        'Compte créé avec succès!',
+        `Bienvenue ${response.user.firstname} ${response.user.lastname}! Vous pouvez maintenant vous connecter.`
+      );
+
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
+        
+        // Redirect to dashboard after successful registration
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 2000);
+      }
+    } catch (error: unknown) {
+      console.error('Registration error:', error); // Debug log
+      
+      let errorMessage = 'Une erreur inattendue s\'est produite.';
+      const errorDetails: string[] = [];
+      
+      // Type guard to check if error has response property
+      if (error && typeof error === 'object' && 'response' in error) {
+        const axiosError = error as { response?: { status?: number; data?: { errors?: Record<string, string[]> } } };
+        
+        if (axiosError.response?.status === 422) {
+          // Validation errors from backend
+          const errors = axiosError.response.data?.errors || {};
+          if (errors.email) {
+            errorDetails.push('Cette adresse email est déjà utilisée.');
+          }
+          if (errors.password) {
+            errorDetails.push('Le mot de passe ne respecte pas les critères requis.');
+          }
+          if (errors.firstname || errors.lastname) {
+            errorDetails.push('Veuillez vérifier vos nom et prénom.');
+          }
+          
+          errorMessage = errorDetails.length > 0 
+            ? errorDetails.join(' ') 
+            : 'Veuillez vérifier vos informations.';
+        } else if (axiosError.response?.status && axiosError.response.status >= 500) {
+          errorMessage = 'Erreur du serveur. Veuillez réessayer plus tard.';
+        } else if (!axiosError.response) {
+          errorMessage = 'Problème de connexion réseau. Vérifiez votre connexion internet.';
+        }
+      }
+      
+      showAlert('error', 'Erreur lors de l\'inscription', errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -115,6 +220,17 @@ const SignUp = () => {
                         <h1 className="font-black text-4xl text-gray-900">Créer un compte</h1>
                         <p className="text-gray-400">Créez votre compte pour commencer.</p>
                     </div>
+
+                    {/* Alert */}
+                    {alert.show && (
+                        <div className="mt-4">
+                            <Alert variant={alert.type === 'error' ? 'destructive' : 'success'}>
+                                {alert.type === 'error' ? <AlertCircleIcon className="h-4 w-4" /> : <CheckCircle2Icon className="h-4 w-4" />}
+                                <AlertTitle>{alert.title}</AlertTitle>
+                                <AlertDescription>{alert.message}</AlertDescription>
+                            </Alert>
+                        </div>
+                    )}
 
                     {/* Prénom and Nom in the same row */}
                     <div className="flex gap-4 mt-4">
@@ -207,54 +323,63 @@ const SignUp = () => {
 
                     {/* Rôle */}
                     <div className="mt-4">
-                        <label className="block font-medium text-sm text-gray-700">
+                        <label className="block font-medium text-sm text-gray-700 mb-3">
                             Vous êtes ici en tant que
                         </label>
-                        <div className="flex flex-wrap gap-4 mt-2">
-                            <div className="flex items-center gap-2">
-                                <input 
-                                    id="buyer" 
-                                    type="radio" 
-                                    name="role" 
-                                    value="buyer" 
-                                    className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" 
-                                    checked={formData.role === 'buyer'}
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <label htmlFor="buyer" className="text-sm text-gray-600">Acheteur</label>
+                        <RadioGroup 
+                            value={formData.role} 
+                            onValueChange={handleRoleChange}
+                            className="flex flex-wrap gap-4"
+                        >
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="buyer" id="buyer" />
+                                <Label htmlFor="buyer" className="text-sm text-gray-600 cursor-pointer">
+                                    Acheteur
+                                </Label>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <input 
-                                    id="seller" 
-                                    type="radio" 
-                                    name="role" 
-                                    value="seller" 
-                                    className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" 
-                                    checked={formData.role === 'seller'}
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <label htmlFor="seller" className="text-sm text-gray-600">Vendeur</label>
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="seller" id="seller" />
+                                <Label htmlFor="seller" className="text-sm text-gray-600 cursor-pointer">
+                                    Vendeur
+                                </Label>
                             </div>
+                        </RadioGroup>
+                    </div>
+
+                    {/* Terms and Conditions */}
+                    <div className="flex items-start gap-3 mt-4">
+                        <Checkbox 
+                            id="terms"
+                            checked={termsAccepted}
+                            onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
+                            required
+                        />
+                        <div className="grid gap-1">
+                            <Label htmlFor="terms" className="text-sm text-gray-600">
+                                Accepter les termes et conditions
+                            </Label>
+                            <p className="text-xs text-gray-500">
+                                En cochant cette case, vous acceptez nos{' '}
+                                <Link to="/terms" className="text-blue-500 hover:underline">
+                                    termes et conditions
+                                </Link>
+                                {' '}et notre{' '}
+                                <Link to="/privacy" className="text-blue-500 hover:underline">
+                                    politique de confidentialité
+                                </Link>
+                                .
+                            </p>
                         </div>
                     </div>
 
                     {/* Submit Button */}
                     <button 
                         type="submit" 
-                        disabled={loading}
-                        className="inline-flex items-center justify-center px-8 py-2 bg-orange-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-700 focus:bg-orange-700 active:bg-orange-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 w-full py-4 rounded focus:outline-none focus:shadow-outline mt-4"
+                        disabled={loading || !termsAccepted}
+                        className="inline-flex items-center justify-center px-8 py-2 bg-orange-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-700 focus:bg-orange-700 active:bg-orange-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 w-full py-4 rounded focus:outline-none focus:shadow-outline mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? 'Création...' : "S'inscrire"}
                     </button>
-
-                    {/* Message */}
-                    {message && (
-                        <div className="mt-4 p-3 rounded bg-gray-100 text-sm">
-                            {message}
-                        </div>
-                    )}
                 </form>
             </div>
         </div>

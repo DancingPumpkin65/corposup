@@ -6,7 +6,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "../../ui/navigation-menu";
+} from "../../Shadcn/NavigationMenu/navigation-menu";
 import logoColored from '../../../assets/LogoColored.svg';
 import menuIcon from '../../../assets/Menu.svg';
 

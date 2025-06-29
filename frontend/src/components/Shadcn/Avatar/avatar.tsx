@@ -50,4 +50,8 @@ const AvatarFallback = React.forwardRef<HTMLDivElement, AvatarFallbackProps>(
 )
 AvatarFallback.displayName = "AvatarFallback"
 
-export { Avatar, AvatarImage, AvatarFallback }
+export {
+  Avatar,
+  AvatarImage,
+  AvatarFallback
+}
