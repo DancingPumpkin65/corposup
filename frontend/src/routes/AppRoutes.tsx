@@ -1,37 +1,38 @@
 import { Routes, Route } from 'react-router-dom';
-import { ProtectedRoute } from './ProtectedRoute';
-import { SignIn, SignUp, AdminPage, BuyerPage, SellerPage, LandingPage } from '../pages';
-import RoleBasedRedirect from '../pages/RoleBasedRedirect';
+import { ProtectedRoute } from '../routes';
+import { SignIn, SignUp, AdminPage, BuyerPage, SellerPage, LandingPage, RoleBasedRedirect, ProductsPage } from '../pages';
 import { USER_ROLES } from '../utils/constants';
 
 export const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/dashboard" element={<RoleBasedRedirect />} />
-      
-      <Route 
-        path="/admin" 
+      <Route path="/corposup" element={<LandingPage />} />
+      <Route path="/corposup/signin" element={<SignIn />} />
+      <Route path="/corposup/signup" element={<SignUp />} />
+      <Route path="/corposup/dashboard" element={<RoleBasedRedirect />} />
+
+      <Route path="/categories/:categoryId/products" element={<ProductsPage />} />
+
+      <Route
+        path="/corposup/admin"
         element={
           <ProtectedRoute requiredRole={USER_ROLES.ADMIN}>
             <AdminPage />
           </ProtectedRoute>
         } 
       />
-      
-      <Route 
-        path="/buyer" 
+
+      <Route
+        path="/corposup/buyer"
         element={
           <ProtectedRoute requiredRole={USER_ROLES.BUYER}>
             <BuyerPage />
           </ProtectedRoute>
         } 
       />
-      
-      <Route 
-        path="/seller" 
+
+      <Route
+        path="/corposup/seller"
         element={
           <ProtectedRoute requiredRole={USER_ROLES.SELLER}>
             <SellerPage />

@@ -1,3 +1,4 @@
+// assets imports
 import backgroundImg0 from '../../../assets/Background0.png';
 import backgroundImg1 from '../../../assets/Background1.png';
 import backgroundImg2 from '../../../assets/Background2.png';

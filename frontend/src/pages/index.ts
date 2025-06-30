@@ -4,3 +4,5 @@ export { default as BuyerPage } from './BuyerPage';
 export { default as SellerPage } from './SellerPage';
 export { default as SignIn } from './SignIn';
 export { default as SignUp } from './SignUp';
+export { default as RoleBasedRedirect } from './RoleBasedRedirect';
+export { default as ProductsPage } from './ProductsPage';

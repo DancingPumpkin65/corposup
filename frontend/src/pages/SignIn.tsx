@@ -1,10 +1,17 @@
+// react imports
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
+
+// services imports
 import authService from '../services/authService';
+
+// shadcn imports
 import { Alert, AlertDescription, AlertTitle } from '../components/Shadcn/Alert';
 import { Checkbox } from '../components/Shadcn/Checkbox';
 import { Label } from '../components/Shadcn/Label';
+
+// assets imports
 import img from '../assets/SignIn.png';
 import logoWhite from '../assets/LogoWhite.svg';
 import logoColored from '../assets/LogoColored.svg';

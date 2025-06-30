@@ -1,7 +1,12 @@
+// react-services imports
 import { useState, useEffect } from 'react';
+import userService from '../../../services/userService';
+
+// components imports
 import { Avatar, AvatarFallback, AvatarImage } from "../../Shadcn/Avatar";
 import { Separator } from "../../Shadcn/Separator";
-import userService from '../../../services/userService';
+
+// assets imports
 import industryWorkerImg from '../../../assets/Decouvrir.png';
 import memberNbr from '../../../assets/Membres.svg';
 import Membres1 from '../../../assets/Membres1.png';

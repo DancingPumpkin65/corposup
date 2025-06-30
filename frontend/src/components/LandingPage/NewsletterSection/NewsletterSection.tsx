@@ -1,4 +1,8 @@
+// react imports
+import React from 'react';
 import { useState } from 'react';
+
+// assets imports
 import workImage from '../../../assets/work.webp';
 import rectangleOverlay from '../../../assets/Rectangle.webp';
 
