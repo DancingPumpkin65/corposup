@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import apiClient from '../../services/apiClient';
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '../Shadcn/Select';
 
 interface Store {
   id: number;
@@ -110,18 +111,18 @@ const FilterComponent = ({ filters, onFilterChange }: FilterComponentProps) => {
         </div>
 
         {/* Store Selection */}
-        <select 
-          className="w-full mt-4 border border-gray-300 p-3 rounded-md bg-white text-gray-500"
-          value={filters.selectedStore}
-          onChange={(e) => handleStoreChange(e.target.value)}
-        >
-          <option value="">Choose store</option>
-          {stores.map((store) => (
-            <option key={store.id} value={store.id}>
-              {store.store_name}
-            </option>
-          ))}
-        </select>
+        <Select value={filters.selectedStore} onValueChange={handleStoreChange}>
+          <SelectTrigger className="w-full mt-4 text-lg px-5 py-6 border border-gray-300 rounded-md bg-white text-gray-500">
+            <SelectValue placeholder="Choose store" />
+          </SelectTrigger>
+          <SelectContent>
+            {stores.map((store) => (
+              <SelectItem key={store.id} value={store.id.toString()}>
+                {store.store_name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
         {/* Filter Buttons */}
         <button 

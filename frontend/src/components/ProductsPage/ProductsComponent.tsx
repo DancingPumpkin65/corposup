@@ -1,8 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Grid, List } from 'lucide-react';
+import { Grid, List, ChevronDown } from 'lucide-react';
 import apiClient from '../../services/apiClient';
 import { ProductCard } from '../ProductsPage';
 import NoProduct from '../../assets/Frame.webp';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../Shadcn/DropdownMenu';
 
 interface Product {
   id: number;
@@ -41,6 +47,17 @@ const ProductsComponent = ({ categoryId, filters }: ProductsComponentProps) => {
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState('popularity');
+
+  const sortOptions = [
+    { value: 'popularity', label: 'Popularité' },
+    { value: 'price-low', label: 'Prix croissant' },
+    { value: 'price-high', label: 'Prix décroissant' },
+    { value: 'name', label: 'Nom A-Z' },
+  ];
+
+  const getCurrentSortLabel = () => {
+    return sortOptions.find(option => option.value === sortBy)?.label || 'Popularité';
+  };
 
   const fetchProducts = useCallback(async () => {
     setLoading(true);
@@ -148,16 +165,23 @@ const ProductsComponent = ({ categoryId, filters }: ProductsComponentProps) => {
           </div>
           <div className="flex items-center">
             <span className="mr-2 text-sm text-gray-500 tracking-wider">Afficher par</span>
-            <select 
-              className="text-sm border-none bg-transparent"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-            >
-              <option value="popularity">Popularité</option>
-              <option value="price-low">Prix croissant</option>
-              <option value="price-high">Prix décroissant</option>
-              <option value="name">Nom A-Z</option>
-            </select>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center text-sm border-none bg-transparent hover:bg-gray-50 px-2 py-1 rounded transition-colors">
+                <span>{getCurrentSortLabel()}</span>
+                <ChevronDown className="ml-1 h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                {sortOptions.map((option) => (
+                  <DropdownMenuItem
+                    key={option.value}
+                    onClick={() => setSortBy(option.value)}
+                    className={`cursor-pointer ${sortBy === option.value ? 'bg-gray-100' : ''}`}
+                  >
+                    {option.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>

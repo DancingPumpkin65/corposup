@@ -6,7 +6,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "../../Shadcn/NavigationMenu/navigation-menu";
+} from "../../Shadcn/NavigationMenu";
 import categoriesIcon from '../../../assets/Categories.svg';
 
 interface Category {
