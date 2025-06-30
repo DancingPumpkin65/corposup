@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import apiClient from '../../services/apiClient';
+import CategorieImg from '../../assets/CategorieImg.png';
 
 interface Category {
   id: number;
@@ -14,13 +15,7 @@ const ProductHeader = ({ categoryId }: ProductHeaderProps) => {
   const [category, setCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (categoryId) {
-      fetchCategory();
-    }
-  }, [categoryId]);
-
-  const fetchCategory = async () => {
+  const fetchCategory = useCallback(async () => {
     if (!categoryId) return;
     
     setLoading(true);
@@ -38,16 +33,18 @@ const ProductHeader = ({ categoryId }: ProductHeaderProps) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [categoryId]);
 
-  const getCategoryImage = () => {
-    return '/images/RCP.png'; // Default image
-  };
+  useEffect(() => {
+    if (categoryId) {
+      fetchCategory();
+    }
+  }, [categoryId, fetchCategory]);
 
   return (
     <div 
       className="relative text-white p-6 rounded-2xl mb-6 w-full bg-no-repeat bg-cover bg-center h-32"
-      style={{ backgroundImage: `url('${getCategoryImage()}')` }}
+      style={{ backgroundImage: `url('${CategorieImg}')`, backgroundPosition: 'top' }}
     >
       <div className="absolute inset-0 object-cover rounded-2xl bg-gradient-to-r from-blue-600 to-blue-600/30"></div>
       

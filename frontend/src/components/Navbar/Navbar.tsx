@@ -15,7 +15,7 @@ const Navbar = () => {
   const { categories, loading } = useCategories();
 
   return (
-    <nav className="bg-white relative z-30 shadow-navbar max-w-full mx-auto">
+    <nav className="bg-white relative z-30 shadow max-w-full mx-auto">
       {/* Top Bar */}
       <TopBar 
         currency={currency}

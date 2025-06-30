@@ -37,9 +37,9 @@ const ProductsPage = () => {
 
   return (
     <MainLayout>
-      <div className="flex flex-col md:flex-row gap-8 px-4 mx-auto py-10">
+      <div className="flex flex-col md:flex-row gap-8 px-4 mx-auto py-10 max-w-7xl">
         {/* Sidebar */}
-        <aside className="w-full md:w-[330px] bg-white p-6 rounded-lg">
+        <aside className="w-full md:w-[330px] bg-white pr-6 pb-6 rounded-lg">
           <CategoriesComponent categories={categories} loading={loading} />
           <FiltersComponent filters={filters} onFilterChange={handleFilterChange} />
         </aside>
