@@ -12,24 +12,35 @@ interface ProductHeaderProps {
 
 const ProductHeader = ({ categoryId }: ProductHeaderProps) => {
   const [category, setCategory] = useState<Category | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchCategory = async () => {
-      try {
-        const response = await apiClient.get(`/categories/${categoryId}`);
-        setCategory(response.data);
-      } catch (error) {
-        console.error('Error fetching category:', error);
-      }
-    };
-
     if (categoryId) {
       fetchCategory();
     }
   }, [categoryId]);
 
+  const fetchCategory = async () => {
+    if (!categoryId) return;
+    
+    setLoading(true);
+    try {
+      const response = await apiClient.get(`/categories/${categoryId}`);
+      
+      let categoryData = response.data;
+      if (categoryData.data) {
+        categoryData = categoryData.data;
+      }
+      
+      setCategory(categoryData);
+    } catch (error) {
+      console.error('Error fetching category:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const getCategoryImage = () => {
-    // Return different images based on category
     return '/images/RCP.png'; // Default image
   };
 
@@ -42,7 +53,7 @@ const ProductHeader = ({ categoryId }: ProductHeaderProps) => {
       
       <div className="relative max-w-full">
         <h1 className="text-md lg:text-xl font-bold uppercase tracking-wider">
-          {category ? category.category_name : 'Tous les produits'}
+          {loading ? 'Chargement...' : category ? category.category_name : 'Tous les produits'}
         </h1>
       </div>
     </div>

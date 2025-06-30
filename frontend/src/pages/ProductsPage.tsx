@@ -7,6 +7,7 @@ import {
     ProductHeader,
     ProductsComponent
 } from '../components/ProductsPage';
+import { useCategories } from '../hooks';
 
 interface Filters {
   priceRange: { min: number; max: number };
@@ -17,6 +18,7 @@ interface Filters {
 const ProductsPage = () => {
   const { categoryId } = useParams();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryId || null);
+  const { categories, loading } = useCategories();
   const [filters, setFilters] = useState<Filters>({
     priceRange: { min: 0, max: 25000 },
     selectedStore: '',
@@ -33,32 +35,19 @@ const ProductsPage = () => {
     setFilters(newFilters);
   };
 
-  const handleCategorySelect = (categoryId: string) => {
-    setSelectedCategory(categoryId);
-  };
-
   return (
     <MainLayout>
       <div className="flex flex-col md:flex-row gap-8 px-4 mx-auto py-10">
         {/* Sidebar */}
         <aside className="w-full md:w-[330px] bg-white p-6 rounded-lg">
-          <CategoriesComponent 
-            selectedCategory={selectedCategory}
-            onCategorySelect={handleCategorySelect}
-          />
-          <FiltersComponent 
-            filters={filters}
-            onFilterChange={handleFilterChange}
-          />
+          <CategoriesComponent categories={categories} loading={loading} />
+          <FiltersComponent filters={filters} onFilterChange={handleFilterChange} />
         </aside>
 
         {/* Main Content */}
         <main className="flex-1 w-full">
           <ProductHeader categoryId={selectedCategory} />
-          <ProductsComponent 
-            categoryId={selectedCategory}
-            filters={filters}
-          />
+          <ProductsComponent categoryId={selectedCategory} filters={filters} />
         </main>
       </div>
     </MainLayout>

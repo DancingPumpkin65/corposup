@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Grid, List } from 'lucide-react';
 import apiClient from '../../services/apiClient';
 import { ProductCard } from '../ProductsPage';
+import NoProduct from '../../assets/Frame.webp';
 
 interface Product {
   id: number;
@@ -53,12 +54,25 @@ const ProductsComponent = ({ categoryId, filters }: ProductsComponentProps) => {
       }
 
       const response = await apiClient.get(url);
-      console.log('API Response:', response.data); // Debug log to see actual structure
+      
+      // Handle your API response structure
       let fetchedProducts = response.data;
-
-      // Handle different response structures
+      
+      // If response is wrapped in a data property
       if (fetchedProducts.data) {
         fetchedProducts = fetchedProducts.data;
+      }
+      
+      // If response is an object with products array
+      if (fetchedProducts.products) {
+        fetchedProducts = fetchedProducts.products;
+      }
+      
+      // Ensure we have an array
+      if (!Array.isArray(fetchedProducts)) {
+        console.error('Expected array of products, got:', fetchedProducts);
+        setProducts([]);
+        return;
       }
 
       // Apply price filter
@@ -151,7 +165,7 @@ const ProductsComponent = ({ categoryId, filters }: ProductsComponentProps) => {
       {products.length === 0 ? (
         <div className="flex justify-center items-center mt-10">
           <div className="text-center flex flex-col">
-            <img src="/images/Frame.png" alt="No products" className="mx-auto mb-4" />
+            <img src={NoProduct} alt="No products" className="mx-auto mb-4" />
             <p className="text-gray-600 text-lg mt-4 font-semibold">Aucun produit disponible</p>
           </div>
         </div>

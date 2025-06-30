@@ -6,13 +6,15 @@ interface Store {
   store_name: string;
 }
 
+interface Filters {
+  priceRange: { min: number; max: number };
+  selectedStore: string;
+  sortBy: string;
+}
+
 interface FilterComponentProps {
-  filters: {
-    priceRange: { min: number; max: number };
-    selectedStore: string;
-    sortBy: string;
-  };
-  onFilterChange: (filters: any) => void;
+  filters: Filters;
+  onFilterChange: (filters: Filters) => void;
 }
 
 const FilterComponent = ({ filters, onFilterChange }: FilterComponentProps) => {

@@ -50,11 +50,9 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
     return (
       <div className="flex bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
         <div className="w-48 h-32 bg-gray-200 flex-shrink-0">
-          <img 
-            src="/images/placeholder-product.jpg" 
-            alt={product.product_name}
-            className="w-full h-full object-cover"
-          />
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+            <span className="text-gray-400 text-xs">No Image</span>
+          </div>
         </div>
         <div className="flex-1 p-4">
           <div className="flex justify-between items-start">
@@ -99,12 +97,8 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-      <div className="h-48 bg-gray-200">
-        <img 
-          src="/images/placeholder-product.jpg" 
-          alt={product.product_name}
-          className="w-full h-full object-cover"
-        />
+      <div className="h-48 bg-gray-200 flex items-center justify-center">
+        <span className="text-gray-400 text-xs">No Image</span>
       </div>
       <div className="p-4">
         <Link to={`/products/${product.id}`}>
