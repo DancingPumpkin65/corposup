@@ -6,15 +6,15 @@ import { USER_ROLES } from '../utils/constants';
 export const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/corposup" element={<LandingPage />} />
-      <Route path="/corposup/signin" element={<SignIn />} />
-      <Route path="/corposup/signup" element={<SignUp />} />
-      <Route path="/corposup/dashboard" element={<RoleBasedRedirect />} />
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/dashboard" element={<RoleBasedRedirect />} />
 
       <Route path="/categories/:categoryId/products" element={<ProductsPage />} />
 
       <Route
-        path="/corposup/admin"
+        path="/admin"
         element={
           <ProtectedRoute requiredRole={USER_ROLES.ADMIN}>
             <AdminPage />
@@ -23,7 +23,7 @@ export const AppRoutes = () => {
       />
 
       <Route
-        path="/corposup/buyer"
+        path="/buyer"
         element={
           <ProtectedRoute requiredRole={USER_ROLES.BUYER}>
             <BuyerPage />
@@ -32,10 +32,17 @@ export const AppRoutes = () => {
       />
 
       <Route
-        path="/corposup/seller"
+        path="/seller/*"
         element={
           <ProtectedRoute requiredRole={USER_ROLES.SELLER}>
-            <SellerPage />
+            <Routes>
+              <Route index element={<SellerPage />} />
+              <Route path="products" element={<div>Mes produits - Coming Soon</div>} />
+              <Route path="orders" element={<div>Commandes - Coming Soon</div>} />
+              <Route path="store" element={<div>Ma boutique - Coming Soon</div>} />
+              <Route path="analytics" element={<div>Statistiques - Coming Soon</div>} />
+              <Route path="settings" element={<div>Paramètres - Coming Soon</div>} />
+            </Routes>
           </ProtectedRoute>
         } 
       />

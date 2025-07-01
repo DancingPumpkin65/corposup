@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Grid, List, ChevronDown } from 'lucide-react';
 import apiClient from '../../services/apiClient';
-import { ProductCard } from '../ProductsPage';
+import { ProductCard } from '.';
 import NoProduct from '../../assets/Frame.webp';
 import {
   DropdownMenu,

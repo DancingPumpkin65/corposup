@@ -20,6 +20,7 @@ export interface User {
   lastname: string;
   email: string;
   role: string;
+  photo_profile?: string;
 }
 
 export interface AuthResponse {
