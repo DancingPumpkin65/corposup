@@ -6,7 +6,7 @@ import MobileMenu from './MobileMenu';
 import CategoriesDropdown from './CategoriesDropdown';
 import SearchBar from './SearchBar';
 import DesktopNavigation from './DesktopNavigation';
-import { useCategories } from '../../hooks';
+import { useCategories, useCurrentUser } from '../../hooks';
 import authService from '../../services/authService';
 import {
   DropdownMenu,
@@ -42,8 +42,8 @@ const Navbar = () => {
   // Check if user is on seller pages
   const isSellerPage = location.pathname.startsWith('/seller');
   
-  // Get current user
-  const currentUser = authService.getUser();
+  // Get current user with fresh data
+  const { user: currentUser } = useCurrentUser();
   const isAuthenticated = authService.isAuthenticated();
 
   const handleLogout = async () => {
