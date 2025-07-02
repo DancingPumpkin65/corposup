@@ -1,4 +1,5 @@
 import apiClient from './apiClient';
+import { clearUserCache } from '../hooks/useCurrentUser';
 
 export interface LoginData {
   email: string;
@@ -49,9 +50,10 @@ class AuthService {
     } catch (error) {
       console.error('Logout API call failed:', error);
     } finally {
-      // Always clear local storage regardless of API call success
+      // Always clear local storage and cache regardless of API call success
       localStorage.removeItem('token');
       localStorage.removeItem('user');
+      clearUserCache(); // Clear the user cache
     }
   }
 

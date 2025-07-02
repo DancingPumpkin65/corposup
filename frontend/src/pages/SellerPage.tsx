@@ -1,4 +1,4 @@
-import { SidebarProvider, SidebarInset, SidebarTrigger } from '../components/Shadcn/Sidebar/sidebar';
+import { SidebarProvider, SidebarInset, SidebarTrigger } from '../components/Shadcn/Sidebar';
 import { SellerSidebar } from '../components/SellerPage/Sidebar';
 import { MainLayout } from '../components/layouts/MainLayout';
 
@@ -10,7 +10,7 @@ const SellerPage = () => {
       <SidebarProvider className="relative">
         <SellerSidebar />
         <SidebarInset>
-          <header className="fixed flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
+          <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
             <SidebarTrigger className="-ml-1" />
             <div className="flex items-center gap-2">
               <h1 className="text-lg font-semibold">Tableau de bord vendeur</h1>

@@ -1,5 +1,4 @@
 import { Link, useLocation } from "react-router-dom"
-
 import {
   Sidebar,
   SidebarContent,
@@ -11,7 +10,6 @@ import {
   SidebarMenuItem,
 } from "../Shadcn/Sidebar/sidebar"
 
-// SVG Icons as components
 const DashboardIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -132,7 +130,6 @@ const EntrepriseIcon = () => (
   </svg>
 )
 
-// Seller-specific menu items
 const sellerItems = [
   {
     title: "Vue d'ensemble",
@@ -176,8 +173,8 @@ export function SellerSidebar() {
 
   return (
     <Sidebar>
-      <div className="fixed bg-white">
-        <SidebarContent className="p-8 space-y-5">
+      <div className="bg-white pl-2 pt-4">
+        <SidebarContent className="space-y-5">
           <SidebarGroup>
             <SidebarGroupLabel className="text-base font-semibold text-gray-300 pb-2">
               Espace vendeur

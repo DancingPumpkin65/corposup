@@ -6,7 +6,7 @@ import MobileMenu from './MobileMenu';
 import CategoriesDropdown from './CategoriesDropdown';
 import SearchBar from './SearchBar';
 import DesktopNavigation from './DesktopNavigation';
-import { useCategories, useCurrentUser } from '../../hooks';
+import { useCurrentUser } from '../../hooks';
 import authService from '../../services/authService';
 import {
   DropdownMenu,
@@ -31,7 +31,6 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currency, setCurrency] = useState("dh");
   const [language, setLanguage] = useState("fr");
-  const { categories, loading } = useCategories();
   const location = useLocation();
   
   // Check if user is on seller pages
@@ -92,7 +91,7 @@ const Navbar = () => {
             {/* Categories next to logo on seller pages (laptop mode) */}
             {isSellerPage && (
               <div className="hidden lg:block">
-                <CategoriesDropdown categories={categories} loading={loading} />
+                <CategoriesDropdown />
               </div>
             )}
           </div>
@@ -144,7 +143,7 @@ const Navbar = () => {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/profile" className="flex items-center cursor-pointer">
+                    <Link to="/seller/profile" className="flex items-center cursor-pointer">
                       <UserIcon className="mr-2 h-4 w-4" />
                       <span>Profil</span>
                     </Link>
@@ -177,7 +176,7 @@ const Navbar = () => {
         {!isSellerPage && (
           <div className="flex items-center justify-between h-12 w-full bg-white px-2 mt-2 mb-2 lg:px-8">
             {/* Categories Button */}
-            <CategoriesDropdown categories={categories} loading={loading} />
+            <CategoriesDropdown />
 
             {/* Mobile Search */}
             <SearchBar isMobile />
@@ -191,7 +190,7 @@ const Navbar = () => {
         {isSellerPage && (
           <div className="flex items-center justify-between h-12 w-full bg-white px-2 mt-2 mb-2 lg:px-8 lg:hidden">
             {/* Categories Button for mobile/tablet */}
-            <CategoriesDropdown categories={categories} loading={loading} />
+            <CategoriesDropdown />
 
             {/* Mobile Search */}
             <SearchBar isMobile />

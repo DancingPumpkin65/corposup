@@ -8,20 +8,10 @@ import {
   NavigationMenuTrigger,
 } from "../../Shadcn/NavigationMenu";
 import categoriesIcon from '../../../assets/Categories.svg';
+import { useCategories } from '../../../hooks';
 
-interface Category {
-  id: number;
-  name: string;
-  subcategories?: string[];
-}
-
-interface CategoriesDropdownProps {
-  categories: Category[];
-  loading?: boolean;
-  error?: string | null;
-}
-
-const CategoriesDropdown = ({ categories, loading, error }: CategoriesDropdownProps) => {
+const CategoriesDropdown = () => {
+  const { categories, loading } = useCategories();
   
   return (
     <div className="relative flex items-center space-x-2">
@@ -37,10 +27,6 @@ const CategoriesDropdown = ({ categories, loading, error }: CategoriesDropdownPr
                 {loading ? (
                   <div className="text-center text-gray-500 py-4">
                     Chargement des catégories...
-                  </div>
-                ) : error ? (
-                  <div className="text-center text-red-500 py-4">
-                    Erreur: {error}
                   </div>
                 ) : categories.length === 0 ? (
                   <div className="text-center text-gray-500 py-4">
