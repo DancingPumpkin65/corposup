@@ -42,7 +42,7 @@ const DeleteAccountSection = () => {
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button variant="destructive" className="bg-red-600 hover:bg-red-500 px-10">
+          <Button variant="destructive" className="bg-black hover:bg-gray-800 px-11">
             SUPPRIMER
           </Button>
         </DialogTrigger>
@@ -96,7 +96,7 @@ const DeleteAccountSection = () => {
                 type="submit"
                 variant="destructive"
                 disabled={loading}
-                className="bg-red-600 hover:bg-red-500 px-10"
+                className="bg-black-600 hover:bg-black-500 px-10"
               >
                 {loading ? 'Suppression...' : 'SUPPRIMER'}
               </Button>

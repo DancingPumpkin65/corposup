@@ -34,10 +34,13 @@ php artisan key:generate
 ### 6. Lancer les migrations
 php artisan migrate
 ---
-### 7. Lancer le backend (Laravel API)
+### 7. Acceder les images publiques
+php artisan storage:link
+---
+### 8. Lancer le backend (Laravel API)
 php artisan serve
 ---
-### 8. Lancer le frontend (Vite + React)
+### 9. Lancer le frontend (Vite + React)
 npm run dev
 ---
 ### 💪 LET'S GO CORPOSUP TEAM! 💪

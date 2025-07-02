@@ -4,7 +4,6 @@ import { Alert, AlertDescription, AlertTitle } from '../Shadcn/Alert';
 import { Button } from '../Shadcn/Button';
 import { Input } from '../Shadcn/Input';
 import { Label } from '../Shadcn/Label';
-import { Textarea } from '../Shadcn/Textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../Shadcn/Select';
 import apiClient from '../../services/apiClient';
 
@@ -12,7 +11,6 @@ interface CompanyInfo {
   company_name: string;
   company_phone: string;
   sector: string;
-  description: string;
   website: string;
   address1: string;
   address2: string;
@@ -27,7 +25,6 @@ const CompanyInfoSection = () => {
     company_name: '',
     company_phone: '',
     sector: '',
-    description: '',
     website: '',
     address1: '',
     address2: '',
@@ -68,7 +65,6 @@ const CompanyInfoSection = () => {
           company_name: company.company_name || '',
           company_phone: company.company_phone || '',
           sector: company.sector || '',
-          description: company.description || '',
           website: company.website || '',
           address1: company.address1 || '',
           address2: company.address2 || '',
@@ -257,7 +253,7 @@ const CompanyInfoSection = () => {
           <div>
             <Label htmlFor="city">Ville *</Label>
             <Input
-              id="city"
+              id="cityCompany"
               value={formData.city}
               onChange={(e) => handleChange('city', e.target.value)}
               placeholder="Casablanca"
@@ -278,20 +274,8 @@ const CompanyInfoSection = () => {
           </div>
         </div>
 
-        {/* Description */}
-        <div>
-          <Label htmlFor="description">Description de l'entreprise</Label>
-          <Textarea
-            id="description"
-            value={formData.description}
-            onChange={(e) => handleChange('description', e.target.value)}
-            placeholder="Décrivez votre entreprise, vos produits et services..."
-            rows={4}
-          />
-        </div>
-
         <Button type="submit" disabled={loading} className="w-full md:w-auto bg-blue-600 hover:bg-blue-500 text-white px-10">
-          {loading ? 'Enregistrement...' : 'Enregistrer'}
+          {loading ? 'Enregistrement...' : 'ENREGISTRER'}
         </Button>
       </form>
     </div>

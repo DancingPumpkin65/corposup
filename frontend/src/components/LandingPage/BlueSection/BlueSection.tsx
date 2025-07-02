@@ -32,8 +32,11 @@ const BlueSection = () => {
   const getProfileImageUrl = (photo_profile?: string): string => {
     if (!photo_profile) return industryWorkerImg;
     
-    // Use photo_profile directly as it's already the correct path
-    return photo_profile;
+    if (photo_profile.startsWith('profiles/')) {
+      return `http://127.0.0.1:8000/storage/${photo_profile}`;
+    }
+    
+    return industryWorkerImg;
   };
 
   return (

@@ -37,6 +37,7 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
     type: 'success',
     message: ''
   });
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (field: keyof ProfileInfo, value: string) => {
@@ -51,39 +52,69 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
     setLoading(true);
 
     try {
-      // Create regular object instead of FormData for PUT request
-      const dataToSend = {
-        firstname: formData.firstname,
-        lastname: formData.lastname,
-        email: formData.email,
-        role: formData.role,
-        phone: formData.phone,
-        city: formData.city
-      };
+      // Always use FormData when there's an image, otherwise use JSON
+      if (selectedImage) {
+        const formDataToSend = new FormData();
+        formDataToSend.append('firstname', formData.firstname);
+        formDataToSend.append('lastname', formData.lastname);
+        formDataToSend.append('email', formData.email);
+        formDataToSend.append('role', formData.role);
+        formDataToSend.append('phone', formData.phone);
+        formDataToSend.append('city', formData.city);
+        formDataToSend.append('photo_profile', selectedImage);
 
-      console.log('Sending data:', dataToSend); // Debug log
+        // Use PUT with _method override for Laravel
+        formDataToSend.append('_method', 'PUT');
 
-      // Use JSON data instead of FormData for profile updates
-      const response = await apiClient.put('/update-profile', dataToSend, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+        const response = await apiClient.post('/update-profile', formDataToSend, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
 
-      console.log('Response:', response.data); // Debug log
+        setAlert({
+          show: true,
+          type: 'success',
+          message: 'Profil et photo mis à jour avec succès!'
+        });
 
-      setAlert({
-        show: true,
-        type: 'success',
-        message: 'Profil mis à jour avec succès!'
-      });
+        // Clear the selected image after successful upload
+        setSelectedImage(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
 
-      // Update the user cache after successful update
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+      } else {
+        // No image selected, use JSON for profile data only
+        const dataToSend = {
+          firstname: formData.firstname,
+          lastname: formData.lastname,
+          email: formData.email,
+          role: formData.role,
+          phone: formData.phone,
+          city: formData.city
+        };
+
+        const response = await apiClient.put('/update-profile', dataToSend, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        setAlert({
+          show: true,
+          type: 'success',
+          message: 'Profil mis à jour avec succès!'
+        });
+
+        // Update the user cache with fresh data
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+      }
       
       setTimeout(() => {
         setAlert(prev => ({ ...prev, show: false }));
-      }, 3000);
+      }, 5000);
     } catch (error) {
       console.error('Profile update error:', error);
       setAlert({
@@ -96,48 +127,14 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
     }
   };
 
-  // Updated image upload handler using the existing update-profile endpoint
-  const handleImageUpload = async (file: File) => {
-    setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append('photo_profile', file);
-
-      // Use the existing /update-profile endpoint with FormData for image uploads
-      const response = await apiClient.put('/update-profile', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      setAlert({
-        show: true,
-        type: 'success',
-        message: 'Photo de profil mise à jour avec succès!'
-      });
-
-      // Update the user cache after successful image update
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      
-      setTimeout(() => {
-        setAlert(prev => ({ ...prev, show: false }));
-      }, 3000);
-    } catch (error) {
-      console.error('Image upload error:', error);
-      setAlert({
-        show: true,
-        type: 'error',
-        message: 'Erreur lors de la mise à jour de la photo'
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      handleImageUpload(file);
+      setSelectedImage(file);
+      // Hide any existing alerts
+      if (alert.show) {
+        setAlert(prev => ({ ...prev, show: false }));
+      }
     }
   };
 
@@ -228,7 +225,7 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
           <div>
             <Label htmlFor="city">Ville</Label>
             <Input
-              id="city"
+              id="cityPersonal"
               value={formData.city}
               onChange={(e) => handleChange('city', e.target.value)}
             />
@@ -237,6 +234,18 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
 
         {/* Image Upload */}
         <div className="border-dashed border-2 border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center">
+          {/* Show current profile image if exists */}
+          {user.photo_profile && !selectedImage && (
+            <div className="mb-4">
+              <img 
+                src={`http://127.0.0.1:8000/storage/${user.photo_profile}`} 
+                alt="Photo de profil actuelle" 
+                className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
+              />
+              <p className="text-xs text-gray-500 text-center mt-2">Photo actuelle</p>
+            </div>
+          )}
+          
           <p className="text-gray-500 mb-4">Glissez une image ici</p>
           <p className="text-gray-500 mb-4">Ou</p>
           <Button
@@ -244,7 +253,7 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
             onClick={() => fileInputRef.current?.click()}
             className="bg-orange-500 hover:bg-orange-600"
           >
-            Choisir un fichier
+            Choisir une image
           </Button>
           <input
             ref={fileInputRef}
@@ -253,10 +262,24 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
             className="hidden"
             accept="image/*"
           />
+          {/* Show selected file name and preview */}
+          {selectedImage && (
+            <div className="mt-4 text-center">
+              <p className="text-sm text-green-600 mb-2">
+                Fichier sélectionné: {selectedImage.name}
+              </p>
+              <p className="text-xs text-gray-500">
+                Taille: {(selectedImage.size / 1024).toFixed(1)} KB
+              </p>
+              <p className="text-xs text-gray-500">
+                Type: {selectedImage.type}
+              </p>
+            </div>
+          )}
         </div>
 
         <Button type="submit" disabled={loading} className="w-full md:w-auto bg-blue-600 hover:bg-blue-500 text-white px-10">
-          {loading ? 'Enregistrement...' : 'Enregistrer'}
+          {loading ? 'Enregistrement...' : 'ENREGISTRER'}
         </Button>
       </form>
     </div>

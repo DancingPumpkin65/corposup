@@ -180,17 +180,18 @@ export function SellerSidebar() {
               Espace vendeur
             </SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu className="font-semibold text-xl flex flex-col gap-2 text-gray-500">
+              <SidebarMenu className="font-semibold text-base flex flex-col gap-2 text-gray-500">
                 {sellerItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
                       isActive={location.pathname === item.url}
-                      className="py-2 px-2 flex items-center gap-2 text-gray-500 hover:text-gray-500 hover:bg-white hover:border-blue-600 data-[active=true]:text-orange-500 hover:border-l data-[active=true]:border-blue-600 h-auto"
+                      className="transition-all duration-150 py-2 px-2 rounded-none flex items-center gap-2 text-gray-500 hover:text-gray-500 hover:bg-white border-l border-transparent hover:border-blue-600 data-[active=true]:text-orange-500 data-[active=true]:border-blue-600 h-auto"
+
                     >
                       <Link to={item.url} className="data-[active=true]:bg-white">
                         <item.icon />
-                        <span className="font-bold text-lg">{item.title}</span>
+                        <span className="font-bold text-base">{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

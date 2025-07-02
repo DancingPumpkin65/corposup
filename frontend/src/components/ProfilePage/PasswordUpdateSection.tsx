@@ -149,7 +149,7 @@ const PasswordUpdateSection = () => {
         </div>
 
         <Button type="submit" disabled={loading} className="w-full md:w-auto bg-blue-600 hover:bg-blue-500 text-white px-10">
-          {loading ? 'Enregistrement...' : 'Enregistrer'}
+          {loading ? 'Enregistrement...' : 'ENREGISTRER'}
         </Button>
       </form>
     </div>
