@@ -19,11 +19,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '../Shadcn/Avatar';
 import { Settings, LogOut, User as UserIcon } from 'lucide-react';
 
-// assets imports for member images
-import Membres1 from '../../assets/Membres1.png';
-import Membres2 from '../../assets/Membres2.png';
-import Membres3 from '../../assets/Membres3.png';
-
 interface User {
   id: number;
   firstname: string;
@@ -68,23 +63,8 @@ const Navbar = () => {
   const getProfileImageUrl = (photo_profile?: string): string => {
     if (!photo_profile) return '';
     
-    // If it's already a full HTTP URL, use it
-    if (photo_profile.startsWith('http')) {
-      return photo_profile;
-    }
-    
-    // Handle specific member images
-    switch (photo_profile) {
-      case 'Membres1.png':
-        return Membres1;
-      case 'Membres2.png':
-        return Membres2;
-      case 'Membres3.png':
-        return Membres3;
-      default:
-        // Handle storage paths from Laravel
-        return `http://127.0.0.1:8000/storage/${photo_profile}`;
-    }
+    // Use photo_profile directly as it's already the correct path
+    return photo_profile;
   };
 
   return (
