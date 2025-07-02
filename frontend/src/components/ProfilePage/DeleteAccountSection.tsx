@@ -80,26 +80,26 @@ const DeleteAccountSection = () => {
               )}
             </div>
 
-            <div className="flex justify-end gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  setIsOpen(false);
-                  setPassword('');
-                  setError('');
-                }}
-              >
-                Annuler
-              </Button>
+            <div className="flex justify-start gap-2">
               <Button
                 type="submit"
                 variant="destructive"
                 disabled={loading}
-                className="bg-black-600 hover:bg-black-500 px-10"
-              >
-                {loading ? 'Suppression...' : 'SUPPRIMER'}
+                className="bg-black hover:bg-gray-800 px-11"
+                >
+                {loading ? 'Suppression...' : 'Supprimer'}
               </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                    setIsOpen(false);
+                    setPassword('');
+                    setError('');
+                }}
+                > 
+                    Annuler
+                  </Button>
             </div>
           </form>
         </DialogContent>

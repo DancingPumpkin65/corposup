@@ -86,9 +86,9 @@ const Navbar = () => {
           {!isSellerPage && <MobileMenu />}
 
           {/* Logo and Categories Section for Seller Pages */}
-          <div className="flex items-center gap-4 flex-grow sm:flex-grow-0 justify-start sm:justify-start">
+          <div className="flex items-center gap-4 flex-grow sm:flex-grow-0 justify-center sm:justify-start">
             <Link to="/">
-              <img src={logoColored} alt="Logo" className="h-7 sm:h-8 md:h-10 w-auto" />
+              <img src={logoColored} alt="Logo" className="h-full sm:h-8 md:h-10 w-auto" />
             </Link>
             
             {/* Categories next to logo on seller pages (laptop mode) */}

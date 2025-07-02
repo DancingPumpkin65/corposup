@@ -4,8 +4,8 @@ import { MainLayout } from '../components/layouts/MainLayout';
 
 const SellerPage = () => {
   return (
-    <div className="min-h-screen">
-      <MainLayout>
+    <MainLayout>
+      <div className="mx-auto max-w-7xl">
       {/* Sidebar layout positioned relative to navbar */}
       <SidebarProvider className="relative">
         <SellerSidebar />
@@ -34,8 +34,8 @@ const SellerPage = () => {
           </div>
         </SidebarInset>
       </SidebarProvider>
-      </MainLayout>
-    </div>
+      </div>
+    </MainLayout>
   );
 };
 

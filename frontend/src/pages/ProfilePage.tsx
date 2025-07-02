@@ -34,6 +34,7 @@ const ProfilePage = () => {
 
   return (
     <MainLayout>
+      <div className="mx-auto max-w-7xl">
       <SidebarProvider className="relative">
         <SellerSidebar />
         <SidebarInset>
@@ -71,6 +72,7 @@ const ProfilePage = () => {
           </div>
         </SidebarInset>
       </SidebarProvider>
+      </div>
     </MainLayout>
   );
 };
