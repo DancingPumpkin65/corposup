@@ -45,15 +45,7 @@ export const AppRoutes = () => {
         path="/seller/*"
         element={
           <ProtectedRoute requiredRole={USER_ROLES.SELLER}>
-            <Routes>
-              <Route index element={<SellerPage />} />
-              <Route path="products" element={<div>Mes produits - Coming Soon</div>} />
-              <Route path="orders" element={<div>Commandes - Coming Soon</div>} />
-              <Route path="store" element={<div>Ma boutique - Coming Soon</div>} />
-              <Route path="analytics" element={<div>Statistiques - Coming Soon</div>} />
-              <Route path="settings" element={<div>Paramètres - Coming Soon</div>} />
-              <Route path="profile" element={<ProfilePage />} />
-            </Routes>
+            <SellerPage />
           </ProtectedRoute>
         } 
       />

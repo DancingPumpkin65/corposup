@@ -8,7 +8,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from "../Shadcn/Sidebar/sidebar"
 
 const DashboardIcon = () => (
@@ -171,15 +170,9 @@ const sellerItems = [
 
 export function SellerSidebar() {
   const location = useLocation()
-  const { state } = useSidebar()
 
   return (
-    <Sidebar 
-      className={state === "collapsed" ? "invisible" : "visible"}
-      style={{ 
-        visibility: state === "collapsed" ? "hidden" : "visible" 
-      }}
-    >
+    <Sidebar>
       <div className="bg-white pl-2 pt-4">
         <SidebarContent className="space-y-5">
           <SidebarGroup>
