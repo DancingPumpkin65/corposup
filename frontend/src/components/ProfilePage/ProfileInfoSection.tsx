@@ -1,4 +1,3 @@
-import { useState, useRef } from 'react';
 import { AlertCircleIcon, CheckCircle2Icon } from 'lucide-react';
 import { Alert, AlertDescription } from '../Shadcn/Alert';
 import { Button } from '../Shadcn/Button';
@@ -6,137 +5,23 @@ import { Input } from '../Shadcn/Input';
 import { Label } from '../Shadcn/Label';
 import { RadioGroup, RadioGroupItem } from '../Shadcn/RadioGroup';
 import { type User } from '../../hooks/useCurrentUser';
-import apiClient from '../../services/apiClient';
+import { useProfileInfo } from '../../hooks/useProfileInfo';
 
 interface ProfileInfoSectionProps {
   user: User;
 }
 
-interface ProfileInfo {
-  firstname: string;
-  lastname: string;
-  email: string;
-  role: string;
-  phone: string;
-  city: string;
-  photo_profile?: File | null;
-}
-
 const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
-  const [formData, setFormData] = useState<ProfileInfo>({
-    firstname: user.firstname || '',
-    lastname: user.lastname || '',
-    email: user.email || '',
-    role: user.role || 'buyer',
-    phone: user.phone || '',
-    city: user.city || ''
-  });
-  const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState<{ show: boolean; type: 'success' | 'error'; message: string }>({
-    show: false,
-    type: 'success',
-    message: ''
-  });
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleChange = (field: keyof ProfileInfo, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    if (alert.show) {
-      setAlert(prev => ({ ...prev, show: false }));
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      // Always use FormData when there's an image, otherwise use JSON
-      if (selectedImage) {
-        const formDataToSend = new FormData();
-        formDataToSend.append('firstname', formData.firstname);
-        formDataToSend.append('lastname', formData.lastname);
-        formDataToSend.append('email', formData.email);
-        formDataToSend.append('role', formData.role);
-        formDataToSend.append('phone', formData.phone);
-        formDataToSend.append('city', formData.city);
-        formDataToSend.append('photo_profile', selectedImage);
-
-        // Use PUT with _method override for Laravel
-        formDataToSend.append('_method', 'PUT');
-
-        const response = await apiClient.post('/update-profile', formDataToSend, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        setAlert({
-          show: true,
-          type: 'success',
-          message: 'Profil et photo mis à jour avec succès!'
-        });
-
-        // Clear the selected image after successful upload
-        setSelectedImage(null);
-        if (fileInputRef.current) {
-          fileInputRef.current.value = '';
-        }
-
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-      } else {
-        // No image selected, use JSON for profile data only
-        const dataToSend = {
-          firstname: formData.firstname,
-          lastname: formData.lastname,
-          email: formData.email,
-          role: formData.role,
-          phone: formData.phone,
-          city: formData.city
-        };
-
-        const response = await apiClient.put('/update-profile', dataToSend, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        setAlert({
-          show: true,
-          type: 'success',
-          message: 'Profil mis à jour avec succès!'
-        });
-
-        // Update the user cache with fresh data
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-      }
-      
-      setTimeout(() => {
-        setAlert(prev => ({ ...prev, show: false }));
-      }, 5000);
-    } catch (error) {
-      console.error('Profile update error:', error);
-      setAlert({
-        show: true,
-        type: 'error',
-        message: 'Erreur lors de la mise à jour du profil'
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setSelectedImage(file);
-      // Hide any existing alerts
-      if (alert.show) {
-        setAlert(prev => ({ ...prev, show: false }));
-      }
-    }
-  };
+  const {
+    formData,
+    loading,
+    alert,
+    selectedImage,
+    fileInputRef,
+    handleChange,
+    handleFileChange,
+    handleSubmit
+  } = useProfileInfo(user);
 
   return (
     <div className="p-6" id="profile-info">

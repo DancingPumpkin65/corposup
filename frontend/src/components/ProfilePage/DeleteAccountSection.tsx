@@ -23,8 +23,7 @@ const DeleteAccountSection = () => {
     setError('');
 
     try {
-      // Since there's no delete endpoint in your API, we'll show a message
-      // that this functionality needs to be implemented
+      // destroy user api still not implemented
       setError('Cette fonctionnalité n\'est pas encore disponible. Contactez l\'administrateur.');
     } finally {
       setLoading(false);
