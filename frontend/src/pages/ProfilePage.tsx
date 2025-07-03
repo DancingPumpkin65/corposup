@@ -7,7 +7,6 @@ import {
   PasswordUpdateSection,
   ProfileInfoSection
 } from '../components/ProfilePage';
-import { SellerSidebar } from "../components/SellerPage/Sidebar";
 
 const ProfilePage = () => {
   const { user, loading } = useCurrentUser();
@@ -33,9 +32,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <MainLayout>
       <SidebarProvider className="relative">
-        <SellerSidebar />
         <SidebarInset>
           <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
             <SidebarTrigger className="-ml-1" />
@@ -44,8 +41,8 @@ const ProfilePage = () => {
             </div>
           </header>
           
-          <div className="flex flex-1 flex-col gap-8 pt-4 pb-8">
-            <div className="max-w-7xl mx-auto w-full px-2 lg:px-8 space-y-8">
+          <div className="flex flex-1 flex-col gap-8 py-8 px-4 sm:py-8 sm:px-4">
+            <div className="w-full space-y-4">
               
                 {/* Company Information Section */}
                 <div className="bg-white rounded-lg shadow-sm border">
@@ -71,7 +68,6 @@ const ProfilePage = () => {
           </div>
         </SidebarInset>
       </SidebarProvider>
-    </MainLayout>
   );
 };
 

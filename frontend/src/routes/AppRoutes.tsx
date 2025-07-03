@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from '../routes';
-import { SignIn, SignUp, AdminPage, BuyerPage, SellerPage, LandingPage, RoleBasedRedirect, ProductsPage, ProfilePage } from '../pages';
+import { SignIn, SignUp, AdminPage, BuyerPage, SellerPage, LandingPage, RoleBasedRedirect, ProductsPage } from '../pages';
 import { USER_ROLES } from '../utils/constants';
 
 export const AppRoutes = () => {
@@ -12,16 +12,6 @@ export const AppRoutes = () => {
       <Route path="/dashboard" element={<RoleBasedRedirect />} />
 
       <Route path="/categories/:categoryId/products" element={<ProductsPage />} />
-
-      {/* Protected Profile Route */}
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <ProfilePage />
-          </ProtectedRoute>
-        }
-      />
 
       <Route
         path="/admin"

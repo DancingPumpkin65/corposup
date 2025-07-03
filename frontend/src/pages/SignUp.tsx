@@ -110,15 +110,22 @@ const SignUp = () => {
         `Bienvenue ${response.user.firstname} ${response.user.lastname}! Vous pouvez maintenant vous connecter.`
       );
 
-      if (response.token) {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('user', JSON.stringify(response.user));
-        
-        // Redirect to dashboard after successful registration
-        setTimeout(() => {
-          window.location.href = '/dashboard';
-        }, 2000);
-      }
+      // Clear form data after successful registration
+      setFormData({
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        role: 'buyer'
+      });
+      setTermsAccepted(false);
+
+      // Redirect to sign-in page after successful registration
+      setTimeout(() => {
+        window.location.href = '/signin';
+      }, 2000);
+
     } catch (error: unknown) {
       console.error('Registration error:', error); // Debug log
       
