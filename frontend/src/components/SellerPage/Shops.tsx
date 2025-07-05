@@ -16,6 +16,7 @@ import {
   DialogTitle,
 } from '@/components/Shadcn/Dialog';
 import apiClient from '@/services/apiClient';
+import emptyStore from '@/assets/EmptyStore.svg'; // Assuming you have a utility function for image URLs
 
 interface Store {
   id: number;
@@ -295,7 +296,7 @@ const Shops = () => {
         <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
           <SidebarTrigger className="-ml-1" />
           <div className="flex items-center gap-2">
-            <h1 className="text-lg font-semibold">Mes Boutiques</h1>
+            <h1 className="text-lg font-semibold">Boutiques</h1>
           </div>
         </header>
         <div className="flex justify-center items-center min-h-[300px] p-4">
@@ -312,11 +313,11 @@ const Shops = () => {
         <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
           <SidebarTrigger className="-ml-1" />
           <div className="flex items-center gap-2">
-            <h1 className="text-lg font-semibold">Mes Boutiques</h1>
+            <h1 className="text-lg font-semibold">Boutiques</h1>
           </div>
         </header>
         <div className="text-center w-full flex flex-col space-y-3 justify-center items-center bg-cover min-h-[400px] sm:min-h-[500px] p-4">
-          <Store className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 text-gray-400" />
+          <img src={ emptyStore } className="w-auto h-32 sm:w-auto sm:h-48 md:w-auto md:h-64 lg:w-auto lg:h-80 text-gray-400" />
           <p className="text-base sm:text-lg text-gray-600 mb-4 max-w-md mx-auto">Il n'y a pas de boutiques.</p>
           <Button 
             onClick={handleCreate}
@@ -406,8 +407,8 @@ const Shops = () => {
                         <Label htmlFor="store_status" className="text-sm sm:text-base">
                           Statut de la boutique *
                         </Label>
-                        <Select value={formData.store_status} onValueChange={(value) => handleSelectChange('store_status', value)}>
-                          <SelectTrigger className="mt-1 text-sm sm:text-base">
+                        <Select name="store_status" value={formData.store_status} onValueChange={(value) => handleSelectChange('store_status', value)}>
+                          <SelectTrigger id="store_status" className="mt-1 text-sm sm:text-base">
                             <SelectValue placeholder="Sélectionnez le statut" />
                           </SelectTrigger>
                           <SelectContent>
@@ -419,11 +420,12 @@ const Shops = () => {
 
                       {/* Store Image Upload */}
                       <div>
-                        <Label className="text-sm sm:text-base">Image de la boutique</Label>
+                        <Label htmlFor="store_image" className="text-sm sm:text-base">Image de la boutique</Label>
                         <div className="mt-1 border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 text-center hover:border-gray-400 transition-colors">
                           <input
                             type="file"
                             id="store_image"
+                            name="store_image"
                             accept="image/*"
                             onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
                             className="hidden"
@@ -494,14 +496,18 @@ const Shops = () => {
                     <div className="p-3 sm:p-4">
                       {/* Store Name */}
                       <div className="flex items-center mb-3">
-                        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg border-2 border-white bg-gray-100 flex items-center justify-center -mt-6 sm:-mt-8 mr-3 shadow-sm">
-                          <Store className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
-                        </div>
                         <div className="min-w-0 flex-1">
-                          <h4 className="font-semibold text-gray-900 text-sm sm:text-base truncate">
-                            {formData.store_name || 'Nom de votre boutique'}
-                          </h4>
-                          <span className="text-xs sm:text-sm text-gray-500">Boutique en ligne</span>
+                          <div className="flex flex-col gap-1">
+                            <span className={`px-2 py-1 text-xs font-medium rounded-full w-fit ${
+                              formData.store_status === 'published' ? 'bg-green-100 text-green-800' :
+                              'bg-gray-100 text-gray-800'
+                            }`}>
+                              {formData.store_status === 'published' ? 'Publié' : 'Masqué'}
+                            </span>
+                            <h4 className="font-semibold text-gray-900 text-sm sm:text-base truncate">
+                              {formData.store_name || 'Nom de votre boutique'}
+                            </h4>
+                          </div>
                         </div>
                       </div>
 
@@ -621,8 +627,8 @@ const Shops = () => {
                         <Label htmlFor="store_status" className="text-sm sm:text-base">
                           Statut de la boutique *
                         </Label>
-                        <Select value={formData.store_status} onValueChange={(value) => handleSelectChange('store_status', value)}>
-                          <SelectTrigger className="mt-1 text-sm sm:text-base">
+                        <Select name="store_status" value={formData.store_status} onValueChange={(value) => handleSelectChange('store_status', value)}>
+                          <SelectTrigger id="store_status" className="mt-1 text-sm sm:text-base">
                             <SelectValue placeholder="Sélectionnez le statut" />
                           </SelectTrigger>
                           <SelectContent>
@@ -634,16 +640,17 @@ const Shops = () => {
 
                       {/* Store Image Upload */}
                       <div>
-                        <Label className="text-sm sm:text-base">Image de la boutique</Label>
+                        <Label htmlFor="store_image_edit" className="text-sm sm:text-base">Image de la boutique</Label>
                         <div className="mt-1 border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 text-center hover:border-gray-400 transition-colors">
                           <input
                             type="file"
-                            id="store_image"
+                            id="store_image_edit"
+                            name="store_image_edit"
                             accept="image/*"
                             onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
                             className="hidden"
                           />
-                          <label htmlFor="store_image" className="cursor-pointer">
+                          <label htmlFor="store_image_edit" className="cursor-pointer">
                             {previewImages.store_image ? (
                               <div className="flex items-center justify-center">
                                 <img 
@@ -709,14 +716,18 @@ const Shops = () => {
                   <div className="p-3 sm:p-4">
                     {/* Store Name */}
                     <div className="flex items-center mb-3">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg border-2 border-white bg-gray-100 flex items-center justify-center -mt-6 sm:-mt-8 mr-3 shadow-sm">
-                        <Store className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
-                      </div>
                       <div className="min-w-0 flex-1">
-                        <h4 className="font-semibold text-gray-900 text-sm sm:text-base truncate">
-                          {formData.store_name || 'Nom de votre boutique'}
-                        </h4>
-                        <span className="text-xs sm:text-sm text-gray-500">Boutique en ligne</span>
+                        <div className="flex flex-col gap-1">
+                          <span className={`px-2 py-1 text-xs font-medium rounded-full w-fit ${
+                            formData.store_status === 'published' ? 'bg-green-100 text-green-800' :
+                            'bg-gray-100 text-gray-800'
+                          }`}>
+                            {formData.store_status === 'published' ? 'Publié' : 'Masqué'}
+                          </span>
+                          <h4 className="font-semibold text-gray-900 text-sm sm:text-base truncate">
+                            {formData.store_name || 'Nom de votre boutique'}
+                          </h4>
+                        </div>
                       </div>
                     </div>
 
@@ -764,7 +775,7 @@ const Shops = () => {
       <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
         <SidebarTrigger className="-ml-1" />
         <div className="flex items-center gap-2">
-          <h1 className="text-lg font-semibold">Mes Boutiques</h1>
+          <h1 className="text-lg font-semibold">Boutiques</h1>
         </div>
       </header>
       <div className="py-8 px-4 sm:py-8 sm:px-4">
@@ -777,7 +788,7 @@ const Shops = () => {
             </div>
             <Button 
               onClick={handleCreate}
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2"
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2"
             >
               <Plus className="w-4 h-4 mr-2" />
               Ajouter une boutique
@@ -815,22 +826,16 @@ const Shops = () => {
                 <div className="p-4">
                   {/* Store Info */}
                   <div className="flex items-center mb-3">
-                    <div className="w-12 h-12 rounded-lg border-2 border-white bg-gray-100 flex items-center justify-center -mt-8 mr-3 shadow-sm">
-                      <Store className="w-6 h-6 text-gray-400" />
-                    </div>
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-gray-900 truncate">{store.store_name}</h3>
-                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                      <div className="flex flex-col gap-1">
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full w-fit ${
                           store.store_status === 'published' ? 'bg-green-100 text-green-800' :
                           'bg-gray-100 text-gray-800'
                         }`}>
                           {store.store_status === 'published' ? 'Publié' : 'Masqué'}
                         </span>
+                        <h3 className="font-semibold text-gray-900 truncate">{store.store_name}</h3>
                       </div>
-                      <p className="text-sm text-gray-600">
-                        Créée le {new Date(store.created_at).toLocaleDateString('fr-FR')}
-                      </p>
                     </div>
                   </div>
 

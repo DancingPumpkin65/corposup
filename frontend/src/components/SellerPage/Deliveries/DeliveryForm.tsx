@@ -1,6 +1,7 @@
 import { Truck } from 'lucide-react';
 import { Button } from '@/components/Shadcn/Button';
 import InputField from '@/components/SellerPage/Deliveries/InputField';
+import DeliveryAlerts from '@/components/SellerPage/Deliveries/DeliveryAlerts';
 import { type DeliveryFormProps } from '@/components/SellerPage/Deliveries/types';
 
 const DeliveryForm = ({ 
@@ -9,7 +10,8 @@ const DeliveryForm = ({
   onSubmit, 
   loading, 
   isEdit = false,
-  onCancel 
+  onCancel,
+  alert
 }: DeliveryFormProps) => {
   return (
     <div className="min-h-screen">
@@ -27,6 +29,8 @@ const DeliveryForm = ({
                     {isEdit ? 'Mettez à jour les informations de votre service' : 'Configurez un nouveau service de livraison pour vos clients'}
                   </p>
                 </div>
+
+                <DeliveryAlerts alert={alert} />
 
                 <form onSubmit={onSubmit} className="space-y-4 sm:space-y-6">
                   <InputField
@@ -112,16 +116,15 @@ const DeliveryForm = ({
                     <Truck className="w-6 h-6 sm:w-7 sm:h-7 text-blue-600" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h4 className="font-semibold text-gray-900 text-sm sm:text-base truncate">
+                    <h4 className="font-semibold text-gray-900 text-sm sm:text-base truncate max-w-[200px]" title={formData.shipping_name || 'Nom du service'}>
                       {formData.shipping_name || 'Nom du service'}
                     </h4>
-                    <span className="text-xs sm:text-sm text-gray-500">Service de livraison</span>
                   </div>
                 </div>
 
                 {/* Description */}
                 <div className="mb-4">
-                  <p className="text-xs sm:text-sm text-gray-600 line-clamp-3">
+                  <p className="text-xs sm:text-sm text-gray-600 truncate max-w-[200px]" title={formData.shipping_description || 'Description du service apparaîtra ici...'}>
                     {formData.shipping_description || 'Description du service apparaîtra ici...'}
                   </p>
                 </div>
@@ -129,13 +132,13 @@ const DeliveryForm = ({
                 {/* Pricing & Time */}
                 <div className="grid grid-cols-2 gap-4 text-center text-xs sm:text-sm">
                   <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="font-semibold text-gray-900">
+                    <div className="font-semibold text-gray-900 truncate max-w-[80px] mx-auto" title={formData.shipping_cost ? `${formData.shipping_cost} DH` : '0.00 DH'}>
                       {formData.shipping_cost ? `${formData.shipping_cost} DH` : '0.00 DH'}
                     </div>
                     <div className="text-gray-500">Coût</div>
                   </div>
                   <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="font-semibold text-gray-900">
+                    <div className="font-semibold text-gray-900 truncate max-w-[80px] mx-auto" title={formData.shipping_delivery_time ? `${formData.shipping_delivery_time} jour${parseInt(formData.shipping_delivery_time) > 1 ? 's' : ''}` : '1 jour'}>
                       {formData.shipping_delivery_time ? `${formData.shipping_delivery_time} jour${parseInt(formData.shipping_delivery_time) > 1 ? 's' : ''}` : '1 jour'}
                     </div>
                     <div className="text-gray-500">Délai</div>
@@ -145,7 +148,7 @@ const DeliveryForm = ({
             </div>
 
             <div className="mt-4 p-3 bg-blue-50 rounded-lg max-w-sm mx-auto xl:max-w-none">
-              <p className="text-xs text-blue-600">
+              <p className="text-xs text-blue-600 truncate" title="💡 Cet aperçu montre comment votre service apparaîtra aux clients">
                 💡 Cet aperçu montre comment votre service apparaîtra aux clients
               </p>
             </div>

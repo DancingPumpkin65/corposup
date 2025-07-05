@@ -35,22 +35,25 @@ export const useCompanyInfo = () => {
   });
   
   const [loading, setLoading] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [alert, setAlert] = useState<AlertState>({
     show: false,
     type: 'success',
     message: ''
   });
-  const [showWarning, setShowWarning] = useState(true);
+  const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
     fetchCompanyInfo();
   }, []);
 
   useEffect(() => {
-    // Check if all required fields are filled to hide warning
-    const isComplete = formData.company_name && formData.company_phone && formData.sector;
-    setShowWarning(!isComplete);
-  }, [formData]);
+    // Only check for completeness after data is loaded
+    if (dataLoaded) {
+      const isComplete = formData.company_name && formData.company_phone && formData.sector;
+      setShowWarning(!isComplete);
+    }
+  }, [formData, dataLoaded]);
 
   const fetchCompanyInfo = async () => {
     try {
@@ -72,6 +75,8 @@ export const useCompanyInfo = () => {
       }
     } catch (error) {
       console.log('No company info found yet', error);
+    } finally {
+      setDataLoaded(true);
     }
   };
 

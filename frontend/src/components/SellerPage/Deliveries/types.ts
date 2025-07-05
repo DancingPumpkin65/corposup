@@ -27,6 +27,7 @@ export interface DeliveryFormProps {
   loading: boolean;
   isEdit?: boolean;
   onCancel: () => void;
+  alert: AlertState;
 }
 
 export interface DeliveryAlertsProps {

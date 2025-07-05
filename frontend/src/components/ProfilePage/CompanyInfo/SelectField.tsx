@@ -3,6 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 interface SelectFieldProps {
   id: string;
+  name?: string;
   label: string;
   value: string;
   onChange: (value: string) => void;
@@ -13,6 +14,7 @@ interface SelectFieldProps {
 
 const SelectField = ({ 
   id, 
+  name,
   label, 
   value, 
   onChange, 
@@ -25,8 +27,8 @@ const SelectField = ({
       <Label htmlFor={id}>
         {label} {required && '*'}
       </Label>
-      <Select value={value} onValueChange={onChange}>
-        <SelectTrigger>
+      <Select name={name || id} value={value} onValueChange={onChange}>
+        <SelectTrigger id={id}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>

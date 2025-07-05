@@ -10,6 +10,7 @@ const SearchBar = ({ isMobile = false }: SearchBarProps) => {
     <div className={isMobile ? mobileClasses : desktopClasses}>
       <div className="relative">
         <input 
+          id={isMobile ? "search-mobile" : "search-desktop"}
           type="text" 
           placeholder="Rechercher ici ..." 
           className="w-full pl-4 pr-10 py-2 text-gray-700 border-none bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-600"

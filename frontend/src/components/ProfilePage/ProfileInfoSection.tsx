@@ -50,8 +50,10 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
             <Label htmlFor="firstname">Prénom</Label>
             <Input
               id="firstname"
+              name="firstname"
               value={formData.firstname}
               onChange={(e) => handleChange('firstname', e.target.value)}
+              autoComplete="given-name"
               required
             />
           </div>
@@ -59,8 +61,10 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
             <Label htmlFor="lastname">Nom</Label>
             <Input
               id="lastname"
+              name="lastname"
               value={formData.lastname}
               onChange={(e) => handleChange('lastname', e.target.value)}
+              autoComplete="family-name"
               required
             />
           </div>
@@ -71,17 +75,22 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
+            name="email"
             type="email"
             value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
+            autoComplete="email"
             required
           />
         </div>
 
         {/* Role */}
-        <div>
-          <Label className="mb-3 block">Rôle</Label>
+        <fieldset>
+          <legend className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-3 block">
+            Rôle
+          </legend>
           <RadioGroup 
+            name="role"
             value={formData.role} 
             onValueChange={(value) => handleChange('role', value)}
             className="flex gap-6"
@@ -95,7 +104,7 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
               <Label htmlFor="seller">Vendeur</Label>
             </div>
           </RadioGroup>
-        </div>
+        </fieldset>
 
         {/* Phone and City */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -103,16 +112,21 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
             <Label htmlFor="phone">Téléphone</Label>
             <Input
               id="phone"
+              name="phone"
+              type="tel"
               value={formData.phone}
               onChange={(e) => handleChange('phone', e.target.value)}
+              autoComplete="tel"
             />
           </div>
           <div>
-            <Label htmlFor="city">Ville</Label>
+            <Label htmlFor="cityPersonal">Ville</Label>
             <Input
               id="cityPersonal"
+              name="city"
               value={formData.city}
               onChange={(e) => handleChange('city', e.target.value)}
+              autoComplete="address-level2"
             />
           </div>
         </div>
@@ -143,6 +157,7 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
           <input
             ref={fileInputRef}
             type="file"
+            name="photo_profile"
             onChange={handleFileChange}
             className="hidden"
             accept="image/*"

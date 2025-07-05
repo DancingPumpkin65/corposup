@@ -1,4 +1,4 @@
-import { Truck, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { Button } from '@/components/Shadcn/Button';
 import { SidebarInset, SidebarTrigger } from '@/components/Shadcn/Sidebar/sidebar';
 import {
@@ -10,9 +10,9 @@ import {
   DialogTitle,
 } from '@/components/Shadcn/Dialog';
 import { useDeliveries } from '@/components/SellerPage/Deliveries/useDeliveries';
-import DeliveryAlerts from '@/components/SellerPage/Deliveries/DeliveryAlerts';
 import DeliveryForm from '@/components/SellerPage/Deliveries/DeliveryForm';
 import DeliveriesTable from '@/components/SellerPage/Deliveries/DeliveriesTable';
+import emptyShipping from '@/assets/EmptyShipping.svg';
 
 const Deliveries = () => {
   const {
@@ -69,7 +69,7 @@ const Deliveries = () => {
           </div>
         </header>
         <div className="text-center w-full flex flex-col space-y-3 justify-center items-center bg-cover min-h-[400px] sm:min-h-[500px] p-4">
-          <Truck className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 text-gray-400" />
+          <img src={ emptyShipping } className="w-auto h-32 sm:w-auto sm:h-48 md:w-auto md:h-64 lg:w-auto lg:h-80 text-gray-400" />
           <p className="text-base sm:text-lg text-gray-600 mb-4 max-w-md mx-auto">
             Aucun service de livraison configuré.
           </p>
@@ -95,12 +95,12 @@ const Deliveries = () => {
             <h1 className="text-lg font-semibold">Créer un service de livraison</h1>
           </div>
         </header>
-        <DeliveryAlerts alert={alert} />
         <DeliveryForm
           formData={formData}
           onFieldChange={handleInputChange}
           onSubmit={handleSubmit}
           loading={creating}
+          alert={alert}
           onCancel={() => {
             setShowCreateForm(false);
             resetForm();
@@ -120,13 +120,13 @@ const Deliveries = () => {
             <h1 className="text-lg font-semibold">Modifier le service de livraison</h1>
           </div>
         </header>
-        <DeliveryAlerts alert={alert} />
         <DeliveryForm
           formData={formData}
           onFieldChange={handleInputChange}
           onSubmit={handleUpdate}
           loading={creating}
           isEdit={true}
+          alert={alert}
           onCancel={() => {
             setShowEditForm(false);
             setEditingService(null);
@@ -159,14 +159,12 @@ const Deliveries = () => {
             </div>
             <Button 
               onClick={handleCreate}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2"
+              className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2"
             >
               <Plus className="w-4 h-4 mr-2" />
               Ajouter un service
             </Button>
           </div>
-
-          <DeliveryAlerts alert={alert} />
 
           <DeliveriesTable
             services={services}
