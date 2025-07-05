@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import apiClient from '../../services/apiClient';
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '../Shadcn/Select';
+import apiClient from '@/services/apiClient';
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/Shadcn/Select';
 
 interface Store {
   id: number;

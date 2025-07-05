@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import apiClient from '../../services/apiClient';
+import apiClient from '@/services/apiClient';
 
 // shadcn imports
 import { Button } from '../Shadcn/Button';

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import apiClient from '../../services/apiClient';
-import CategorieImg from '../../assets/CategorieImg.png';
+import apiClient from '@/services/apiClient';
+import CategorieImg from '@/assets/CategorieImg.png';
 
 interface Category {
   id: number;

@@ -16,7 +16,7 @@ import {
   DialogTitle,
 } from '@/components/Shadcn/Dialog';
 import apiClient from '@/services/apiClient';
-import emptyStore from '@/assets/EmptyStore.svg'; // Assuming you have a utility function for image URLs
+import emptyStore from '@/assets/EmptyStore.svg';
 
 interface Store {
   id: number;

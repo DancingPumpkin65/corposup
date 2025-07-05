@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Grid, List, ChevronDown } from 'lucide-react';
-import apiClient from '../../services/apiClient';
+import apiClient from '@/services/apiClient';
 import { ProductCard } from '.';
-import NoProduct from '../../assets/Frame.webp';
+import emptyProduct from '@/assets/EmptyProduct.svg';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -189,7 +189,7 @@ const ProductsComponent = ({ categoryId, filters }: ProductsComponentProps) => {
       {products.length === 0 ? (
         <div className="flex justify-center items-center mt-10">
           <div className="text-center flex flex-col">
-            <img src={NoProduct} alt="No products" className="mx-auto mb-4" />
+            <img src={ emptyProduct } alt="No products" className="mx-auto mb-4" />
             <p className="text-gray-600 text-lg mt-4 font-semibold">Aucun produit disponible</p>
           </div>
         </div>
