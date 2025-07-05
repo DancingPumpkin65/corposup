@@ -1,5 +1,4 @@
-// assets imports
-import img1 from '../../../assets/MaskGroup.png';
+import img1 from '@/assets/MaskGroup.png';
 
 const HeroSection = () => {
   return (

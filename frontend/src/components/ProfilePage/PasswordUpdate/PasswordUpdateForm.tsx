@@ -1,7 +1,7 @@
-import { Button } from '../../Shadcn/Button';
-import { Input } from '../../Shadcn/Input';
-import { Label } from '../../Shadcn/Label';
-import { type PasswordUpdateFormProps } from './types';
+import { Button } from '@/components/Shadcn/Button';
+import { Input } from '@/components/Shadcn/Input';
+import { Label } from '@/components/Shadcn/Label';
+import { type PasswordUpdateFormProps } from '@/components/ProfilePage/PasswordUpdate/types';
 
 const PasswordUpdateForm = ({ formData, onFieldChange, onSubmit, loading }: PasswordUpdateFormProps) => {
   return (

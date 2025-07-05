@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { apiClient, authService } from '../services';
+import { apiClient, authService } from '@/services';
 
 export interface User {
   id: number;

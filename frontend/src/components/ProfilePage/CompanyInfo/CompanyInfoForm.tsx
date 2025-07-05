@@ -1,7 +1,7 @@
-import { Button } from '../../Shadcn/Button';
-import InputField from './InputField';
-import SelectField from './SelectField';
-import { type CompanyInfoFormProps } from './types';
+import { Button } from '@/components/Shadcn/Button';
+import InputField from '@/components/ProfilePage/CompanyInfo/InputField';
+import SelectField from '@/components/ProfilePage/CompanyInfo/SelectField';
+import { type CompanyInfoFormProps } from '@/components/ProfilePage/CompanyInfo/types';
 
 const CompanyInfoForm = ({ formData, onFieldChange, onSubmit, loading }: CompanyInfoFormProps) => {
   const sectors = [

@@ -1,10 +1,10 @@
-import { SidebarProvider } from '../components/Shadcn/Sidebar';
-import { SellerSidebar } from '../components/SellerPage/Sidebar';
-import { MainLayout } from '../components/layouts/MainLayout';
+import { SidebarProvider } from '@/components/Shadcn/Sidebar';
+import { SellerSidebar } from '@/components/SellerPage/Sidebar';
+import { MainLayout } from '@/components/layouts/MainLayout';
 import Overview from '@/components/SellerPage/Overview';
-import Deliveries from '@/components/SellerPage/Deliveries'; // Updated import path
-import { Shops } from '../components/SellerPage';
-import ProfilePage from './ProfilePage';
+import Deliveries from '@/components/SellerPage/Deliveries';
+import { Shops } from '@/components/SellerPage';
+import ProfilePage from '@/pages/ProfilePage';
 import { Routes, Route } from 'react-router-dom';
 
 const SellerPage = () => {

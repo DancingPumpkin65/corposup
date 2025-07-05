@@ -6,7 +6,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "../../Shadcn/Select/select";
+} from "@/components/Shadcn/Select/select";
 
 interface TopBarProps {
   currency: string;

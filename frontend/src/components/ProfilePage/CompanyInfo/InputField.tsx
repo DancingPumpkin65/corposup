@@ -1,5 +1,5 @@
-import { Input } from '../../Shadcn/Input';
-import { Label } from '../../Shadcn/Label';
+import { Input } from '@/components/Shadcn/Input';
+import { Label } from '@/components/Shadcn/Label';
 
 interface InputFieldProps {
   id: string;

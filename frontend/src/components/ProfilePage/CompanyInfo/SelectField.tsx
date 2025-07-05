@@ -1,5 +1,5 @@
-import { Label } from '../../Shadcn/Label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../Shadcn/Select';
+import { Label } from '@/components/Shadcn/Label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/Shadcn/Select';
 
 interface SelectFieldProps {
   id: string;

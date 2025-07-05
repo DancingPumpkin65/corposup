@@ -1,13 +1,14 @@
 import { useState } from 'react';
+import { Settings, LogOut, User as UserIcon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import logoColored from '../../assets/LogoColored.svg';
-import TopBar from './TopBar';
-import MobileMenu from './MobileMenu';
-import CategoriesDropdown from './CategoriesDropdown';
-import SearchBar from './SearchBar';
-import DesktopNavigation from './DesktopNavigation';
-import { useCurrentUser } from '../../hooks';
-import authService from '../../services/authService';
+import logoColored from '@/assets/LogoColored.svg';
+import TopBar from '@/components/Navbar/TopBar';
+import MobileMenu from '@/components/Navbar/MobileMenu';
+import CategoriesDropdown from '@/components/Navbar/CategoriesDropdown';
+import SearchBar from '@/components/Navbar/SearchBar';
+import DesktopNavigation from '@/components/Navbar/DesktopNavigation';
+import { useCurrentUser } from '@/hooks';
+import authService from '@/services/authService';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,9 +16,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../Shadcn/DropdownMenu';
-import { Avatar, AvatarFallback, AvatarImage } from '../Shadcn/Avatar';
-import { Settings, LogOut, User as UserIcon } from 'lucide-react';
+} from '@/components/Shadcn/DropdownMenu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/Shadcn/Avatar';
 
 interface User {
   id: number;

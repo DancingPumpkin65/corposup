@@ -1,6 +1,6 @@
-import PasswordAlerts from './PasswordAlerts';
-import PasswordUpdateForm from './PasswordUpdateForm';
-import { usePasswordUpdate } from './usePasswordUpdate';
+import PasswordAlerts from '@/components/ProfilePage/PasswordUpdate/PasswordAlerts';
+import PasswordUpdateForm from '@/components/ProfilePage/PasswordUpdate/PasswordUpdateForm';
+import { usePasswordUpdate } from '@/components/ProfilePage/PasswordUpdate/usePasswordUpdate';
 
 const PasswordUpdateSection = () => {
   const {

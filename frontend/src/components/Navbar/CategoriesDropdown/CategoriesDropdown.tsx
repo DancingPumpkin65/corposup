@@ -6,9 +6,9 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "../../Shadcn/NavigationMenu";
-import categoriesIcon from '../../../assets/Categories.svg';
-import { useCategories } from '../../../hooks';
+} from "@/components/Shadcn/NavigationMenu";
+import categoriesIcon from '@/assets/Categories.svg';
+import { useCategories } from '@/hooks';
 
 const CategoriesDropdown = () => {
   const { categories, loading } = useCategories();

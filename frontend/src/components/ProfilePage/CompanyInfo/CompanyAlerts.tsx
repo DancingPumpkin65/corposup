@@ -1,6 +1,6 @@
 import { AlertCircleIcon, CheckCircle2Icon } from 'lucide-react';
-import { Alert, AlertDescription, AlertTitle } from '../../Shadcn/Alert';
-import { type CompanyAlertsProps } from './types';
+import { Alert, AlertDescription, AlertTitle } from '@/components/Shadcn/Alert';
+import { type CompanyAlertsProps } from '@/components/ProfilePage/CompanyInfo/types';
 
 const CompanyAlerts = ({ showWarning, alert }: CompanyAlertsProps) => {
   return (

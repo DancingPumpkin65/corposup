@@ -1,7 +1,7 @@
 import { Truck } from 'lucide-react';
-import { Button } from '../../Shadcn/Button';
-import InputField from './InputField';
-import { type DeliveryFormProps } from './types';
+import { Button } from '@/components/Shadcn/Button';
+import InputField from '@/components/SellerPage/Deliveries/InputField';
+import { type DeliveryFormProps } from '@/components/SellerPage/Deliveries/types';
 
 const DeliveryForm = ({ 
   formData, 

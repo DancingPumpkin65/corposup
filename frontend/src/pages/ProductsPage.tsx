@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { MainLayout } from '../components/layouts/MainLayout';
+import { MainLayout } from '@/components/layouts/MainLayout';
 import {
     CategoriesComponent,
     FiltersComponent,

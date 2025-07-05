@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logoWhite from '../../assets/LogoWhite.svg';
+import logoWhite from '@/assets/LogoWhite.svg';
 
 const Footer = () => {
   // Manual categories list without API

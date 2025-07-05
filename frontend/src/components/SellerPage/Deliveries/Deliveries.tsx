@@ -1,6 +1,6 @@
 import { Truck, Plus } from 'lucide-react';
-import { Button } from '../../Shadcn/Button';
-import { SidebarInset, SidebarTrigger } from '../../Shadcn/Sidebar/sidebar';
+import { Button } from '@/components/Shadcn/Button';
+import { SidebarInset, SidebarTrigger } from '@/components/Shadcn/Sidebar/sidebar';
 import {
   Dialog,
   DialogContent,
@@ -8,11 +8,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '../../Shadcn/Dialog';
-import { useDeliveries } from './useDeliveries';
-import DeliveryAlerts from './DeliveryAlerts';
-import DeliveryForm from './DeliveryForm';
-import DeliveriesTable from './DeliveriesTable';
+} from '@/components/Shadcn/Dialog';
+import { useDeliveries } from '@/components/SellerPage/Deliveries/useDeliveries';
+import DeliveryAlerts from '@/components/SellerPage/Deliveries/DeliveryAlerts';
+import DeliveryForm from '@/components/SellerPage/Deliveries/DeliveryForm';
+import DeliveriesTable from '@/components/SellerPage/Deliveries/DeliveriesTable';
 
 const Deliveries = () => {
   const {

@@ -1,7 +1,7 @@
-import { Input } from '../../Shadcn/Input';
-import { Label } from '../../Shadcn/Label';
-import { Textarea } from '../../Shadcn/Textarea';
-import { type InputFieldProps } from './types';
+import { Input } from '@/components/Shadcn/Input';
+import { Label } from '@/components/Shadcn/Label';
+import { Textarea } from '@/components/Shadcn/Textarea';
+import { type InputFieldProps } from '@/components/SellerPage/Deliveries/types';
 
 const InputField = ({ 
   id, 

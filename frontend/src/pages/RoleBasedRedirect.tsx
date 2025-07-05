@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useAuth } from '../hooks';
-import { USER_ROLES } from '../utils/constants';
+import { useAuth } from '@/hooks';
+import { USER_ROLES } from '@/utils/constants';
 
 const RoleBasedRedirect = () => {
   const { user, isAuthenticated, loading } = useAuth();

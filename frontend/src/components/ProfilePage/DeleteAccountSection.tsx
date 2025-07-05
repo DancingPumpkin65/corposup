@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { AlertTriangleIcon } from 'lucide-react';
-import { Button } from '../Shadcn/Button';
-import { Input } from '../Shadcn/Input';
-import { Label } from '../Shadcn/Label';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../Shadcn/Dialog';
+import { Button } from '@/components/Shadcn/Button';
+import { Input } from '@/components/Shadcn/Input';
+import { Label } from '@/components/Shadcn/Label';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/Shadcn/Dialog';
 
 const DeleteAccountSection = () => {
   const [password, setPassword] = useState('');

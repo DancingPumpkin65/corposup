@@ -1,6 +1,6 @@
-import { SidebarProvider, SidebarInset, SidebarTrigger } from '../components/Shadcn/Sidebar/sidebar';
-import { MainLayout } from '../components/layouts/MainLayout';
-import { useCurrentUser } from '../hooks';
+import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/Shadcn/Sidebar';
+import { MainLayout } from '@/components/layouts/MainLayout';
+import { useCurrentUser } from '@/hooks';
 import { 
   CompanyInfoSection,
   DeleteAccountSection,

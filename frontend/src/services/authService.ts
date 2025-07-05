@@ -1,5 +1,5 @@
 import apiClient from './apiClient';
-import { clearUserCache } from '../hooks/useCurrentUser';
+import { clearUserCache } from '@/hooks/useCurrentUser';
 
 export interface LoginData {
   email: string;

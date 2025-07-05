@@ -8,7 +8,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "../Shadcn/Sidebar/sidebar"
+} from "@/components/Shadcn/Sidebar/sidebar"
 
 const DashboardIcon = () => (
   <svg

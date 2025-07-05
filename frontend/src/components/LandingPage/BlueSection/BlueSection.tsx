@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import userService from '../../../services/userService';
-import { Avatar, AvatarFallback, AvatarImage } from "../../Shadcn/Avatar";
-import { Separator } from "../../Shadcn/Separator";
-import industryWorkerImg from '../../../assets/Decouvrir.png';
-import memberNbr from '../../../assets/Membres.svg';
+import userService from '@/services/userService';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/Shadcn/Avatar";
+import { Separator } from "@/components/Shadcn/Separator";
+import industryWorkerImg from '@/assets/Decouvrir.png';
+import memberNbr from '@/assets/Membres.svg';
 
 interface User {
   id: number;

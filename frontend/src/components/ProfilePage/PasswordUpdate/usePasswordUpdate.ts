@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
-import apiClient from '../../../services/apiClient';
-import { type PasswordData, type AlertState } from './types';
+import apiClient from '@/services/apiClient';
+import { type PasswordData, type AlertState } from '@/components/ProfilePage/PasswordUpdate/types';
 
 export const usePasswordUpdate = () => {
   const [formData, setFormData] = useState<PasswordData>({

@@ -1,6 +1,6 @@
-import { useCompanyInfo } from './useCompanyInfo';
-import CompanyAlerts from './CompanyAlerts';
-import CompanyInfoForm from './CompanyInfoForm';
+import { useCompanyInfo } from '@/components/ProfilePage/CompanyInfo/useCompanyInfo';
+import CompanyAlerts from '@/components/ProfilePage/CompanyInfo/CompanyAlerts';
+import CompanyInfoForm from '@/components/ProfilePage/CompanyInfo/CompanyInfoForm';
 
 const CompanyInfoSection = () => {
   const {

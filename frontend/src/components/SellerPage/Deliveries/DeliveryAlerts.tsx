@@ -1,6 +1,6 @@
 import { AlertCircleIcon, CheckCircle2Icon } from 'lucide-react';
-import { Alert, AlertDescription } from '../../Shadcn/Alert';
-import { type DeliveryAlertsProps } from './types';
+import { Alert, AlertDescription } from '@/components/Shadcn/Alert';
+import { type DeliveryAlertsProps } from '@/components/SellerPage/Deliveries/types';
 
 const DeliveryAlerts = ({ alert }: DeliveryAlertsProps) => {
   if (!alert.show) return null;

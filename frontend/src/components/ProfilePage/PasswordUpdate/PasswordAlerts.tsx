@@ -1,6 +1,6 @@
 import { AlertCircleIcon, CheckCircle2Icon } from 'lucide-react';
-import { Alert, AlertDescription } from '../../Shadcn/Alert';
-import { type PasswordAlertsProps } from './types';
+import { Alert, AlertDescription } from '@/components/Shadcn/Alert';
+import { type PasswordAlertsProps } from '@/components/ProfilePage/PasswordUpdate/types';
 
 const PasswordAlerts = ({ alert }: PasswordAlertsProps) => {
   if (!alert.show) return null;

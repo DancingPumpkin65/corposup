@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import apiClient from '../../../services/apiClient';
-import { type ShippingService, type ShippingFormData, type AlertState } from './types';
+import apiClient from '@/services/apiClient';
+import { type ShippingService, type ShippingFormData, type AlertState } from '@/components/SellerPage/Deliveries/types';
 
 export const useDeliveries = () => {
   const [services, setServices] = useState<ShippingService[]>([]);

@@ -6,9 +6,9 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "../../Shadcn/NavigationMenu/navigation-menu";
-import logoColored from '../../../assets/LogoColored.svg';
-import menuIcon from '../../../assets/Menu.svg';
+} from "@/components/Shadcn/NavigationMenu/navigation-menu";
+import logoColored from '@/assets/LogoColored.svg';
+import menuIcon from '@/assets/Menu.svg';
 
 const MobileMenu = () => {
   return (

@@ -1,11 +1,11 @@
 import { AlertCircleIcon, CheckCircle2Icon } from 'lucide-react';
-import { Alert, AlertDescription } from '../Shadcn/Alert';
-import { Button } from '../Shadcn/Button';
-import { Input } from '../Shadcn/Input';
-import { Label } from '../Shadcn/Label';
-import { RadioGroup, RadioGroupItem } from '../Shadcn/RadioGroup';
-import { type User } from '../../hooks/useCurrentUser';
-import { useProfileInfo } from '../../hooks/useProfileInfo';
+import { Alert, AlertDescription } from '@/components/Shadcn/Alert';
+import { Button } from '@/components/Shadcn/Button';
+import { Input } from '@/components/Shadcn/Input';
+import { Label } from '@/components/Shadcn/Label';
+import { RadioGroup, RadioGroupItem } from '@/components/Shadcn/RadioGroup';
+import { type User } from '@/hooks/useCurrentUser';
+import { useProfileInfo } from '@/hooks/useProfileInfo';
 
 interface ProfileInfoSectionProps {
   user: User;

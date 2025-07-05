@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import { ProtectedRoute } from '../routes';
-import { SignIn, SignUp, AdminPage, BuyerPage, SellerPage, LandingPage, RoleBasedRedirect, ProductsPage } from '../pages';
-import { USER_ROLES } from '../utils/constants';
+import { ProtectedRoute } from '@/routes';
+import { SignIn, SignUp, AdminPage, BuyerPage, SellerPage, LandingPage, RoleBasedRedirect, ProductsPage } from '@/pages';
+import { USER_ROLES } from '@/utils/constants';
 
 export const AppRoutes = () => {
   return (

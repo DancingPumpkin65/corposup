@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { AlertCircleIcon, CheckCircle2Icon, Upload, Store, Trash2, Plus, Edit } from 'lucide-react';
-import { Alert, AlertDescription } from '../Shadcn/Alert';
-import { Button } from '../Shadcn/Button';
-import { Input } from '../Shadcn/Input';
-import { Label } from '../Shadcn/Label';
-import { Textarea } from '../Shadcn/Textarea';
-import { SidebarInset, SidebarTrigger } from '../Shadcn/Sidebar/sidebar';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../Shadcn/Select';
+import { Alert, AlertDescription } from '@/components/Shadcn/Alert';
+import { Button } from '@/components/Shadcn/Button';
+import { Input } from '@/components/Shadcn/Input';
+import { Label } from '@/components/Shadcn/Label';
+import { Textarea } from '@/components/Shadcn/Textarea';
+import { SidebarInset, SidebarTrigger } from '@/components/Shadcn/Sidebar/sidebar';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/Shadcn/Select';
 import {
   Dialog,
   DialogContent,
@@ -14,8 +14,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '../Shadcn/Dialog';
-import apiClient from '../../services/apiClient';
+} from '@/components/Shadcn/Dialog';
+import apiClient from '@/services/apiClient';
 
 interface Store {
   id: number;

@@ -1,5 +1,5 @@
 import { Edit, Trash2 } from 'lucide-react';
-import { Button } from '../../Shadcn/Button';
+import { Button } from '@/components/Shadcn/Button';
 import {
   Table,
   TableBody,
@@ -7,8 +7,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../Shadcn/Table/table';
-import { type ShippingService } from './types';
+} from '@/components/Shadcn/Table/table';
+import { type ShippingService } from '@/components/SellerPage/Deliveries/types';
 
 interface DeliveriesTableProps {
   services: ShippingService[];
