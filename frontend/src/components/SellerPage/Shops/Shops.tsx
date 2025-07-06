@@ -61,7 +61,7 @@ const Shops = () => {
     );
   }
 
-  // No stores exist and not showing create form
+  {/* No stores exist and not showing create form */}
   if (stores.length === 0 && !showCreateForm) {
     return (
       <SidebarInset>
@@ -86,7 +86,7 @@ const Shops = () => {
     );
   }
 
-  // Show create form
+  {/* Show create form */}
   if (showCreateForm) {
     return (
       <SidebarInset>
@@ -114,7 +114,7 @@ const Shops = () => {
     );
   }
 
-  // Show edit form
+  {/* Show edit form */}
   if (showEditForm && editingStore) {
     return (
       <SidebarInset>
@@ -144,7 +144,7 @@ const Shops = () => {
     );
   }
 
-  // Stores list view
+  {/* Shops list view */}
   return (
     <SidebarInset>
       <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">

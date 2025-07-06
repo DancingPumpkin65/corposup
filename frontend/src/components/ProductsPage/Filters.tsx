@@ -1,22 +1,8 @@
 import { useState, useEffect } from 'react';
 import apiClient from '@/services/apiClient';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/Shadcn/Select';
-
-interface Store {
-  id: number;
-  store_name: string;
-}
-
-interface Filters {
-  priceRange: { min: number; max: number };
-  selectedStore: string;
-  sortBy: string;
-}
-
-interface FilterComponentProps {
-  filters: Filters;
-  onFilterChange: (filters: Filters) => void;
-}
+import { type Store } from './types';
+import { type FilterComponentProps } from './types';
 
 const FilterComponent = ({ filters, onFilterChange }: FilterComponentProps) => {
   const [stores, setStores] = useState<Store[]>([]);

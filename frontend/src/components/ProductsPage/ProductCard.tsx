@@ -1,33 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Star, ShoppingCart } from 'lucide-react';
-
-interface Product {
-  id: number;
-  product_name: string;
-  product_price: number;
-  product_description: string;
-  product_stock: number;
-  // Make these optional since they might not be included in API responses
-  seller?: {
-    firstname: string;
-    lastname: string;
-  };
-  store?: {
-    store_name: string;
-  };
-  category?: {
-    category_name: string;
-  };
-  // These might be the actual field names from your API
-  seller_id?: number;
-  store_id?: number;
-  category_id?: number;
-}
-
-interface ProductCardProps {
-  product: Product;
-  viewMode: 'grid' | 'list';
-}
+import { type ProductCardProps } from './types';
 
 const ProductCard = ({ product, viewMode }: ProductCardProps) => {
   const truncateText = (text: string, maxLength: number) => {

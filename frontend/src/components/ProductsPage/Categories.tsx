@@ -1,16 +1,5 @@
 import { Link } from 'react-router-dom';
-
-interface Category {
-  id: number;
-  name: string;
-  subcategories?: string[];
-}
-
-interface CategoriesDropdownProps {
-  categories: Category[];
-  loading?: boolean;
-  error?: string | null;
-}
+import { type CategoriesDropdownProps } from './types';
 
 const CategoriesComponent = ({ categories, loading }: CategoriesDropdownProps) => {
 
