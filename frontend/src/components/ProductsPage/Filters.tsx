@@ -1,59 +1,16 @@
-import { useState, useEffect } from 'react';
-import apiClient from '@/services/apiClient';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/Shadcn/Select';
-import { type Store } from './types';
+import { useFilters } from '@/hooks/useFilters';
 import { type FilterComponentProps } from './types';
 
 const FilterComponent = ({ filters, onFilterChange }: FilterComponentProps) => {
-  const [stores, setStores] = useState<Store[]>([]);
-  const [minPrice, setMinPrice] = useState(filters.priceRange.min);
-  const [maxPrice, setMaxPrice] = useState(filters.priceRange.max);
-
-  useEffect(() => {
-    fetchStores();
-  }, []);
-
-  const fetchStores = async () => {
-    try {
-      const response = await apiClient.get('/stores');
-      setStores(response.data);
-    } catch (error) {
-      console.error('Error fetching stores:', error);
-    }
-  };
-
-  const handlePriceChange = (type: 'min' | 'max', value: number) => {
-    const newRange = {
-      min: type === 'min' ? value : minPrice,
-      max: type === 'max' ? value : maxPrice
-    };
-    
-    if (type === 'min') setMinPrice(value);
-    if (type === 'max') setMaxPrice(value);
-    
-    onFilterChange({
-      ...filters,
-      priceRange: newRange
-    });
-  };
-
-  const handleStoreChange = (storeId: string) => {
-    onFilterChange({
-      ...filters,
-      selectedStore: storeId
-    });
-  };
-
-  const resetFilters = () => {
-    const defaultFilters = {
-      priceRange: { min: 0, max: 25000 },
-      selectedStore: '',
-      sortBy: 'popularity'
-    };
-    setMinPrice(0);
-    setMaxPrice(25000);
-    onFilterChange(defaultFilters);
-  };
+  const {
+    stores,
+    minPrice,
+    maxPrice,
+    handlePriceChange,
+    handleStoreChange,
+    resetFilters
+  } = useFilters(filters);
 
   return (
     <div>
@@ -77,7 +34,7 @@ const FilterComponent = ({ filters, onFilterChange }: FilterComponentProps) => {
               min="0"
               max="25000"
               value={minPrice}
-              onChange={(e) => handlePriceChange('min', parseInt(e.target.value))}
+              onChange={(e) => handlePriceChange('min', parseInt(e.target.value), onFilterChange, filters)}
               className="absolute top-0 w-full h-1 appearance-none bg-transparent pointer-events-auto range-thumb"
             />
             <input
@@ -85,7 +42,7 @@ const FilterComponent = ({ filters, onFilterChange }: FilterComponentProps) => {
               min="0"
               max="25000"
               value={maxPrice}
-              onChange={(e) => handlePriceChange('max', parseInt(e.target.value))}
+              onChange={(e) => handlePriceChange('max', parseInt(e.target.value), onFilterChange, filters)}
               className="absolute top-0 w-full h-1 appearance-none bg-transparent pointer-events-auto range-thumb"
             />
           </div>
@@ -97,7 +54,7 @@ const FilterComponent = ({ filters, onFilterChange }: FilterComponentProps) => {
         </div>
 
         {/* Store Selection */}
-        <Select value={filters.selectedStore} onValueChange={handleStoreChange}>
+        <Select value={filters.selectedStore} onValueChange={(storeId) => handleStoreChange(storeId, onFilterChange, filters)}>
           <SelectTrigger className="w-full mt-4 text-lg px-5 py-6 border border-gray-300 rounded-md bg-white text-gray-500">
             <SelectValue placeholder="Choose store" />
           </SelectTrigger>
@@ -119,7 +76,7 @@ const FilterComponent = ({ filters, onFilterChange }: FilterComponentProps) => {
         </button>
         <button 
           className="mt-2 text-orange-500 w-full py-3 font-semibold hover:underline"
-          onClick={resetFilters}
+          onClick={() => resetFilters(onFilterChange)}
         >
           Reset Filter
         </button>
