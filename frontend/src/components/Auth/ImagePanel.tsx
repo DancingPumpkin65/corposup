@@ -1,7 +1,7 @@
 import img from '@/assets/SignIn.png';
 import logoWhite from '@/assets/LogoWhite.svg';
 
-const SignInImagePanel = () => {
+const ImagePanel = () => {
   return (
     <div className="w-2/5 h-screen hidden lg:block relative">
       {/* Logo White - Top Left on Large Screens */}
@@ -23,4 +23,4 @@ const SignInImagePanel = () => {
   );
 };
 
-export default SignInImagePanel;
+export default ImagePanel;

@@ -1,6 +1,6 @@
-import SignInImagePanel from '@/components/Auth/SignInImagePanel';
-import SignUpHeader from '@/components/Auth/SignUpHeader';
-import SignUpForm from '@/components/Auth/SignUpForm';
+import SignInImagePanel from '@/components/Auth/ImagePanel';
+import SignUpHeader from '@/components/Auth/SignUp/SignUpHeader';
+import SignUpForm from '@/components/Auth/SignUp/SignUpForm';
 import { useSignUp } from '@/hooks/useSignUp';
 
 const SignUp = () => {
