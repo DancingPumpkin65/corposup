@@ -3,6 +3,8 @@ import { Button } from '@/components/Shadcn/Button';
 import InputField from '@/components/SellerPage/Deliveries/InputField';
 import DeliveryAlerts from '@/components/SellerPage/Deliveries/DeliveryAlerts';
 import { type DeliveryFormProps } from '@/components/SellerPage/Deliveries/types';
+import { Alert, AlertTitle, AlertDescription } from '@/components/Shadcn/Alert';
+import { Info } from 'lucide-react';
 
 const DeliveryForm = ({ 
   formData, 
@@ -14,21 +16,29 @@ const DeliveryForm = ({
   alert
 }: DeliveryFormProps) => {
   return (
-    <div className="min-h-screen">
+    <div>
       <div className="flex flex-col xl:flex-row">
         {/* Form Section */}
         <div className="flex-1 py-4 sm:py-6 lg:py-8 px-4">
           <div className="bg-white rounded-xl shadow-sm border">
             <div className="p-4 sm:p-6">
               <div className="max-w-full">
-                <div className="mb-6 sm:mb-8">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+                <div className="mb-6 sm:mb-6">
+                  <h2 className="text-2xl sm:text-2xl font-bold text-gray-900 mb-2">
                     {isEdit ? 'Modifier le service de livraison' : 'Créer un service de livraison'}
-                  </h1>
+                  </h2>
                   <p className="text-sm sm:text-base text-gray-600">
                     {isEdit ? 'Mettez à jour les informations de votre service' : 'Configurez un nouveau service de livraison pour vos clients'}
                   </p>
                 </div>
+
+                <Alert variant="default" className="bg-blue-50 border-blue-300 text-blue-800 mb-6">
+                    <Info className="h-4 w-4 text-blue-800" />
+                    <AlertTitle className="font-medium">Alerte info !</AlertTitle>
+                    <AlertDescription>
+                    Les champs marqués d'une étoile (*) sont obligatoires.
+                    </AlertDescription>
+                </Alert>
 
                 <DeliveryAlerts alert={alert} />
 

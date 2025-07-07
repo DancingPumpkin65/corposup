@@ -1,3 +1,4 @@
+import { Info } from 'lucide-react';
 import InputField from '@/components/SellerPage/Shops/InputField';
 import SelectField from '@/components/SellerPage/Shops/SelectField';
 import ShopAlerts from '@/components/SellerPage/Shops/ShopAlerts';
@@ -6,6 +7,7 @@ import ShopImageUpload from '@/components/SellerPage/Shops/ShopImageUpload';
 import ShopFormButtons from '@/components/SellerPage/Shops/ShopFormButtons';
 import ShopPreview from '@/components/SellerPage/Shops/ShopPreview';
 import { type ShopFormProps } from '@/components/SellerPage/Shops/types';
+import { Alert, AlertTitle, AlertDescription } from '@/components/Shadcn/Alert';
 
 const ShopForm = ({ 
   formData, 
@@ -27,7 +29,7 @@ const ShopForm = ({
   const isFormValid = !!(formData.store_name && formData.store_description);
 
   return (
-    <div className="min-h-screen">
+    <div>
       <div className="flex flex-col xl:flex-row">
         {/* Form Section */}
         <div className="flex-1 py-4 sm:py-6 lg:py-8 px-4">
@@ -35,6 +37,14 @@ const ShopForm = ({
             <div className="p-4 sm:p-6">
               <div className="max-w-full">
                 <ShopFormHeader isEdit={isEdit} />
+
+                <Alert variant="default" className="bg-blue-50 border-blue-300 text-blue-800 mb-6">
+                    <Info className="h-4 w-4 text-blue-800" />
+                    <AlertTitle className="font-medium">Alerte info !</AlertTitle>
+                    <AlertDescription>
+                    Les champs marqués d'une étoile (*) sont obligatoires.
+                    </AlertDescription>
+                </Alert>
 
                 <ShopAlerts alert={alert} />
 

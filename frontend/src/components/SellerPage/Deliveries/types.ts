@@ -57,3 +57,11 @@ export interface SelectFieldProps {
   required?: boolean;
   options: Array<{ value: string; label: string }>;
 }
+
+export interface DeliveriesTableProps {
+  services: ShippingService[];
+  onEdit: (service: ShippingService) => void;
+  onDelete: (service: ShippingService) => void;
+  formatCost: (cost: number | string) => string;
+  formatDeliveryTime: (time: number | string) => number;
+}

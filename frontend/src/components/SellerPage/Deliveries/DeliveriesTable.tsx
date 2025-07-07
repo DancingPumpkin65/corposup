@@ -14,15 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/Shadcn/DropdownMenu';
-import { type ShippingService } from '@/components/SellerPage/Deliveries/types';
-
-interface DeliveriesTableProps {
-  services: ShippingService[];
-  onEdit: (service: ShippingService) => void;
-  onDelete: (service: ShippingService) => void;
-  formatCost: (cost: number | string) => string;
-  formatDeliveryTime: (time: number | string) => number;
-}
+import { type DeliveriesTableProps } from '@/components/SellerPage/Deliveries/types';
 
 const DeliveriesTable = ({ services, onEdit, onDelete, formatCost, formatDeliveryTime }: DeliveriesTableProps) => {
   return (

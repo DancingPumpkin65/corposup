@@ -5,6 +5,7 @@ import Overview from '@/components/SellerPage/Overview';
 import Deliveries from '@/components/SellerPage/Deliveries/Deliveries';
 import { Shops } from '@/components/SellerPage';
 import ProfilePage from '@/pages/ProfilePage';
+import Products from '@/components/SellerPage/Products/Products';
 import { Routes, Route } from 'react-router-dom';
 
 const SellerPage = () => {
@@ -15,7 +16,7 @@ const SellerPage = () => {
         <div className="flex flex-1 flex-col">
           <Routes>
             <Route index element={<Overview />} />
-            <Route path="products" element={<div className="p-6">Mes produits - Coming Soon</div>} />
+            <Route path="products" element={<Products />} />
             <Route path="store" element={<Shops />} />
             <Route path="shipping" element={<Deliveries />} />
             <Route path="orders" element={<div className="p-6">Commandes - Coming Soon</div>} />
