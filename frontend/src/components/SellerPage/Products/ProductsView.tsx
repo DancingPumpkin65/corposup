@@ -1,4 +1,11 @@
+import { Edit, Trash2, MoreHorizontal } from 'lucide-react';
 import { Button } from "@/components/Shadcn/Button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/Shadcn/DropdownMenu/dropdown-menu";
 import type { Products } from "@/components/SellerPage/Products/types";
 import ProductCard from "@/components/SellerPage/Products/ProductCard";
 
@@ -14,13 +21,30 @@ const ProductsView = ({ products, onEdit, onDelete }: ProductsViewProps) => {
       {products.map((product) => (
         <div key={product.id} className="relative group">
           <ProductCard product={product} previewImage={product.images.find(img => img.is_main)?.preview} />
-          <div className="absolute bottom-4 right-4 flex gap-2">
-            <Button variant="outline" size="sm" onClick={() => onEdit(product)}>
-              Modifier
-            </Button>
-            <Button variant="destructive" size="sm" onClick={() => onDelete(product)}>
-              Supprimer
-            </Button>
+          <div className="absolute top-2 right-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-100">
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-40">
+                <DropdownMenuItem 
+                  className='cursor-pointer hover:bg-gray-100' 
+                  onClick={() => onEdit(product)}
+                >
+                  <Edit className="mr-2 h-4 w-4" />
+                  Modifier
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => onDelete(product)}
+                  className="text-red-600 focus:text-red-600 cursor-pointer hover:bg-red-50"
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Supprimer
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       ))}
