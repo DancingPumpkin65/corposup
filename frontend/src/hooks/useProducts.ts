@@ -4,10 +4,6 @@ import { type Product } from '@/components/ProductsPage/types';
 import { processApiResponse } from '@/utils/apiResponseUtils';
 import { applyPriceFilter, applySorting, buildApiUrl } from '@/utils/productUtils';
 
-interface ApiResponse {
-  data: Product[] | { data: Product[] } | { products: Product[] };
-}
-
 interface UseProductsProps {
   categoryId?: string | null;
   filters: {
@@ -41,14 +37,31 @@ export const useProducts = ({ categoryId, filters }: UseProductsProps) => {
     setLoading(true);
     try {
       const url = buildApiUrl(categoryId, filters.selectedStore);
-      const response = await apiClient.get<ApiResponse>(url);
+      console.log('Fetching products from URL:', url);
       
-      const rawProducts = processApiResponse(response.data);
+      const response = await apiClient.get(url);
+      console.log('Full API response:', response);
+      console.log('Response data:', response.data);
+      
+      // Check if response and response.data exist
+      if (!response || response.data === undefined || response.data === null) {
+        console.warn('API response or response.data is missing');
+        setProducts([]);
+        return;
+      }
+      
+      // Pass the correct structure to processApiResponse
+      const rawProducts = processApiResponse({ data: response.data });
       const processedProducts = processProducts(rawProducts);
 
       setProducts(processedProducts);
     } catch (error) {
       console.error('Error fetching products:', error);
+      console.error('Error details:', {
+        categoryId,
+        selectedStore: filters.selectedStore,
+        url: buildApiUrl(categoryId, filters.selectedStore)
+      });
       setProducts([]);
     } finally {
       setLoading(false);

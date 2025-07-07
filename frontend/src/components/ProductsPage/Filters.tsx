@@ -29,21 +29,27 @@ const FilterComponent = ({ filters, onFilterChange }: FilterComponentProps) => {
               }}
             ></div>
             
+            <label htmlFor="price-range-min" className="sr-only">Prix minimum</label>
             <input
+              id="price-range-min"
               type="range"
               min="0"
               max="25000"
               value={minPrice}
               onChange={(e) => handlePriceChange('min', parseInt(e.target.value), onFilterChange, filters)}
               className="absolute top-0 w-full h-1 appearance-none bg-transparent pointer-events-auto range-thumb"
+              aria-label="Prix minimum"
             />
+            <label htmlFor="price-range-max" className="sr-only">Prix maximum</label>
             <input
+              id="price-range-max"
               type="range"
               min="0"
               max="25000"
               value={maxPrice}
               onChange={(e) => handlePriceChange('max', parseInt(e.target.value), onFilterChange, filters)}
               className="absolute top-0 w-full h-1 appearance-none bg-transparent pointer-events-auto range-thumb"
+              aria-label="Prix maximum"
             />
           </div>
           

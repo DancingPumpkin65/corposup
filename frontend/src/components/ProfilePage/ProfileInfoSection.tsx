@@ -133,6 +133,10 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
 
         {/* Image Upload */}
         <div className="border-dashed border-2 border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center">
+          <Label htmlFor="photo-profile-upload" className="sr-only">
+            Télécharger une photo de profil
+          </Label>
+          
           {/* Show current profile image if exists */}
           {user.photo_profile && !selectedImage && (
             <div className="mb-4">
@@ -156,6 +160,7 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
           </Button>
           <input
             ref={fileInputRef}
+            id="photo-profile-upload"
             type="file"
             name="photo_profile"
             onChange={handleFileChange}
