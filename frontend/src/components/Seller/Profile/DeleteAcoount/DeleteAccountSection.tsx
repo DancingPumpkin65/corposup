@@ -41,7 +41,7 @@ const DeleteAccountSection = () => {
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button variant="destructive" className="bg-black hover:bg-gray-800 px-11">
+          <Button variant="destructive" className="bg-orange-600 hover:bg-orange-500 px-11">
             SUPPRIMER
           </Button>
         </DialogTrigger>
@@ -52,8 +52,7 @@ const DeleteAccountSection = () => {
               Êtes-vous sûr de vouloir supprimer votre compte ?
             </DialogTitle>
             <DialogDescription>
-              Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées. 
-              Veuillez entrer votre mot de passe pour confirmer que vous souhaitez supprimer définitivement votre compte.
+              Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées.
             </DialogDescription>
           </DialogHeader>
 
@@ -84,7 +83,7 @@ const DeleteAccountSection = () => {
                 type="submit"
                 variant="destructive"
                 disabled={loading}
-                className="bg-black hover:bg-gray-800 px-11"
+                className="bg-orange-600 hover:bg-orange-500 px-11"
                 >
                 {loading ? 'Suppression...' : 'Supprimer'}
               </Button>
