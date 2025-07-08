@@ -51,8 +51,77 @@ export interface Products {
 }
 
 export interface ProductAlertsProps {
-    alert: {
-      type: 'success' | 'error';
-      message: string;
-    } | null;
-  }
+  alert: {
+    type: 'success' | 'error';
+    message: string;
+  } | null;
+}
+
+export interface ProductFormProps {
+  formData: Products;
+  onFieldChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
+  onSelectChange: (name: string, value: string | number) => void;
+  onKeywordChange: (index: number, value: string) => void;
+  onPriceTierChange: (index: number, field: keyof PriceTier, value: string) => void;
+  addPriceTier: () => void;
+  onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  removeImage: (index: number) => void;
+  setMainImage: (index: number) => void;
+  onSubmit: (e: React.FormEvent) => void;
+  onCancel: () => void;
+  loading: boolean;
+  isEdit?: boolean;
+  categories: CategoryOption[];
+  units: SelectOption[];
+  stores: SelectOption[];
+  shippings: SelectOption[];
+}
+
+export interface BasicInfoSectionProps {
+    formData: Products;
+    onFieldChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onSelectChange: (name: string, value: string | number) => void;
+    groupedCategories: Record<string, CategoryOption[]>;
+}
+
+export interface DetailsSectionProps {
+    formData: Products;
+    onFieldChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onKeywordChange: (index: number, value: string) => void;
+}
+
+export interface PricingSectionProps {
+    formData: Products;
+    onFieldChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onSelectChange: (name: string, value: string | number) => void;
+    onPriceTierChange: (index: number, field: keyof PriceTier, value: string) => void;
+    addPriceTier: () => void;
+    units: SelectOption[];
+    stores: SelectOption[];
+}
+
+export interface MediaSectionProps {
+    formData: Products;
+    onFieldChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onSelectChange: (name: string, value: string | number) => void;
+    onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    removeImage: (index: number) => void;
+    setMainImage: (index: number) => void;
+    shippings: SelectOption[];
+}
+
+export interface FormActionsProps {
+    onCancel: () => void;
+    loading: boolean;
+    isEdit: boolean;
+}
+
+export interface ProductPreviewProps {
+    formData: Products;
+    mainImage: string | undefined;
+}
+
+export interface ProductPreviewProps {
+    formData: Products;
+    mainImage: string | undefined;
+}

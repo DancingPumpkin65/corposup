@@ -20,7 +20,7 @@ const CategoriesDropdown = () => {
           <NavigationMenuItem>
             <NavigationMenuTrigger className="flex items-center space-x-2 cursor-pointer bg-transparent border-0 hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent p-0">
               <img className="w-5 h-5" src={categoriesIcon} alt="Categories" />
-              <p className="text-base text-black font-semibold">Catégories</p>
+              <p className="text-xl text-black font-semibold">Catégories</p>
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               <div className="w-[280px] sm:w-[350px] md:w-[400px] p-3 sm:p-4 max-h-[350px] sm:max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">

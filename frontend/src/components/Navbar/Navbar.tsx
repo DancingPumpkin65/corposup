@@ -44,13 +44,14 @@ const Navbar = () => {
               <img src={logoColored} alt="Logo" className="h-full sm:h-8 md:h-10 w-auto" />
             </Link>
             
-            {/* Categories next to logo on seller pages (laptop mode) */}
-            {isSellerPage && (
-              <div className="hidden lg:block">
-                <CategoriesDropdown />
-              </div>
-            )}
           </div>
+          
+          {/* Categories next to logo on seller pages (laptop mode) */}
+          {isSellerPage && (
+            <div className="hidden lg:block">
+              <CategoriesDropdown />
+            </div>
+          )}
 
           {/* Search Bar (Large screens) - Hidden on seller pages */}
           <SearchBar />
