@@ -10,7 +10,6 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
   SidebarMenuSubButton,
-  SidebarProvider,
   SidebarGroupLabel
 } from '@/components/Shadcn/Sidebar/sidebar';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/Shadcn/DropdownMenu';
@@ -57,7 +56,6 @@ const adminSidebarItems = [
 
 const AdminSidebar = () => {
   return (
-    <SidebarProvider>
       <Sidebar>
         <SidebarHeader className="bg-blue-600 text-white flex flex-col py-4 px-4 items-start">
           <img src={logoWhite} alt="Logo" className="w-43" />
@@ -85,8 +83,8 @@ const AdminSidebar = () => {
                             href={sub.url}
                             className={`block px-6 py-2 rounded w-full text-left ${
                               item.title === "Products"
-                                ? "hover:bg-blue-900"
-                                : "hover:bg-blue-900"
+                                ? "hover:bg-white/50"
+                                : "hover:bg-white/50"
                             }`}
                           >
                             {sub.title}
@@ -142,7 +140,6 @@ const AdminSidebar = () => {
           </SidebarMenu>
         </SidebarFooter>
       </Sidebar>
-    </SidebarProvider>
   );
 }
 

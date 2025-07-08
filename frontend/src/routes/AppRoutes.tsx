@@ -24,7 +24,7 @@ export const AppRoutes = () => {
         <Route path="/categories/:categoryId/products" element={<ProductsPage />} />
 
         <Route
-          path="/admin"
+          path="/admin/*"
           element={
             <ProtectedRoute requiredRole={USER_ROLES.ADMIN}>
               <AdminPage />
@@ -49,9 +49,7 @@ export const AppRoutes = () => {
             </ProtectedRoute>
           } 
         />
-        
-        {/* Catch all route */}
-        <Route path="*" element={<LandingPage />} />
+
       </Routes>
     </Suspense>
   );

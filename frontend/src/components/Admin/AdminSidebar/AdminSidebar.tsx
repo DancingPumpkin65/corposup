@@ -10,7 +10,6 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
   SidebarMenuSubButton,
-  SidebarProvider,
   SidebarGroupLabel
 } from '@/components/Shadcn/Sidebar/sidebar';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/Shadcn/DropdownMenu';
@@ -23,41 +22,43 @@ const ChevronRightSvg = (
 const adminSidebarItems = [
   {
     title: "Dashboard",
-    url: "/dashboard",
+    url: "/admin/dashboard",
     icon: HomeIcon,
   },
   {
     title: "Users",
+    url: "/admin/users",
     icon: UserIcon,
     subItems: [
-      { title: "View Users", url: "/users" },
-      { title: "Add User", url: "/users/add" },
-      { title: "User Roles", url: "/users/roles" },
+      { title: "View Users", url: "/admin/users" },
+      { title: "Add User", url: "/admin/users/add" },
+      { title: "User Roles", url: "/admin/users/roles" },
     ],
   },
   {
     title: "Products",
+    url: "/admin/products",
     icon: BoxIcon,
     subItems: [
-      { title: "All Products", url: "/products" },
-      { title: "Add Product", url: "/products/add" },
-      { title: "Categories", url: "/products/categories" },
+      { title: "All Products", url: "/admin/products" },
+      { title: "Add Product", url: "/admin/products/add" },
+      { title: "Categories", url: "/admin/products/categories" },
     ],
   },
   {
     title: "Consulting",
+    url: "/admin/consult",
     icon: SearchIcon,
     subItems: [
-      { title: "Consult Product", url: "/consult" },
-      { title: "Product Logs", url: "/consult/logs" },
-      { title: "Reports", url: "/consult/reports" },
+      { title: "Consult Product", url: "/admin/consult" },
+      { title: "Product Logs", url: "/admin/consult/logs" },
+      { title: "Reports", url: "/admin/consult/reports" },
     ],
   },
 ];
 
 const AdminSidebar = () => {
   return (
-    <SidebarProvider>
       <Sidebar>
         <SidebarHeader className="bg-blue-600 text-white flex flex-col py-4 px-4 items-start">
           <img src={logoWhite} alt="Logo" className="w-43" />
@@ -69,9 +70,9 @@ const AdminSidebar = () => {
           <SidebarMenu>
             {adminSidebarItems.map((item) =>
               item.subItems ? (
-                <SidebarMenuItem className="px-4" key={item.title}>
+                <SidebarMenuItem className="px-4 pb-2" key={item.title}>
                   <SidebarMenuButton className="w-full hover:bg-white rounded transition-colors flex items-center">
-                    <span className="flex items-center gap-2 w-full py-2">
+                    <span className="flex text-base font-bold items-center gap-2 w-full py-2">
                       <item.icon />
                       <span>{item.title}</span>
                       {ChevronRightSvg}
@@ -83,10 +84,10 @@ const AdminSidebar = () => {
                         <SidebarMenuSubButton asChild>
                           <a
                             href={sub.url}
-                            className={`block px-6 py-2 rounded w-full text-left ${
+                            className={`block text-white px-6 py-4 rounded w-full text-left ${
                               item.title === "Products"
-                                ? "hover:bg-blue-900"
-                                : "hover:bg-white/50"
+                                ? "hover:bg-white"
+                                : "hover:bg-white"
                             }`}
                           >
                             {sub.title}
@@ -97,8 +98,8 @@ const AdminSidebar = () => {
                   </SidebarMenuSub>
                 </SidebarMenuItem>
               ) : (
-                <SidebarMenuItem className="px-4" key={item.title}>
-                  <SidebarMenuButton className="w-full hover:bg-white rounded transition-colors">
+                <SidebarMenuItem className="px-4 pb-2" key={item.title}>
+                  <SidebarMenuButton className="w-full text-base font-bold rounded transition-colors">
                     <a href={item.url} className="flex items-center gap-2 w-full py-2">
                       <item.icon />
                       <span>{item.title}</span>
@@ -142,7 +143,6 @@ const AdminSidebar = () => {
           </SidebarMenu>
         </SidebarFooter>
       </Sidebar>
-    </SidebarProvider>
   );
 }
 
