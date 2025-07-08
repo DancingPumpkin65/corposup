@@ -61,7 +61,7 @@ const Products = () => {
         <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
           <SidebarTrigger className="-ml-1" />
           <div className="flex items-center gap-2">
-            <h1 className="text-lg font-semibold">Mes Produits</h1>
+            <h1 className="text-lg font-semibold">Annonces de produits</h1>
           </div>
         </header>
         <div className="flex justify-center items-center min-h-[300px] p-4">
@@ -77,7 +77,7 @@ const Products = () => {
         <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
           <SidebarTrigger className="-ml-1" />
           <div className="flex items-center gap-2">
-            <h1 className="text-lg font-semibold">Mes Produits</h1>
+            <h1 className="text-lg font-semibold">Annonces de produits</h1>
           </div>
         </header>
         <div className="text-center w-full flex flex-col space-y-3 justify-center items-center bg-cover min-h-[400px] sm:min-h-[500px] p-4">
@@ -125,7 +125,7 @@ const Products = () => {
         <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
           <SidebarTrigger className="-ml-1" />
           <div className="flex items-center gap-2">
-            <h1 className="text-lg font-semibold">Ajouter un nouveau produit</h1>
+            <h1 className="text-lg font-semibold">Annonces de produits</h1>
           </div>
         </header>
         <ProductForm {...formProps} onSubmit={handleSubmit} />
@@ -152,7 +152,7 @@ const Products = () => {
       <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
         <SidebarTrigger className="-ml-1" />
         <div className="flex items-center gap-2">
-          <h1 className="text-lg font-semibold">Mes Produits</h1>
+          <h1 className="text-lg font-semibold">Annonces de produits</h1>
         </div>
       </header>
       <div className="py-8 px-4 sm:py-8 sm:px-4">
