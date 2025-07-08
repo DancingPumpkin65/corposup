@@ -1,4 +1,4 @@
-import type { StoreFormData } from '@/components/SellerPage/Shops/types';
+import type { StoreFormData } from '@/components/Seller/Shops/types';
 
 export const createStoreFormData = (storeData: StoreFormData, method?: string): FormData => {
   const formDataToSend = new FormData();

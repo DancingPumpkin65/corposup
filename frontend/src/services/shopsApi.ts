@@ -1,5 +1,5 @@
 import apiClient from '@/services/apiClient';
-import type { Store } from '@/components/SellerPage/Shops/types';
+import type { Store } from '@/components/Seller/Shops/types';
 
 export const fetchStores = async (): Promise<Store[]> => {
   const response = await apiClient.get('/my-store');

@@ -21,6 +21,8 @@ export const useAuth = () => {
     if (token && userData) {
       setUser(userData);
       setIsAuthenticated(true);
+      console.log('User is authenticated:', userData);
+      console.log('Token:', token);
     }
     setLoading(false);
   }, []);

@@ -1,47 +1,58 @@
 import { Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import { ProtectedRoute } from '@/routes';
-import { SignIn, SignUp, AdminPage, BuyerPage, SellerPage, LandingPage, RoleBasedRedirect, ProductsPage } from '@/pages';
 import { USER_ROLES } from '@/utils/constants';
+
+const LandingPage = lazy(() => import('@/pages/LandingPage'));
+const AdminPage = lazy(() => import('@/pages/AdminPage'));
+const BuyerPage = lazy(() => import('@/pages/BuyerPage'));
+const SellerPage = lazy(() => import('@/pages/SellerPage'));
+const SignIn = lazy(() => import('@/pages/SignIn'));
+const SignUp = lazy(() => import('@/pages/SignUp'));
+const ProductsPage = lazy(() => import('@/pages/ProductsPage'));
+const RoleBasedRedirect = lazy(() => import('@/pages/RoleBasedRedirect'));
 
 export const AppRoutes = () => {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/dashboard" element={<RoleBasedRedirect />} />
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/dashboard" element={<RoleBasedRedirect />} />
 
-      <Route path="/categories/:categoryId/products" element={<ProductsPage />} />
+        <Route path="/categories/:categoryId/products" element={<ProductsPage />} />
 
-      <Route
-        path="/admin"
-        element={
-          <ProtectedRoute requiredRole={USER_ROLES.ADMIN}>
-            <AdminPage />
-          </ProtectedRoute>
-        } 
-      />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute requiredRole={USER_ROLES.ADMIN}>
+              <AdminPage />
+            </ProtectedRoute>
+          } 
+        />
 
-      <Route
-        path="/buyer"
-        element={
-          <ProtectedRoute requiredRole={USER_ROLES.BUYER}>
-            <BuyerPage />
-          </ProtectedRoute>
-        } 
-      />
+        <Route
+          path="/buyer"
+          element={
+            <ProtectedRoute requiredRole={USER_ROLES.BUYER}>
+              <BuyerPage />
+            </ProtectedRoute>
+          } 
+        />
 
-      <Route
-        path="/seller/*"
-        element={
-          <ProtectedRoute requiredRole={USER_ROLES.SELLER}>
-            <SellerPage />
-          </ProtectedRoute>
-        } 
-      />
-      
-      {/* Catch all route */}
-      <Route path="*" element={<LandingPage />} />
-    </Routes>
+        <Route
+          path="/seller/*"
+          element={
+            <ProtectedRoute requiredRole={USER_ROLES.SELLER}>
+              <SellerPage />
+            </ProtectedRoute>
+          } 
+        />
+        
+        {/* Catch all route */}
+        <Route path="*" element={<LandingPage />} />
+      </Routes>
+    </Suspense>
   );
 };

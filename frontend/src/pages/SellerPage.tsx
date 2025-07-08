@@ -1,12 +1,12 @@
 import { SidebarProvider } from '@/components/Shadcn/Sidebar';
-import { SellerSidebar } from '@/components/SellerPage/Sidebar';
+import { SellerSidebar } from '@/components/Seller/Sidebar';
 import { MainLayout } from '@/components/layouts/MainLayout';
-import Overview from '@/components/SellerPage/Overview';
-import Deliveries from '@/components/SellerPage/Deliveries/Deliveries';
-import { Shops } from '@/components/SellerPage';
-import ProfilePage from '@/pages/ProfilePage';
-import Products from '@/components/SellerPage/Products/Products';
+import Overview from '@/components/Seller/Overview';
+import Deliveries from '@/components/Seller/Deliveries/Deliveries';
+import { Shops } from '@/components/Seller';
+import Products from '@/components/Seller/Products/Products';
 import { Routes, Route } from 'react-router-dom';
+import Profile from '@/components/Seller/Profile/Profile';
 
 const SellerPage = () => {
   return (
@@ -22,7 +22,7 @@ const SellerPage = () => {
             <Route path="orders" element={<div className="p-6">Commandes - Coming Soon</div>} />
             <Route path="inbox" element={<div className="p-6">Chats - Coming Soon</div>} />
             <Route path="boost" element={<div className="p-6">Boostez votre entreprise - Coming Soon</div>} />
-            <Route path="profile" element={<ProfilePage />} />
+            <Route path="profile" element={<Profile />} />
           </Routes>
         </div>
       </SidebarProvider>
