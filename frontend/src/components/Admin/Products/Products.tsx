@@ -1,12 +1,12 @@
 import { SidebarInset, SidebarTrigger } from '@/components/Shadcn/Sidebar';
 
-const Overview = () => {
+const Products = () => {
   return (
     <SidebarInset>
       <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
         <SidebarTrigger className="-ml-1" />
         <div className="flex items-center gap-2">
-          <h1 className="text-lg font-semibold">Dashboard</h1>
+          <h1 className="text-lg font-semibold">Produits</h1>
         </div>
       </header>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-8">
@@ -29,4 +29,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default Products;

@@ -5,39 +5,41 @@ import Deliveries from '@/components/Seller/Deliveries/Deliveries';
 import { Shops } from '@/components/Seller';
 import { Routes, Route } from 'react-router-dom';
 import Profile from '@/components/Seller/Profile/Profile';
-import Products from '@/components/Seller/Products/Products';
+import Products from '@/components/Admin/Products/Products';
+import Categories from '@/components/Admin/Products/Categories';
+import Users from '@/components/Admin/Users/Users';
+import ConsultProduct from '@/components/Admin/Consult/ConsultProducts';
+import Logs from '@/components/Admin/Consult/Logs';
+import Repports from '@/components/Admin/Consult/Repports';
 
 const AdminPage = () => {
   return (
     <SidebarProvider className="relative flex">
-          <AdminSidebar />
-          <div className="flex flex-1 flex-col">
-            <Routes>
-              <Route index element={<Overview />} />
-              <Route path="admin/dashboard" element={<Overview />} />
-              {/* Users */}
-              <Route path="admin/users" element={<div className="p-6">View Users - Coming Soon</div>} />
-              <Route path="admin/users/add" element={<div className="p-6">Add User - Coming Soon</div>} />
-              <Route path="admin/users/roles" element={<div className="p-6">User Roles - Coming Soon</div>} />
-              {/* Products */}
-              <Route path="admin/products" element={<Products />} />
-              <Route path="admin/products/add" element={<div className="p-6">Add Product - Coming Soon</div>} />
-              <Route path="admin/products/categories" element={<div className="p-6">Categories - Coming Soon</div>} />
-              {/* Consulting */}
-              <Route path="admin/consult" element={<div className="p-6">Consult Product - Coming Soon</div>} />
-              <Route path="admin/consult/logs" element={<div className="p-6">Product Logs - Coming Soon</div>} />
-              <Route path="admin/consult/reports" element={<div className="p-6">Reports - Coming Soon</div>} />
-              {/* Other */}
-              <Route path="admin/store" element={<Shops />} />
-              <Route path="admin/shipping" element={<Deliveries />} />
-              <Route path="admin/orders" element={<div className="p-6">Commandes - Coming Soon</div>} />
-              <Route path="admin/inbox" element={<div className="p-6">Chats - Coming Soon</div>} />
-              <Route path="admin/boost" element={<div className="p-6">Boostez votre entreprise - Coming Soon</div>} />
-              <Route path="admin/profile" element={<Profile />} />
-              <Route path="admin/settings" element={<div className="p-6">Settings - Coming Soon</div>} />
-              <Route path="admin/logout" element={<div className="p-6">Logout - Coming Soon</div>} />
-            </Routes>
-          </div>
+      <AdminSidebar />
+      <div className="flex flex-1 flex-col">
+        <Routes>
+          <Route index element={<Overview />} />
+          <Route path="dashboard" element={<Overview />} />
+          {/* Users */}
+          <Route path="users" element={<Users />} />
+          {/* Products */}
+          <Route path="products" element={<Products />} />
+          <Route path="products/categories" element={<Categories />} />
+          {/* Consulting */}
+          <Route path="consult" element={<ConsultProduct />} />
+          <Route path="consult/logs" element={<Logs />} />
+          <Route path="consult/reports" element={<Repports />} />
+          {/* Other */}
+          <Route path="store" element={<Shops />} />
+          <Route path="shipping" element={<Deliveries />} />
+          <Route path="orders" element={<div className="p-6">Commandes - Coming Soon</div>} />
+          <Route path="inbox" element={<div className="p-6">Chats - Coming Soon</div>} />
+          <Route path="boost" element={<div className="p-6">Boostez votre entreprise - Coming Soon</div>} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="settings" element={<div className="p-6">Settings - Coming Soon</div>} />
+          <Route path="logout" element={<div className="p-6">Logout - Coming Soon</div>} />
+        </Routes>
+      </div>
     </SidebarProvider>
   );
 };

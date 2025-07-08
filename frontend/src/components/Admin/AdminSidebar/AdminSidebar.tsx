@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { HomeIcon, BoxIcon, SearchIcon, SettingsIcon, LogOutIcon, ChevronUp, UserIcon } from 'lucide-react';
 import {
   Sidebar,
@@ -26,33 +27,27 @@ const adminSidebarItems = [
     icon: HomeIcon,
   },
   {
-    title: "Users",
+    title: "Utilisateurs",
     url: "/admin/users",
-    icon: UserIcon,
-    subItems: [
-      { title: "View Users", url: "/admin/users" },
-      { title: "Add User", url: "/admin/users/add" },
-      { title: "User Roles", url: "/admin/users/roles" },
-    ],
+    icon: UserIcon
   },
   {
-    title: "Products",
+    title: "Produits",
     url: "/admin/products",
     icon: BoxIcon,
     subItems: [
-      { title: "All Products", url: "/admin/products" },
-      { title: "Add Product", url: "/admin/products/add" },
-      { title: "Categories", url: "/admin/products/categories" },
+      { title: "Tous les produits", url: "/admin/products" },
+      { title: "Catégories", url: "/admin/products/categories" },
     ],
   },
   {
-    title: "Consulting",
+    title: "Consultation",
     url: "/admin/consult",
     icon: SearchIcon,
     subItems: [
-      { title: "Consult Product", url: "/admin/consult" },
-      { title: "Product Logs", url: "/admin/consult/logs" },
-      { title: "Reports", url: "/admin/consult/reports" },
+      { title: "Consulter le produit", url: "/admin/consult" },
+      { title: "Logs des produits", url: "/admin/consult/logs" },
+      { title: "Rapports", url: "/admin/consult/reports" },
     ],
   },
 ];
@@ -60,10 +55,10 @@ const adminSidebarItems = [
 const AdminSidebar = () => {
   return (
       <Sidebar>
-        <SidebarHeader className="bg-blue-600 text-white flex flex-col py-4 px-4 items-start">
+        <SidebarHeader className="bg-blue-500 text-white flex flex-col py-4 px-4 items-start">
           <img src={logoWhite} alt="Logo" className="w-43" />
         </SidebarHeader>
-        <SidebarContent className="bg-blue-600 text-white">
+        <SidebarContent className="bg-blue-500 text-white">
           <SidebarGroupLabel className="text-gray-300 text-base px-4">
             Espace administrateur
           </SidebarGroupLabel>
@@ -72,18 +67,18 @@ const AdminSidebar = () => {
               item.subItems ? (
                 <SidebarMenuItem className="px-4 pb-2" key={item.title}>
                   <SidebarMenuButton className="w-full hover:bg-white rounded transition-colors flex items-center">
-                    <span className="flex text-base font-bold items-center gap-2 w-full py-2">
+                    <Link to={item.url} className="flex text-base font-bold items-center gap-2 w-full py-2">
                       <item.icon />
                       <span>{item.title}</span>
                       {ChevronRightSvg}
-                    </span>
+                    </Link>
                   </SidebarMenuButton>
                   <SidebarMenuSub>
                     {item.subItems.map((sub) => (
                       <SidebarMenuSubItem key={sub.title}>
                         <SidebarMenuSubButton asChild>
-                          <a
-                            href={sub.url}
+                          <Link
+                            to={sub.url}
                             className={`block text-white px-6 py-4 rounded w-full text-left ${
                               item.title === "Products"
                                 ? "hover:bg-white"
@@ -91,7 +86,7 @@ const AdminSidebar = () => {
                             }`}
                           >
                             {sub.title}
-                          </a>
+                          </Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}
@@ -99,24 +94,24 @@ const AdminSidebar = () => {
                 </SidebarMenuItem>
               ) : (
                 <SidebarMenuItem className="px-4 pb-2" key={item.title}>
-                  <SidebarMenuButton className="w-full text-base font-bold rounded transition-colors">
-                    <a href={item.url} className="flex items-center gap-2 w-full py-2">
+                  <SidebarMenuButton className="data-[active=true]:bg-white data-[active=true]:text-blue-700 w-full text-base font-bold rounded transition-colors">
+                    <Link to={item.url} className="flex items-center gap-2 w-full py-2">
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               )
             )}
           </SidebarMenu>
         </SidebarContent>
-        <SidebarFooter className="bg-blue-600 text-white py-4">
+        <SidebarFooter className="bg-blue-500 text-white py-4">
           <SidebarMenu>
             {/* Settings and Logout Dropdown */}
             <SidebarMenuItem className="px-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton className="w-full hover:bg-white rounded transition-colors flex items-center">
+                  <SidebarMenuButton className="w-full hover:bg-blue-700 hover:text-white rounded transition-colors flex items-center">
                     <span className="flex items-center gap-2 w-full py-2">
                       <SettingsIcon />
                       <span>Settings</span>
