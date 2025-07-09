@@ -95,7 +95,7 @@ class StoreController extends Controller
     // Public: list all stores (for frontend select)
     public function publicIndex()
     {
-        $stores = Store::all(['id', 'store_name']);
+        $stores = Store::all(['id', 'store_name', 'store_status']);
         return response()->json($stores);
     }
 }

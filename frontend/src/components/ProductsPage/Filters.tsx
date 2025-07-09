@@ -65,10 +65,12 @@ const FilterComponent = ({ filters, onFilterChange }: FilterComponentProps) => {
             <SelectValue placeholder="Choose store" />
           </SelectTrigger>
           <SelectContent>
-            {stores.map((store) => (
-              <SelectItem key={store.id} value={store.id.toString()}>
-                {store.store_name}
-              </SelectItem>
+            {stores
+              .filter(store => store.store_status === 'published')
+              .map((store) => (
+                <SelectItem key={store.id} value={store.id.toString()}>
+                  {store.store_name}
+                </SelectItem>
             ))}
           </SelectContent>
         </Select>

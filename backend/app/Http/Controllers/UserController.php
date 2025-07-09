@@ -26,10 +26,11 @@ class UserController extends Controller
             'firstname', 
             'lastname',
             'email',
+            'role',
             'photo_profile',
             'created_at'
         ])
-        ->whereNotNull('photo_profile') // Only users with profile photos
+        ->where('role', '!=', 'admin') // Exclude admin users
         ->orderBy('created_at', 'desc')
         ->get();
         

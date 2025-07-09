@@ -55,10 +55,10 @@ const adminSidebarItems = [
 const AdminSidebar = () => {
   return (
       <Sidebar>
-        <SidebarHeader className="bg-blue-500 text-white flex flex-col py-4 px-4 items-start">
+        <SidebarHeader className="bg-blue-700 text-white flex flex-col py-4 px-4 items-start">
           <img src={logoWhite} alt="Logo" className="w-43" />
         </SidebarHeader>
-        <SidebarContent className="bg-blue-500 text-white">
+        <SidebarContent className="bg-blue-700 text-white">
           <SidebarGroupLabel className="text-gray-300 text-base px-4">
             Espace administrateur
           </SidebarGroupLabel>
@@ -66,7 +66,7 @@ const AdminSidebar = () => {
             {adminSidebarItems.map((item) =>
               item.subItems ? (
                 <SidebarMenuItem className="px-4 pb-2" key={item.title}>
-                  <SidebarMenuButton className="w-full hover:bg-white rounded transition-colors flex items-center">
+                  <SidebarMenuButton className="w-full rounded transition-colors flex items-center">
                     <Link to={item.url} className="flex text-base font-bold items-center gap-2 w-full py-2">
                       <item.icon />
                       <span>{item.title}</span>
@@ -94,7 +94,7 @@ const AdminSidebar = () => {
                 </SidebarMenuItem>
               ) : (
                 <SidebarMenuItem className="px-4 pb-2" key={item.title}>
-                  <SidebarMenuButton className="data-[active=true]:bg-white data-[active=true]:text-blue-700 w-full text-base font-bold rounded transition-colors">
+                  <SidebarMenuButton className="w-full text-base font-bold rounded transition-colors">
                     <Link to={item.url} className="flex items-center gap-2 w-full py-2">
                       <item.icon />
                       <span>{item.title}</span>
@@ -105,7 +105,7 @@ const AdminSidebar = () => {
             )}
           </SidebarMenu>
         </SidebarContent>
-        <SidebarFooter className="bg-blue-500 text-white py-4">
+        <SidebarFooter className="bg-blue-700 text-white py-4">
           <SidebarMenu>
             {/* Settings and Logout Dropdown */}
             <SidebarMenuItem className="px-2">

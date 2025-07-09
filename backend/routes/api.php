@@ -62,6 +62,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/admin-dashboard', function () {
             return response()->json(['message' => 'Admin Dashboard']);
         });
+        
         Route::get('/users/{userId}', [AdminController::class, 'showSellerForAdmin']);
         // list of all stores for admin
         Route::get('/stores', [StoreController::class, 'index']);

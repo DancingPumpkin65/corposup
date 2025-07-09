@@ -46,10 +46,10 @@ const CategoriesDropdown = () => {
                                 {category.subcategories.map((subcategory, subIndex) => (
                                   <NavigationMenuLink key={subIndex} asChild>
                                     <Link 
-                                      to={`/categories/${category.id}/products`}
+                                      to={`/categories/${subcategory.id}/products`}
                                       className="block text-xs text-gray-600 hover:text-blue-600 py-1 px-2 rounded hover:bg-blue-50 transition-colors"
                                     >
-                                      {subcategory}
+                                      {subcategory.name}
                                     </Link>
                                   </NavigationMenuLink>
                                 ))}

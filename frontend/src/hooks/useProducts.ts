@@ -37,11 +37,8 @@ export const useProducts = ({ categoryId, filters }: UseProductsProps) => {
     setLoading(true);
     try {
       const url = buildApiUrl(categoryId, filters.selectedStore);
-      console.log('Fetching products from URL:', url);
       
       const response = await apiClient.get(url);
-      console.log('Full API response:', response);
-      console.log('Response data:', response.data);
       
       // Check if response and response.data exist
       if (!response || response.data === undefined || response.data === null) {

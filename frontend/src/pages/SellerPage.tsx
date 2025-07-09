@@ -11,7 +11,7 @@ import Profile from '@/components/Seller/Profile/Profile';
 const SellerPage = () => {
   return (
     <MainLayout>
-      <SidebarProvider className="relative">
+      <SidebarProvider className="relative max-w-[1680px] mx-auto">
         <SellerSidebar />
         <div className="flex flex-1 flex-col">
           <Routes>

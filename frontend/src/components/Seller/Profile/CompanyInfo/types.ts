@@ -10,7 +10,7 @@ export interface CompanyAlertsProps {
 export interface CompanyInfoFormProps {
   formData: CompanyInfo;
   onFieldChange: (field: keyof CompanyInfo, value: string) => void;
-  onSubmit: (e: React.FormEvent) => void;
+  onSubmit: (e: React.FormEvent) => void; 
   loading: boolean;
 }
 

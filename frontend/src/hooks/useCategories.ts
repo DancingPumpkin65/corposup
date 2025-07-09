@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 interface Category {
   id: number;
   name: string;
-  subcategories?: string[];
+  subcategories?: { id: number; name: string }[];
 }
 
 interface ApiCategory {
@@ -40,9 +40,12 @@ const fetchCategoriesFromAPI = async (): Promise<Category[]> => {
           .map(parent => ({
             id: parent.id,
             name: parent.category_name,
-            subcategories: parent.children 
-              ? parent.children.map(child => child.category_name)
-              : undefined
+            subcategories: parent.children
+              ? parent.children.map(child => ({
+                  id: child.id,
+                  name: child.category_name,
+                }))
+              : undefined,
           }));
         
         categoriesCache = parentCategories;

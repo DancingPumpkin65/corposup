@@ -4,6 +4,7 @@ export interface Product {
   product_price: number;
   product_description: string;
   product_stock: number;
+  product_status: string;
   // Make these optional since they might not be included in API responses
   seller?: {
     firstname: string;
@@ -11,6 +12,7 @@ export interface Product {
   };
   store?: {
     store_name: string;
+    store_status: string;
   };
   category?: {
     category_name: string;
@@ -38,7 +40,7 @@ export interface ProductsComponentProps {
 export interface Category {
   id: number;
   name: string;
-  subcategories?: string[];
+  subcategories?: { id: number; name: string }[];
 }
 
 export interface CategoriesDropdownProps {
@@ -50,6 +52,7 @@ export interface CategoriesDropdownProps {
 export interface Store {
   id: number;
   store_name: string;
+  store_status: string;
 }
 
 export interface Filters {

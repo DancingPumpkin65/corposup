@@ -176,11 +176,11 @@ export function SellerSidebar() {
       <div className="bg-white pl-2 pt-4">
         <SidebarContent className="space-y-5">
           <SidebarGroup>
-            <SidebarGroupLabel className="text-base font-semibold text-gray-300 pb-2">
+            <SidebarGroupLabel className="text-lg font-semibold text-gray-300 pb-2">
               Espace vendeur
             </SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu className="font-semibold text-base flex flex-col gap-2 text-gray-600">
+              <SidebarMenu className="font-semibold text-lg flex flex-col gap-2 text-gray-600">
                 {sellerItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
@@ -191,7 +191,7 @@ export function SellerSidebar() {
                     >
                       <Link to={item.url} className="data-[active=true]:bg-white">
                         <item.icon />
-                        <span className="font-bold text-base">{item.title}</span>
+                        <span className="font-bold text-lg">{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
