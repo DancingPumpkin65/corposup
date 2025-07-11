@@ -2,7 +2,7 @@ import { Button } from "@/components/Shadcn/Button";
 import { Edit, Trash2, MoreHorizontal } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/Shadcn/Table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/Shadcn/DropdownMenu";
-import {type Discount} from "./types";
+import { type Discount } from "./types";
 
 // --- mock data ---
 const mockStores = [
@@ -17,9 +17,11 @@ const mockProducts = [
 function DiscountsTable ({
   discounts,
   onDelete,
+  onEdit,
 }: {
   discounts: Discount[];
   onDelete: (id: number) => void;
+  onEdit?: (discount: Discount) => void;
 }) {
   // Helper to get label for store or product by value
   const getStoreLabel = (value?: string) =>
@@ -76,7 +78,7 @@ function DiscountsTable ({
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuItem onClick={() => { /* handle edit */ }}>
+                      <DropdownMenuItem onClick={() => onEdit?.(d)}>
                         <Edit className="w-4 h-4 mr-2" /> Modifier
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => onDelete(d.id)}>

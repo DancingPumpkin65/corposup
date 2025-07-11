@@ -1,10 +1,11 @@
 import { SidebarInset, SidebarTrigger } from "@/components/Shadcn/Sidebar";
 import { Button } from "@/components/Shadcn/Button";
 import { Plus } from "lucide-react";
+import { Info } from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "@/components/Shadcn/Alert";
 import useDiscounts from "./useDiscounts";
 import DiscountsForm from "./DiscountsForm";
 import DiscountsTable from "./DiscountsTable";
-import DiscountsAlerts from "./DiscountsAlerts";
 
 const Discounts = () => {
   const {
@@ -14,6 +15,10 @@ const Discounts = () => {
     loading,
     handleAddDiscount,
     handleDelete,
+    editingDiscount,
+    handleEditInit,
+    handleUpdateDiscount,
+    setEditingDiscount,
   } = useDiscounts();
 
   if (loading) {
@@ -44,12 +49,23 @@ const Discounts = () => {
         <div className="py-8 px-4 sm:py-8 sm:px-4">
           <div className="bg-white rounded-xl shadow-sm border p-6">
             <h2 className="text-2xl sm:text-2xl font-bold text-gray-900 mb-2">
-              Créer une remise
+              {editingDiscount ? "Modifier la remise" : "Créer une remise"}
             </h2>
-            <p>Configurez une remise pour vos clients</p>
+            <p className="pb-4">Configurez une remise pour vos clients</p>
+            <Alert variant="default" className="bg-blue-50 border-blue-300 text-blue-800 mb-6">
+                <Info className="h-4 w-4 text-blue-800" />
+                <AlertTitle className="font-medium">Alerte info !</AlertTitle>
+                <AlertDescription>
+                Les champs marqués d'une étoile (*) sont obligatoires.
+                </AlertDescription>
+            </Alert>
             <DiscountsForm
-              onAdd={handleAddDiscount}
-              onCancel={() => setShowForm(false)}
+              onAdd={editingDiscount ? handleUpdateDiscount : handleAddDiscount}
+              onCancel={() => {
+                setShowForm(false);
+                setEditingDiscount(null);
+              }}
+              initialValues={editingDiscount ?? undefined}
             />
           </div>
         </div>
@@ -86,8 +102,11 @@ const Discounts = () => {
               </Button>
             )}
           </div>
-          <DiscountsAlerts />
-          <DiscountsTable discounts={discounts} onDelete={handleDelete} />
+          <DiscountsTable
+            discounts={discounts}
+            onDelete={handleDelete}
+            onEdit={handleEditInit}
+          />
         </div>
       </div>
     </SidebarInset>

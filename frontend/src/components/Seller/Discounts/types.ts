@@ -14,3 +14,10 @@ export interface Discount {
   storeValue?: string;
   productValue?: string;
 }
+
+export interface DiscountsAlertsProps {
+  alert: {
+    type: 'success' | 'error';
+    message: string;
+  } | null;
+}

@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/Shadcn/Button";
 import { Label } from "@/components/Shadcn/Label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/Shadcn/Select";
@@ -19,15 +18,36 @@ const mockProducts = [
   { value: "product2", label: "Produit 2" },
 ];
 
-const DiscountsForm = ({ onAdd, onCancel }: { onAdd: (d: Discount) => void; onCancel: () => void }) => {
-  const [discountValue, setDiscountValue] = useState<number | "">("");
-  const [discountType, setDiscountType] = useState<"percentage" | "fixed">("percentage");
-  const [applyTo, setApplyTo] = useState<"store" | "product">("store");
-  const [store, setStore] = useState<string>("");
-  const [product, setProduct] = useState<string>("");
-  const [startDate, setStartDate] = useState<Date | undefined>();
-  const [endDate, setEndDate] = useState<Date | undefined>();
+const DiscountsForm = ({
+  onAdd,
+  onCancel,
+  initialValues,
+}: {
+  onAdd: (d: Discount) => void;
+  onCancel: () => void;
+  initialValues?: Discount;
+}) => {
+  // If initialValues is provided, use them for editing
+  const [discountValue, setDiscountValue] = useState<number | "">(initialValues ? initialValues.discount_value : "");
+  const [discountType, setDiscountType] = useState<"percentage" | "fixed">(initialValues ? (initialValues.discount_amount === initialValues.discount_value ? "percentage" : "fixed") : "percentage");
+  const [applyTo, setApplyTo] = useState<"store" | "product">(initialValues ? initialValues.applyTo : "store");
+  const [store, setStore] = useState<string>(initialValues?.storeValue || "");
+  const [product, setProduct] = useState<string>(initialValues?.productValue || "");
+  const [startDate, setStartDate] = useState<Date | undefined>(initialValues?.discount_start);
+  const [endDate, setEndDate] = useState<Date | undefined>(initialValues?.discount_end);
   const [formTouched, setFormTouched] = useState(false);
+
+  useEffect(() => {
+    if (initialValues) {
+      setDiscountValue(initialValues.discount_value);
+      setDiscountType(initialValues.discount_amount === initialValues.discount_value ? "percentage" : "fixed");
+      setApplyTo(initialValues.applyTo);
+      setStore(initialValues.storeValue || "");
+      setProduct(initialValues.productValue || "");
+      setStartDate(initialValues.discount_start);
+      setEndDate(initialValues.discount_end);
+    }
+  }, [initialValues]);
 
   const isFormValid =
     discountValue !== "" &&
@@ -41,7 +61,7 @@ const DiscountsForm = ({ onAdd, onCancel }: { onAdd: (d: Discount) => void; onCa
     setFormTouched(true);
     if (!isFormValid) return;
     onAdd({
-      id: Date.now(),
+      id: initialValues?.id ?? Date.now(),
       seller_id: 1,
       product_id: applyTo === "product" ? 1 : 0,
       store_id: applyTo === "store" ? 1 : 0,
@@ -56,15 +76,17 @@ const DiscountsForm = ({ onAdd, onCancel }: { onAdd: (d: Discount) => void; onCa
       storeValue: store,
       productValue: product,
     });
-    // Reset form
-    setDiscountValue("");
-    setDiscountType("percentage");
-    setStore("");
-    setProduct("");
-    setApplyTo("store");
-    setStartDate(undefined);
-    setEndDate(undefined);
-    setFormTouched(false);
+    // Reset form only if not editing
+    if (!initialValues) {
+      setDiscountValue("");
+      setDiscountType("percentage");
+      setStore("");
+      setProduct("");
+      setApplyTo("store");
+      setStartDate(undefined);
+      setEndDate(undefined);
+      setFormTouched(false);
+    }
   };
 
   return (
