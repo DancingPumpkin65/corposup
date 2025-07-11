@@ -122,7 +122,7 @@ const Users = () => {
                 {users?.map((user: User) => (
                   <tr key={user.id} className="border-b hover:bg-gray-50">
                     <td className="py-2 px-2">{user.id}</td>
-                    <td className="py-2 px-2"><Avatar><AvatarImage className='w-5 h-5' src={getProfileImageUrl(user.photo_profile)} alt={`${user.firstname} ${user.lastname}`} className="w-10 h-10 rounded-full" /></Avatar></td>
+                    <td className="py-2 px-2"><Avatar><AvatarImage className='w-5 h-5' src={getProfileImageUrl(user.photo_profile)} alt={`${user.firstname} ${user.lastname}`} /></Avatar></td>
                     <td className="py-2 px-2">{user.firstname}</td>
                     <td className="py-2 px-2">{user.lastname}</td>
                     <td className="py-2 px-2">{user.email}</td>

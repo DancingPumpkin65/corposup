@@ -3,6 +3,7 @@ import type { Store, StoreFormData } from '@/components/Seller/Shops/types';
 import { fetchStores, createStore, updateStore, deleteStore } from '@/services/shopsApi';
 import { useAlert } from '@/hooks/useAlert';
 import { createStoreFormData, getImageUrl } from '@/utils/formUtils';
+import { toast } from "sonner";
 
 export const useShops = () => {
   const [stores, setStores] = useState<Store[]>([]);
@@ -25,7 +26,7 @@ export const useShops = () => {
     store_image: ''
   });
 
-  const { alert, showAlert, hideAlert } = useAlert();
+  const { alert, hideAlert } = useAlert();
 
   useEffect(() => {
     const loadStores = async () => {
@@ -110,8 +111,7 @@ export const useShops = () => {
       const response = await createStore(dataToSend);
 
       // Show success alert immediately
-      showAlert('success', 'Boutique créée avec succès!', 2000);
-      
+      toast.success('Boutique créée avec succès!');
       // Handle different response structures
       const newStore = response.data?.store || response.data;
       setStores(prev => [...prev, newStore]);
@@ -119,7 +119,7 @@ export const useShops = () => {
       // Wait for user to see the success message before navigating
       setTimeout(() => {
         setShowCreateForm(false);
-      }, 2000);
+      }, 100);
 
     } finally {
       setCreating(false);
@@ -137,8 +137,8 @@ export const useShops = () => {
       const response = await updateStore(editingStore.id, dataToSend);
 
       // Show success alert immediately
-      showAlert('success', 'Boutique mise à jour avec succès!', 2000);
-      
+      toast.success('Boutique mise à jour avec succès!');
+
       // Handle different response structures
       const updatedStore = response.data?.store || response.data;
       setStores(prev => prev.map(s => s.id === editingStore.id ? updatedStore : s));
@@ -147,7 +147,7 @@ export const useShops = () => {
       setTimeout(() => {
         setShowEditForm(false);
         setEditingStore(null);
-      }, 2000);
+      }, 100);
 
     } finally {
       setCreating(false);
@@ -165,7 +165,7 @@ export const useShops = () => {
     try {
       await deleteStore(storeToDelete.id);
       setStores(prev => prev.filter(s => s.id !== storeToDelete.id));
-      showAlert('success', 'Boutique supprimée avec succès!', 3000);
+      toast.success('Boutique supprimée avec succès!');
     } finally {
       setDeleteDialogOpen(false);
       setStoreToDelete(null);

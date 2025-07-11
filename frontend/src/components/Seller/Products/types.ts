@@ -1,24 +1,3 @@
-export interface PriceTier {
-  min_quantity: number;
-  max_quantity: number;
-  price: number;
-}
-
-export interface SelectOption {
-  value: string | number;
-  label: string;
-}
-
-export interface CategoryOption extends SelectOption {
-  group: string;
-}
-
-export interface ProductImage {
-    file: File;
-    is_main: boolean;
-    preview: string; // URL.createObjectURL result
-}
-
 export interface Products {
   // products table
   id: number;
@@ -48,6 +27,27 @@ export interface Products {
   MPN: string;
   // product_galleries table
   images: ProductImage[];
+}
+
+export interface PriceTier {
+  min_quantity: number;
+  max_quantity: number;
+  price: number;
+}
+
+export interface SelectOption {
+  value: string | number;
+  label: string;
+}
+
+export interface CategoryOption extends SelectOption {
+  group: string;
+}
+
+export interface ProductImage {
+    file: File;
+    is_main: boolean;
+    preview: string; // URL.createObjectURL result
 }
 
 export interface ProductAlertsProps {

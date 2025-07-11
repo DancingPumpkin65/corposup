@@ -11,11 +11,21 @@ import Users from '@/components/Admin/Users/Users';
 import ConsultProduct from '@/components/Admin/Consult/ConsultProducts';
 import Logs from '@/components/Admin/Consult/Logs';
 import Repports from '@/components/Admin/Consult/Repports';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
+import authService from '@/services/authService';
 
 const AdminPage = () => {
+  const { user: currentUser } = useCurrentUser();
+  const isAuthenticated = authService.isAuthenticated();
   return (
     <SidebarProvider className="relative flex">
-      <AdminSidebar />
+      {isAuthenticated && currentUser ? (
+      <AdminSidebar user={currentUser} />
+      ) : (
+        <div className="flex items-center justify-center h-screen">
+          <div className="text-gray-500">Please log in to access the admin panel.</div>
+        </div>
+      )}
       <div className="flex flex-1 flex-col">
         <Routes>
           <Route index element={<Overview />} />

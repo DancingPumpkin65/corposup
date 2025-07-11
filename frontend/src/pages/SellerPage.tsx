@@ -3,6 +3,7 @@ import { SellerSidebar } from '@/components/Seller/Sidebar';
 import { MainLayout } from '@/components/layouts/MainLayout';
 import Overview from '@/components/Seller/Overview';
 import Deliveries from '@/components/Seller/Deliveries/Deliveries';
+import Discounts from '@/components/Seller/Discounts/Discounts';
 import { Shops } from '@/components/Seller';
 import Products from '@/components/Seller/Products/Products';
 import { Routes, Route } from 'react-router-dom';
@@ -17,6 +18,7 @@ const SellerPage = () => {
           <Routes>
             <Route index element={<Overview />} />
             <Route path="products" element={<Products />} />
+            <Route path="discounts" element={<Discounts />} />
             <Route path="store" element={<Shops />} />
             <Route path="shipping" element={<Deliveries />} />
             <Route path="orders" element={<div className="p-6">Commandes - Coming Soon</div>} />

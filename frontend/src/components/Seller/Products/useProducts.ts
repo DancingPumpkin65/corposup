@@ -169,7 +169,7 @@ export const useProducts = () => {
       setShowCreateForm(false);
       resetForm();
       toast.success('Produit créé avec succès !');
-    }, 1000);
+    }, 3000);
   };
 
   const handleUpdate = (e: React.FormEvent) => {
@@ -184,7 +184,7 @@ export const useProducts = () => {
       setEditingProduct(null);
       resetForm();
       toast.success('Produit mis à jour avec succès !');
-    }, 1000);
+    }, 3000);
   };
 
   const handleDelete = (product: Products) => {
@@ -194,10 +194,12 @@ export const useProducts = () => {
 
   const confirmDelete = () => {
     if (productToDelete) {
-      setProducts(prev => prev.filter(p => p.id !== productToDelete.id));
-      setDeleteDialogOpen(false);
-      setProductToDelete(null);
-      toast.success('Produit supprimé avec succès.');
+      setTimeout(() => {
+        setProducts(prev => prev.filter(p => p.id !== productToDelete.id));
+        setDeleteDialogOpen(false);
+        setProductToDelete(null);
+        toast.success('Produit supprimé avec succès.');
+      }, 3000);
     }
   };
 

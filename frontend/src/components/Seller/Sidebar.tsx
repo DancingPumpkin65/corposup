@@ -130,6 +130,23 @@ const EntrepriseIcon = () => (
   </svg>
 )
 
+const RemiseIcon = () => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    fill="none" 
+    viewBox="0 0 24 24" 
+    stroke-width="1.5" 
+    stroke="currentColor" 
+    style={{ width: '24px', height: '24px' }}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="m9 14.25 6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0c1.1.128 1.907 1.077 1.907 2.185ZM9.75 9h.008v.008H9.75V9Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 4.5h.008v.008h-.008V13.5Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+    ></path>
+  </svg>
+)
+
 const sellerItems = [
   {
     title: "Vue d'ensemble",
@@ -140,6 +157,11 @@ const sellerItems = [
     title: "Annonces de produits",
     url: "/seller/products",
     icon: ProductsIcon,
+  },
+  {
+    title: "Remises",
+    url: "/seller/discounts",
+    icon: RemiseIcon,
   },
   {
     title: "Boutiques",
@@ -180,18 +202,18 @@ export function SellerSidebar() {
               Espace vendeur
             </SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu className="font-semibold text-lg flex flex-col gap-2 text-gray-600">
+              <SidebarMenu className="font-semibold text-lg flex flex-col gap-2 text-gray-500">
                 {sellerItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
                       isActive={location.pathname === item.url}
-                      className="transition-all duration-150 py-2 px-2 rounded-none flex items-center gap-2 text-gray-600 hover:text-gray-500 hover:bg-white border-l border-transparent hover:border-blue-600 data-[active=true]:text-orange-500 data-[active=true]:border-blue-600 h-auto"
+                      className="transition-all duration-150 py-2 px-2 rounded-none flex items-center gap-2 text-gray-500 hover:text-gray-400 hover:bg-white border-l border-transparent hover:border-blue-600 data-[active=true]:text-orange-500 data-[active=true]:border-blue-600 h-auto"
 
                     >
                       <Link to={item.url} className="data-[active=true]:bg-white">
                         <item.icon />
-                        <span className="font-bold text-lg">{item.title}</span>
+                        <span className="font-bold text-base">{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

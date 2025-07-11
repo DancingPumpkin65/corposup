@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { HomeIcon, BoxIcon, SearchIcon, SettingsIcon, LogOutIcon, ChevronUp, UserIcon } from 'lucide-react';
+import { HomeIcon, BoxIcon, SearchIcon, UserIcon } from 'lucide-react';
 import {
   Sidebar,
   SidebarHeader,
@@ -15,6 +15,20 @@ import {
 } from '@/components/Shadcn/Sidebar/sidebar';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/Shadcn/DropdownMenu';
 import logoWhite from '@/assets/LogoWhite.svg';
+import {
+  DropdownMenuLabel,
+  DropdownMenuGroup,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuPortal,
+  DropdownMenuSubContent,
+  DropdownMenuShortcut,
+  DropdownMenuSeparator
+} from '@/components/Shadcn/DropdownMenu/dropdown-menu';
+import { Button } from '@/components/Shadcn/Button/button';
+import { AvatarImage } from '@/components/Shadcn/Avatar/avatar';
+import { getUserDisplayName, getProfileImageUrl } from '@/utils/user';
+import authService from '@/services/authService';
 
 const ChevronRightSvg = (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-auto lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"></path></svg>
@@ -50,14 +64,43 @@ const adminSidebarItems = [
       { title: "Rapports", url: "/admin/consult/reports" },
     ],
   },
-];
 
-const AdminSidebar = () => {
+];
+import { Avatar } from '@/components/Shadcn/Avatar/avatar';
+
+
+interface User {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  photo_profile?: string;
+}
+
+interface SidebarUserDropdownProps {
+  user: User;
+}
+
+const AdminSidebar = ({ user }: SidebarUserDropdownProps) => {
+
+
+  const handleLogout = async () => {
+      try {
+        await authService.logout();
+        window.location.href = '/signin';
+      } catch (error) {
+        console.error('Logout error:', error);
+        window.location.href = '/signin';
+      }
+    };
+
   return (
       <Sidebar>
         <SidebarHeader className="bg-blue-700 text-white flex flex-col py-4 px-4 items-start">
           <img src={logoWhite} alt="Logo" className="w-43" />
         </SidebarHeader>
+        
+
         <SidebarContent className="bg-blue-700 text-white">
           <SidebarGroupLabel className="text-gray-300 text-base px-4">
             Espace administrateur
@@ -109,31 +152,59 @@ const AdminSidebar = () => {
           <SidebarMenu>
             {/* Settings and Logout Dropdown */}
             <SidebarMenuItem className="px-2">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton className="w-full hover:bg-blue-700 hover:text-white rounded transition-colors flex items-center">
-                    <span className="flex items-center gap-2 w-full py-2">
-                      <SettingsIcon />
-                      <span>Settings</span>
-                      <ChevronUp className="ml-auto" />
-                    </span>
+                  <SidebarMenuButton >
+                    <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                    <Button variant="outline">
+                        <Avatar>
+                          {user.photo_profile && getProfileImageUrl(user.photo_profile) ? (
+                            <AvatarImage
+                              src={getProfileImageUrl(user.photo_profile)}
+                              alt={getUserDisplayName(user)}
+                            />  
+                          ) : null}
+                        </Avatar>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-semibold">{getUserDisplayName(user)}</span>
+                          <div className="text-xs text-gray-500">{user.email}</div>
+                        </div>
+                      </Button>
+                    </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56" align="start">
+                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuGroup>
+                          <DropdownMenuItem>
+                            Profile
+                            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            Settings
+                            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                          </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup>
+                          <DropdownMenuItem>Team</DropdownMenuItem>
+                          <DropdownMenuSub>
+                            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                            <DropdownMenuPortal>
+                              <DropdownMenuSubContent>
+                                <DropdownMenuItem>Email</DropdownMenuItem>
+                                <DropdownMenuItem>Message</DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>More...</DropdownMenuItem>
+                              </DropdownMenuSubContent>
+                            </DropdownMenuPortal>
+                          </DropdownMenuSub>
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600">
+                          Log out
+                          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </SidebarMenuButton>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent side="top" className="w-[--radix-popper-anchor-width] bg-white text-black border-none shadow-lg">
-                  <DropdownMenuItem className='h-8'>
-                    <a href="/settings" className="flex items-center gap-2 w-full py-2">
-                      <UserIcon className='w-6' />
-                      <span>Profile</span>
-                    </a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className='h-8'>
-                    <a href="/logout" className="flex items-center gap-2 w-full py-2">
-                      <LogOutIcon className='w-6' />
-                      <span>Logout</span>
-                    </a>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarFooter>

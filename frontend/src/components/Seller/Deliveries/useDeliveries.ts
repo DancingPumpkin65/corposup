@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import apiClient from '@/services/apiClient';
 import { type ShippingService, type ShippingFormData, type AlertState } from '@/components/Seller/Deliveries/types';
+import { toast } from "sonner";
 
 export const useDeliveries = () => {
   const [services, setServices] = useState<ShippingService[]>([]);
@@ -52,20 +53,6 @@ export const useDeliveries = () => {
     };
   }, [fetchServices]);
 
-  const showAlert = (type: 'success' | 'error', message: string) => {
-    if (isMountedRef.current) {
-      setAlert({ show: true, type, message });
-      
-      if (type === 'success') {
-        setTimeout(() => {
-          if (isMountedRef.current) {
-            setAlert(prev => ({ ...prev, show: false }));
-          }
-        }, 3000);
-      }
-    }
-  };
-
   const handleInputChange = (field: keyof ShippingFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (alert.show) {
@@ -110,7 +97,7 @@ export const useDeliveries = () => {
       await apiClient.delete(`/shippings/${serviceToDelete.id}`);
       if (isMountedRef.current) {
         setServices(prev => prev.filter(s => s.id !== serviceToDelete.id));
-        showAlert('success', 'Service de livraison supprimé avec succès!');
+        toast.success('Service de livraison supprimé avec succès!');
       }
     } finally {
       setDeleteDialogOpen(false);
@@ -133,16 +120,14 @@ export const useDeliveries = () => {
       await apiClient.post('/shippings', submitData);
       
       if (isMountedRef.current) {
-        showAlert('success', 'Service de livraison créé avec succès!');
-
+        toast.success('Service de livraison créé avec succès!');
         setTimeout(async () => {
           if (isMountedRef.current) {
             await fetchServices();
             setShowCreateForm(false);
-            setAlert(prev => ({ ...prev, show: false }));
             resetForm();
           }
-        }, 1500);
+        }, 100);
       }
 
     } finally {
@@ -169,8 +154,7 @@ export const useDeliveries = () => {
       await apiClient.put(`/shippings/${editingService.id}`, submitData);
       
       if (isMountedRef.current) {
-        showAlert('success', 'Service de livraison mis à jour avec succès!');
-
+        toast.success('Service de livraison mis à jour avec succès!');
         setTimeout(async () => {
           if (isMountedRef.current) {
             await fetchServices();
@@ -179,7 +163,7 @@ export const useDeliveries = () => {
             setAlert(prev => ({ ...prev, show: false }));
             resetForm();
           }
-        }, 1500);
+        }, 100);
       }
 
     } finally {
