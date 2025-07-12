@@ -11,6 +11,7 @@ const SignIn = lazy(() => import('@/pages/SignIn'));
 const SignUp = lazy(() => import('@/pages/SignUp'));
 const ProductsPage = lazy(() => import('@/pages/ProductsPage'));
 const RoleBasedRedirect = lazy(() => import('@/pages/RoleBasedRedirect'));
+const ProductPage = lazy(() => import('@/components/ProductsPage/ProductPage'));
 
 export const AppRoutes = () => {
   return (
@@ -22,6 +23,7 @@ export const AppRoutes = () => {
         <Route path="/dashboard" element={<RoleBasedRedirect />} />
 
         <Route path="/categories/:categoryId/products" element={<ProductsPage />} />
+        <Route path="/categories/:categoryId/products/:productId" element={<ProductPage />} />
 
         <Route
           path="/admin/*"

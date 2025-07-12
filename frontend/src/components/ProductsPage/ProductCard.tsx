@@ -1,18 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Star, ShoppingCart } from 'lucide-react';
 import { type ProductCardProps } from './types';
+import item from '@/assets/Item.jpg'
 
 const ProductCard = ({ product, viewMode }: ProductCardProps) => {
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-  };
-
-  // Safe getters for potentially missing data
-  const getSellerName = () => {
-    if (product.seller?.firstname && product.seller?.lastname) {
-      return `${product.seller.firstname} ${product.seller.lastname}`;
-    }
-    return 'Vendeur inconnu';
   };
 
   const getStoreName = () => {
@@ -22,15 +15,13 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
   if (viewMode === 'list') {
     return (
       <div className="flex flex-col sm:flex-row bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-        <div className="w-full sm:w-48 h-48 sm:h-32 bg-gray-200 flex-shrink-0">
-          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-            <span className="text-gray-400 text-xs">No Image</span>
-          </div>
+        <div className="relative h-48 w-53 flex items-center justify-center my-auto p-4">
+            <img src={item} className='rounded-[15px] w-auto h-full md:h-full object-cover' />
         </div>
         <div className="flex-1 p-4">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
             <div className="flex-1">
-              <Link to={`/products/${product.id}`}>
+              <Link to={`/categories/${product.category_id}/products/${product.id}`}>
                 <h3 className="font-semibold text-lg text-gray-900 hover:text-blue-600 mb-2">
                   {product.product_name}
                 </h3>
@@ -47,7 +38,7 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
                 <span className="text-sm text-gray-500">(4.5)</span>
               </div>
               <p className="text-sm text-gray-500 mb-3 sm:mb-0">
-                Par {getSellerName()} • {getStoreName()}
+                Store: {getStoreName()}
               </p>
             </div>
             <div className="flex sm:flex-col sm:text-right sm:ml-4 justify-between items-center sm:items-end mt-3 sm:mt-0">
@@ -71,12 +62,12 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-      <div className="h-48 bg-gray-200 flex items-center justify-center">
-        <span className="text-gray-400 text-xs">No Image</span>
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow p-4 w-full max-w-sm mx-auto">
+      <div className="relative h-48 w-full flex items-center justify-center mx-auto">
+        <img src={item} className='rounded-[15px] w-auto h-full md:h-full object-cover' />
       </div>
-      <div className="p-4">
-        <Link to={`/products/${product.id}`}>
+      <div className="py-4">
+        <Link to={`/categories/${product.category_id}/products/${product.id}`}>
           <h3 className="font-semibold text-lg text-gray-900 hover:text-blue-600 mb-2">
             {truncateText(product.product_name, 50)}
           </h3>
@@ -93,7 +84,7 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
           <span className="text-sm text-gray-500">(4.5)</span>
         </div>
         <p className="text-sm text-gray-500 mb-3">
-          Par {getSellerName()}
+          Store: {getStoreName()}
         </p>
         <div className="flex justify-between items-center">
           <p className="text-xl font-bold text-blue-600">

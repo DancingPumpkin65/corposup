@@ -26,7 +26,7 @@ const ProductsComponent = ({ categoryId, filters }: ProductsComponentProps) => {
   }
 
   return (
-    <section>
+    <>
       <ProductsHeader
         productsCount={products.length}
         viewMode={viewMode}
@@ -40,7 +40,7 @@ const ProductsComponent = ({ categoryId, filters }: ProductsComponentProps) => {
       ) : (
         <ProductsList products={products} viewMode={viewMode} />
       )}
-    </section>
+    </>
   );
 };
 

@@ -18,7 +18,7 @@ interface TopBarProps {
 const TopBar = ({ currency, setCurrency, language, setLanguage }: TopBarProps) => {
   return (
     <div className="bg-blue-600 w-full">
-      <div className="max-w-[1580px] mx-auto flex justify-between items-center px-2 lg:px-8">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-2 lg:px-8">
         <div className="flex w-full justify-between items-center py-2">
           <div className="flex flex-row items-center text-white text-xs sm:text-sm space-x-2 sm:space-x-4">
             <div className="hidden sm:flex items-center">

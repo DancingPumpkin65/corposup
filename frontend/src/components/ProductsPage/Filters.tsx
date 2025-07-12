@@ -1,6 +1,7 @@
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/Shadcn/Select';
 import { useFilters } from '@/hooks/useFilters';
 import { type FilterComponentProps } from './types';
+import { Button } from '@/components/Shadcn/Button'
 
 const FilterComponent = ({ filters, onFilterChange }: FilterComponentProps) => {
   const {
@@ -61,7 +62,7 @@ const FilterComponent = ({ filters, onFilterChange }: FilterComponentProps) => {
 
         {/* Store Selection */}
         <Select value={filters.selectedStore} onValueChange={(storeId) => handleStoreChange(storeId, onFilterChange, filters)}>
-          <SelectTrigger className="w-full mt-4 text-lg px-5 py-6 border border-gray-300 rounded-md bg-white text-gray-500">
+          <SelectTrigger className="w-full mt-4 text-base px-5 border border-gray-300 rounded-md bg-white text-gray-500">
             <SelectValue placeholder="Choose store" />
           </SelectTrigger>
           <SelectContent>
@@ -76,18 +77,18 @@ const FilterComponent = ({ filters, onFilterChange }: FilterComponentProps) => {
         </Select>
 
         {/* Filter Buttons */}
-        <button 
+        <Button 
           className="mt-6 bg-orange-500 text-white w-full py-2 rounded-md font-bold hover:bg-orange-600 transition-colors"
           onClick={() => onFilterChange(filters)}
         >
           FILTER
-        </button>
-        <button 
-          className="mt-2 text-orange-500 w-full py-3 font-semibold hover:underline"
+        </Button>
+        <Button 
+          className="mt-2 bg-transparent hover:bg-transparent border-none shadow-none text-orange-500 w-full py-3 font-semibold hover:underline"
           onClick={() => resetFilters(onFilterChange)}
         >
           Reset Filter
-        </button>
+        </Button>
       </div>
     </div>
   );

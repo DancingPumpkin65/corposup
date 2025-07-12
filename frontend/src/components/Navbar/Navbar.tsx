@@ -33,7 +33,7 @@ const Navbar = () => {
       />
 
       {/* Main Navigation */}
-      <div className="max-w-[1580px] mx-auto w-full flex flex-col">
+      <div className="max-w-7xl mx-auto w-full flex flex-col">
         <div className="flex items-center gap-1 justify-between h-16 bg-white px-2 my-2 lg:px-8 w-full">
           {/* Mobile Menu Button - Hidden on seller pages */}
           {!isSellerPage && <MobileMenu />}

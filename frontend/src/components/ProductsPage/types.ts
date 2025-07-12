@@ -1,27 +1,80 @@
 export interface Product {
   id: number;
+  seller_id: number;
+  store_id: number;
+  category_id: number;
+  unit_id: number;
   product_name: string;
-  product_price: number;
+  product_ref: string;
   product_description: string;
+  product_price: number;
   product_stock: number;
+  product_minimum_commande: number;
   product_status: string;
-  // Make these optional since they might not be included in API responses
-  seller?: {
-    firstname: string;
-    lastname: string;
-  };
-  store?: {
+  video_path: string;
+  video_description: string;
+  key_words: string[];
+
+  store: {
+    id: number;
+    seller_id: number;
     store_name: string;
+    store_description: string;
+    store_image: string;
     store_status: string;
   };
-  category?: {
+
+  category: {
+    id: number;
     category_name: string;
+    category_parent_id: number;
   };
-  // These might be the actual field names from your API
-  seller_id?: number;
-  store_id?: number;
-  category_id?: number;
+
+  reviews: {
+    id: number;
+    product_id: number;
+    buyer_id: number;
+    rating: number;
+    comment: string;
+  };
+
+  discount: {
+    id: number;
+    seller_id: number;
+    product_id: number;
+    discount_value: number;
+    discount_start: Date;
+    discount_end: Date;
+    discount_active: boolean;
+    discount_amount: number;
+    new_price: number;
+  };
+  shippings: {
+    id: number;
+    shipping_name: string;
+    shipping_description: string;
+    shipping_cost: number;
+    shipping_delivery_time: string;
+    seller_id: number;
+  };
+
+  galleries: {
+    id: number;
+    product_id: number;
+    image_path: string;
+  };
+
+  details: {
+    id: number;
+    product_id: number;
+    color: string;
+    material: string;
+    brand: string;
+    GTIN: string;
+    MPN: string;
+  };
 }
+
 
 export interface ProductCardProps {
   product: Product;
