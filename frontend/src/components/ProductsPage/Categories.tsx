@@ -1,5 +1,17 @@
 import { Link } from 'react-router-dom';
-import { type CategoriesDropdownProps } from './types';
+import { type CategoriesDropdownProps, type Category } from './types';
+
+type ChildCategory = {
+  id: number;
+  category_name: string;
+  category_parent_id: number;
+};
+
+const normalizeChildren = (children: Category["children"] | undefined): ChildCategory[] => {
+  if (!children) return [];
+  if (Array.isArray(children)) return children as ChildCategory[];
+  return [children as ChildCategory];
+};
 
 const CategoriesComponent = ({ categories, loading }: CategoriesDropdownProps) => {
 
@@ -23,16 +35,16 @@ const CategoriesComponent = ({ categories, loading }: CategoriesDropdownProps) =
         <ul>
           {categories.map((category) => (
             <li key={category.id} className="my-4">
-              <span className="text-gray-700 font-bold cursor-default">{category.name}</span>
-              {category.subcategories && category.subcategories.length > 0 && (
+              <span className="text-gray-700 font-bold cursor-default">{category.category_name}</span>
+              {normalizeChildren(category.children).length > 0 && (
                 <ul className="ml-4 mt-1">
-                  {category.subcategories.map((subcategory) => (
-                    <li key={subcategory.id}>
+                  {normalizeChildren(category.children).map((child) => (
+                    <li key={child.id}>
                       <Link
-                        to={`/categories/${subcategory.id}/products`}
+                        to={`/categories/${child.id}/products`}
                         className="block text-xs text-gray-600 hover:text-blue-600 py-1 px-2 rounded hover:bg-blue-50 transition-colors"
                       >
-                        {subcategory.name}
+                        {child.category_name}
                       </Link>
                     </li>
                   ))}

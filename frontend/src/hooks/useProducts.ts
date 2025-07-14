@@ -50,7 +50,6 @@ export const useProducts = ({ categoryId, filters }: UseProductsProps) => {
       // Pass the correct structure to processApiResponse
       const rawProducts = processApiResponse({ data: response.data });
       const processedProducts = processProducts(rawProducts);
-      console.log(rawProducts)
 
       setProducts(processedProducts);
     } catch (error) {

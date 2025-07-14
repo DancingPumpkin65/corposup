@@ -92,8 +92,13 @@ export interface ProductsComponentProps {
 
 export interface Category {
   id: number;
-  name: string;
-  subcategories?: { id: number; name: string }[];
+  category_name: string;
+  category_parent_id: null;
+  children: {
+    id: number;
+    category_name: string;
+    category_parent_id: number;
+  };
 }
 
 export interface CategoriesDropdownProps {

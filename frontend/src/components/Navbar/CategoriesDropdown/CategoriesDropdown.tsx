@@ -39,17 +39,17 @@ const CategoriesDropdown = () => {
                         <NavigationMenuLink asChild>
                           <div className="block select-none space-y-1 rounded-md p-2 sm:p-3 leading-none no-underline outline-none transition-colors hover:bg-blue-50 hover:text-blue-600 focus:bg-blue-50 focus:text-blue-600">
                             <div className="text-sm font-medium leading-none mb-2 flex items-center justify-between">
-                              <span>{category.name}</span>
+                              <span>{category.category_name}</span>
                             </div>
-                            {category.subcategories && category.subcategories.length > 0 && (
+                            {category.children && category.children.length > 0 && (
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 sm:gap-2 mt-2">
-                                {category.subcategories.map((subcategory, subIndex) => (
+                                {category.children.map((child, subIndex) => (
                                   <NavigationMenuLink key={subIndex} asChild>
-                                    <Link 
-                                      to={`/categories/${subcategory.id}/products`}
+                                    <Link
+                                      to={`/categories/${child.id}/products`}
                                       className="block text-xs text-gray-600 hover:text-blue-600 py-1 px-2 rounded hover:bg-blue-50 transition-colors"
                                     >
-                                      {subcategory.name}
+                                      {child.category_name}
                                     </Link>
                                   </NavigationMenuLink>
                                 ))}

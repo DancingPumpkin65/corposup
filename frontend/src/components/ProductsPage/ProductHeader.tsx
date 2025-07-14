@@ -1,46 +1,41 @@
-import { useState, useEffect, useCallback } from 'react';
-import apiClient from '@/services/apiClient';
+import { useParams } from 'react-router-dom';
+import { useCategories } from '@/hooks/useCategories';
 import CategorieImg from '@/assets/CategorieImg.png';
 
-interface Category {
-  id: number;
-  category_name: string;
-}
+const ProductHeader = () => {
+  const { categories, loading } = useCategories();
+  const { categoryId } = useParams<{ categoryId: string }>();
 
-interface ProductHeaderProps {
-  categoryId: string | null;
-}
-
-const ProductHeader = ({ categoryId }: ProductHeaderProps) => {
-  const [category, setCategory] = useState<Category | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  const fetchCategory = useCallback(async () => {
-    if (!categoryId) return;
-    
-    setLoading(true);
-    try {
-      const response = await apiClient.get(`/categories/${categoryId}`);
-      
-      let categoryData = response.data;
-      if (categoryData.data) {
-        categoryData = categoryData.data;
+  let childCategoryName = 'Tous les produits';
+  if (!loading && categoryId) {
+    const idNum = Number(categoryId);
+    for (const parent of categories) {
+      if (Array.isArray(parent.children)) {
+        const found = parent.children.find((child) => child.id === idNum);
+        if (found) {
+          childCategoryName = found.category_name;
+          break;
+        }
       }
+    }
+  }
+
+  if (loading) 
+    return (
+      <div 
+      className="relative text-white p-6 rounded-2xl mb-6 w-full bg-no-repeat bg-cover bg-center h-32"
+      style={{ backgroundImage: `url('${CategorieImg}')`, backgroundPosition: 'top' }}
+    >
+      <div className="absolute inset-0 object-cover rounded-2xl bg-gradient-to-r from-blue-600 to-blue-600/30"></div>
       
-      setCategory(categoryData);
-    } catch (error) {
-      console.error('Error fetching category:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [categoryId]);
-
-  useEffect(() => {
-    if (categoryId) {
-      fetchCategory();
-    }
-  }, [categoryId, fetchCategory]);
-
+      <div className="relative max-w-full">
+        <h1 className="text-md lg:text-xl font-bold uppercase tracking-wider">
+          Chargement...
+        </h1>
+      </div>
+    </div>
+    );
+    
   return (
     <div 
       className="relative text-white p-6 rounded-2xl mb-6 w-full bg-no-repeat bg-cover bg-center h-32"
@@ -50,7 +45,7 @@ const ProductHeader = ({ categoryId }: ProductHeaderProps) => {
       
       <div className="relative max-w-full">
         <h1 className="text-md lg:text-xl font-bold uppercase tracking-wider">
-          {loading ? 'Chargement...' : category ? category.category_name : 'Tous les produits'}
+          {childCategoryName}
         </h1>
       </div>
     </div>

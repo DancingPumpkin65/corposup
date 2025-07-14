@@ -4,7 +4,7 @@ const ProductsLoadingSkeleton = () => {
       <div className="flex justify-between items-center mb-4 flex-wrap gap-4">
         <h2 className="text-xl font-bold capitalize">Chargement...</h2>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {[...Array(6)].map((_, index) => (
           <div key={index} className="animate-pulse">
             <div className="bg-gray-200 h-48 rounded-lg mb-4"></div>

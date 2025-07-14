@@ -4,6 +4,7 @@ import EmptyProducts from '@/components/ProductsPage/EmptyProducts';
 import ProductsList from '@/components/ProductsPage/ProductsList';
 import { useProducts } from '@/hooks/useProducts';
 import { type ProductsComponentProps } from './types';
+import { useMemo } from 'react';
 
 const ProductsComponent = ({ categoryId, filters }: ProductsComponentProps) => {
   const {
@@ -17,9 +18,19 @@ const ProductsComponent = ({ categoryId, filters }: ProductsComponentProps) => {
     categoryId: categoryId || null, 
     filters: {
       ...filters,
-      selectedStore: filters.selectedStore || null
+      selectedStore: filters.selectedStore && filters.selectedStore !== '' ? filters.selectedStore : null
     }
   });
+
+  const filteredProducts = useMemo(() => {
+    if (filters.selectedStore) {
+      const storeId = String(filters.selectedStore);
+      return products.filter(
+        (product) => String(product.store_id) === storeId
+      );
+    }
+    return products;
+  }, [products, filters.selectedStore]);
 
   if (loading) {
     return <ProductsLoadingSkeleton />;
@@ -28,17 +39,17 @@ const ProductsComponent = ({ categoryId, filters }: ProductsComponentProps) => {
   return (
     <>
       <ProductsHeader
-        productsCount={products.length}
+        productsCount={filteredProducts.length}
         viewMode={viewMode}
         setViewMode={setViewMode}
         sortBy={sortBy}
         setSortBy={setSortBy}
       />
 
-      {products.length === 0 ? (
+      {filteredProducts.length === 0 ? (
         <EmptyProducts />
       ) : (
-        <ProductsList products={products} viewMode={viewMode} />
+        <ProductsList products={filteredProducts} viewMode={viewMode} />
       )}
     </>
   );

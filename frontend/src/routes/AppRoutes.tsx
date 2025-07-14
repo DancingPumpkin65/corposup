@@ -11,7 +11,7 @@ const SignIn = lazy(() => import('@/pages/SignIn'));
 const SignUp = lazy(() => import('@/pages/SignUp'));
 const ProductsPage = lazy(() => import('@/pages/ProductsPage'));
 const RoleBasedRedirect = lazy(() => import('@/pages/RoleBasedRedirect'));
-const ProductPage = lazy(() => import('@/components/ProductsPage/ProductPage'));
+const ProductPage = lazy(() => import('@/components/ProductsPage/ProductInfos'));
 
 export const AppRoutes = () => {
   return (
