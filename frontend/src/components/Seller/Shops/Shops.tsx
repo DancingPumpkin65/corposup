@@ -93,7 +93,7 @@ const Shops = () => {
         <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
           <SidebarTrigger className="-ml-1" />
           <div className="flex items-center gap-2">
-            <h1 className="text-lg font-semibold">Créer ma boutique</h1>
+            <h1 className="text-lg font-semibold">Boutiques</h1>
           </div>
         </header>
         <ShopForm
@@ -121,7 +121,7 @@ const Shops = () => {
         <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
           <SidebarTrigger className="-ml-1" />
           <div className="flex items-center gap-2">
-            <h1 className="text-lg font-semibold">Modifier ma boutique</h1>
+            <h1 className="text-lg font-semibold">Boutiques</h1>
           </div>
         </header>
         <ShopForm

@@ -41,7 +41,7 @@ function DiscountsTable ({
             <TableHead className="min-w-[120px] font-semibold">Valeur de la remise</TableHead>
             <TableHead className="min-w-[120px] font-semibold">Ancien prix</TableHead>
             <TableHead className="min-w-[120px] font-semibold">Nouveau prix</TableHead>
-            <TableHead></TableHead>
+            <TableHead className="w-[50px] text-left"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -70,18 +70,18 @@ function DiscountsTable ({
                 </TableCell>
                 <TableCell>{d.old_price}</TableCell>
                 <TableCell>{d.new_price}</TableCell>
-                <TableCell>
+                <TableCell className="text-left">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreHorizontal className="w-4 h-4" />
+                      <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-100">
+                        <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent>
+                    <DropdownMenuContent align="end" className="w-40">
                       <DropdownMenuItem onClick={() => onEdit?.(d)}>
                         <Edit className="w-4 h-4 mr-2" /> Modifier
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => onDelete(d.id)}>
+                      <DropdownMenuItem className="text-red-600 focus:text-red-600 cursor-pointer hover:bg-red-50" onClick={() => onDelete(d.id)}>
                         <Trash2 className="w-4 h-4 mr-2" /> Supprimer
                       </DropdownMenuItem>
                     </DropdownMenuContent>
