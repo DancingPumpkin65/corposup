@@ -71,7 +71,7 @@ const ProductPage = () => {
     <MainLayout>
       {/* Breadcrumb */}
       <ProductBreadcrumb product={product} />
-      <div className="max-w-[1580px] mx-auto w-full px-8 py-8 lg:px-8">
+      <div className="max-w-7xl mx-auto w-full px-8 pt-4 pb-8 lg:px-8">
         <div className="flex flex-col gap-8 md:flex-row h-auto">
           {/* Left: Gallery */}
           <div className="md:w-1/2 flex flex-col items-center">
@@ -82,42 +82,35 @@ const ProductPage = () => {
           <div className="md:w-1/2 flex flex-col gap-4">
             {/* Product Name & Details */}
             <div>
-              <div className="text-lg text-gray-400 mb-1">{product.product_ref}</div>
-              <h1 className="text-4xl w-full font-bold mb-4 text-justify">{product.product_name}, {product.details.brand}, {product.details.material}, {product.details.color}<br /></h1>
-              <div className="flex flex-wrap items-center gap-2 text-lg mb-4">
-                Magasin{" "}
-                <a
-                  href="#"
-                  className="text-blue-600 font-semibold underline"
-                >
-                  {product.store?.store_name}
-                </a>
-              </div>
-              <div className="flex items-center mb-2">
-                <div className="flex">
-                    {renderStars(product.reviews.rating || 0)}
+              <div className="flex w-full justify-between items-center">
+              <div className="flex text-left flex-wrap items-center gap-2 text-lg mb-4">
+                  
+                  <a
+                    href="#"
+                    className="text-orange-500 text-xl font-base uppercase"
+                  >
+                    {product.store?.store_name}
+                  </a>
                 </div>
+              <div className="text-lg text-right text-gray-400 mb-[10px]">{product.product_ref}</div>
+
               </div>
+              <h1 className="text-4xl w-full uppercase font-base text-gray-700 mb-4">{product.product_name}, {product.details.brand}, {product.details.material}, {product.details.color}<br /></h1>
+              
+              {/* Price, Old Price, Discount */}
+              <ProductPrice product={product} />
             </div>
-            {/* Price, Old Price, Discount */}
-            <ProductPrice product={product} />
             {/* Unit, Minimum, Delivery */}
             <div className="text-lg text-gray-700 mb-8">
               <div className="mb-2">
-                <span className="font-bold">Unit :</span> {product.unit_id}
-              </div>
-              <div className="mb-2">
-                <span className="font-bold">Minimum number of units :</span> {product.product_minimum_commande}
-              </div>
-              <div className="mb-2">
-                <span className="font-bold">Delivery :</span>{" "}
+                <span className="font-bold"></span>{" "}
                 {normalizeShippings(product.shippings).length > 0 ? (
                   <Dialog open={deliveryOpen} onOpenChange={setDeliveryOpen}>
                     <DialogTrigger asChild>
                       <button
-                        className="text-blue-600 hover:text-blue-800 transition border border-blue-600 font-bold rounded px-3 py-2"
+                        className="text-blue-500 hover:text-white hover:bg-blue-500 transition border border-blue-400 font-semibold rounded-xl px-4 py-3"
                         type="button"
-                      >
+                      > Tronsport: &nbsp;
                         {
                           normalizeShippings(product.shippings)[selectedShippingIdx].shipping_delivery_time
                         } - {
@@ -159,6 +152,12 @@ const ProductPage = () => {
                 ) : (
                   <span className="text-gray-400">Aucune livraison disponible</span>
                 )}
+              </div>
+              <div className="mb-2">
+                <span className="font-bold">Unit :</span> {product.unit_id}
+              </div>
+              <div className="mb-2">
+                <span className="font-bold">Minimum number of units :</span> {product.product_minimum_commande}
               </div>
             </div>
             {/* Quantity Selector and Buttons */}

@@ -208,7 +208,7 @@ export function SellerSidebar() {
                     <SidebarMenuButton
                       asChild
                       isActive={location.pathname === item.url}
-                      className="transition-all duration-150 py-2 px-2 rounded-none flex items-center gap-2 text-gray-500 hover:text-gray-400 hover:bg-white border-l border-transparent hover:border-blue-600 data-[active=true]:text-orange-500 data-[active=true]:border-blue-600 h-auto"
+                      className="transition-all duration-150 py-2 px-2 rounded-none flex items-center gap-2 text-gray-500 hover:text-gray-400 hover:bg-white border-l border-transparent data-[active=true]:text-orange-500 data-[active=true]:border-blue-600 h-auto"
 
                     >
                       <Link to={item.url} className="data-[active=true]:bg-white">

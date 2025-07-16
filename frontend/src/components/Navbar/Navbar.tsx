@@ -23,7 +23,7 @@ const Navbar = () => {
   const isAuthenticated = authService.isAuthenticated();
 
   return (
-    <nav className={`bg-white relative z-30 border-b border-gray-400 max-w-full mx-auto ${isSellerPage ? 'top-0' : ''}`}>
+    <nav className={`bg-white relative z-30 border-b border-gray-200 max-w-full mx-auto ${isSellerPage ? 'top-0' : ''}`}>
       {/* Top Bar */}
       <TopBar 
         currency={currency}

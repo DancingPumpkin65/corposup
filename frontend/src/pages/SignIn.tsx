@@ -15,7 +15,7 @@ const SignIn = () => {
   } = useSignIn();
 
   return (
-    <div className="sm:rounded-lg flex h-screen overflow-x-hidden">
+    <div className="sm:rounded-none flex h-screen overflow-x-hidden">
       {/* Image Panel */}
       <SignInImagePanel />
 

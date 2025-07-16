@@ -18,7 +18,7 @@ export const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ formData, on
                 <Input id="product_name" name="product_name" value={formData.product_name} onChange={onFieldChange} required />
             </div>
         </div>
-        <div>
+        <>
             <Label htmlFor="category_id">Catégorie *</Label>
             <Select name="category_id" onValueChange={(value) => onSelectChange('category_id', value)} value={String(formData.category_id)} required>
                 <SelectTrigger><SelectValue placeholder="Sélectionnez la catégorie" /></SelectTrigger>
@@ -33,11 +33,11 @@ export const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ formData, on
                     ))}
                 </SelectContent>
             </Select>
-        </div>
-        <div>
+        </>
+        <>
             <Label htmlFor="product_description">Description *</Label>
             <Textarea id="product_description" name="product_description" value={formData.product_description} onChange={onFieldChange} required />
-        </div>
+        </>
     </FormSection>
 );
 
