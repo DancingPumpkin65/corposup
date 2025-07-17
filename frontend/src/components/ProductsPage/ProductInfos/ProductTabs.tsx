@@ -32,7 +32,7 @@ const ProductTabs = ({ product }: { product: Product }) => {
         {TABS.map(tab => (
           <button
             key={tab}
-            className={`w-full py-2 px-4 ${activeTab === tab ? "border-b-2 border-blue-600 font-semibold text-blue-600" : "text-gray-500"}`}
+            className={`w-full uppercase text-xl py-2 px-4 ${activeTab === tab ? "border-b-2 border-blue-600 font-semibold text-blue-600" : "text-gray-500"}`}
             onClick={() => setActiveTab(tab)}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}

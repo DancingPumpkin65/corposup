@@ -267,8 +267,8 @@ const ProductGallery = ({
         </div>
         {/* Thumbnails */}
         {galleryArr.length > 1 && (
-          <div className="fotorama__nav-wrap" data-gallery-role="nav-wrap" style={{ marginTop: 16 }}>
-            <div className="fotorama__nav" style={{ height: 82, display: "flex", alignItems: "center" }}>
+          <div className="fotorama__nav-wrap" data-gallery-role="nav-wrap">
+            <div className="fotorama__nav" style={{ height: 82, display: "flex", alignItems: "end" }}>
               <div className="fotorama__nav__shaft fotorama__grab" style={{ display: "flex", alignItems: "center" }}>
                 {galleryArr.map((img, idx) => (
                   <Thumbnail
