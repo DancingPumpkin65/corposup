@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { type Product } from "@/components/ProductsPage/types";
+import imgtest from '@/assets/Item.jpg';
 
 type GalleryItem = {
   id: number;
@@ -88,7 +89,7 @@ const Thumbnail = ({
     onClick={onClick}
   >
     <img
-      src={`http://127.0.0.1:8000/storage/${img.image_path}`}
+      src={imgtest}
       alt={`gallery-thumb-${idx}`}
       style={{ width: "100%", height: "100%", objectFit: "cover" }}
     />
@@ -223,7 +224,7 @@ const ProductGallery = ({
             >
               <img
                 ref={mainImgRef}
-                src={`http://127.0.0.1:8000/storage/${galleryArr[selectedImageIdx].image_path}`}
+                src={imgtest}
                 alt={productName}
                 className="fotorama__img"
                 style={{ maxHeight: 480, maxWidth: 480, objectFit: "contain" }}
@@ -253,7 +254,7 @@ const ProductGallery = ({
               <div style={{ width: "100%", height: "100%", overflow: "hidden", position: "relative" }}>
                 <img
                   ref={previewImgRef}
-                  src={`http://127.0.0.1:8000/storage/${galleryArr[selectedImageIdx].image_path}`}
+                  src={imgtest}
                   id="magnifier-item-0-large"
                   className={`magnifier-large${showMagnifier ? " w-full" : " magnify-hidden"}`}
                   style={getLargeImageStyle()}
