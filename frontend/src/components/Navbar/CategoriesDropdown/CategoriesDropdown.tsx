@@ -18,7 +18,7 @@ const CategoriesDropdown = () => {
       <NavigationMenu className="relative z-1">
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="flex items-center space-x-2 cursor-pointer bg-transparent border-0 hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent p-0">
+            <NavigationMenuTrigger className="flex items-center space-x-2 cursor-pointer bg-transparent border-0 hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent hover:data-[state=open]:bg-transparent p-0">
               <img className="w-5 h-5" src={categoriesIcon} alt="Categories" />
               <p className="text-xl text-black font-semibold">Catégories</p>
             </NavigationMenuTrigger>

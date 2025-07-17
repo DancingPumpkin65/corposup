@@ -19,6 +19,8 @@ const Navbar = () => {
   const location = useLocation();
   
   const isSellerPage = location.pathname.startsWith('/seller');
+  const isNotHomePage = location.pathname !== '/';
+
   const { user: currentUser } = useCurrentUser();
   const isAuthenticated = authService.isAuthenticated();
 
@@ -36,29 +38,33 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto w-full flex flex-col">
         <div className="flex items-center gap-1 justify-between h-16 bg-white px-2 my-2 lg:px-8 w-full">
           {/* Mobile Menu Button - Hidden on seller pages */}
-          {!isSellerPage && <MobileMenu />}
+          {!isSellerPage && !isNotHomePage && <MobileMenu />}
 
-          {/* Logo and Categories Section for Seller Pages */}
+          {/* Logo and Categories Section */}
           <div className="flex items-center gap-4 flex-grow sm:flex-grow-0 justify-center sm:justify-start">
             <Link to="/">
               <img src={logoColored} alt="Logo" className="h-full sm:h-8 md:h-10 w-auto" />
             </Link>
-            
+            {/* Show CategoriesDropdown next to logo on all non-home, non-seller pages (laptop mode) */}
+            {(!isSellerPage && isNotHomePage) && (
+              <div className="hidden lg:block ml-4">
+                <CategoriesDropdown />
+              </div>
+            )}
+            {/* Seller page logic unchanged */}
+            {isSellerPage && (
+              <div className="hidden lg:block ml-4">
+                <CategoriesDropdown />
+              </div>
+            )}
           </div>
           
-          {/* Categories next to logo on seller pages (laptop mode) */}
-          {isSellerPage && (
-            <div className="hidden lg:block">
-              <CategoriesDropdown />
-            </div>
-          )}
-
           {/* Search Bar (Large screens) - Hidden on seller pages */}
           <SearchBar />
 
           {/* Right Section */}
           <div className="flex items-center gap-6">
-            {!isSellerPage && <NavbarIcons />}
+            {!isSellerPage && !isNotHomePage && <NavbarIcons />}
 
             {/* User Profile or Login Button */}
             {isAuthenticated && currentUser ? (
@@ -75,7 +81,7 @@ const Navbar = () => {
         </div>
 
         {/* Second Bar: Categories + Search + Navigation - Hidden on seller pages */}
-        {!isSellerPage && (
+        {!isSellerPage && !isNotHomePage && (
           <div className="flex items-center justify-between h-12 w-full bg-white px-2 mt-2 mb-2 lg:px-8">
             <CategoriesDropdown />
             <SearchBar isMobile />
@@ -84,7 +90,7 @@ const Navbar = () => {
         )}
 
         {/* Seller Page: Categories for mobile/tablet + Mobile Search */}
-        {isSellerPage && (
+        {isSellerPage && !isNotHomePage && (
           <div className="flex items-center justify-between h-12 w-full bg-white px-2 mt-2 mb-2 lg:px-8 lg:hidden">
             <CategoriesDropdown />
             <SearchBar isMobile />
@@ -93,7 +99,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu Overlay - Hidden on seller pages */}
-      {!isSellerPage && (
+      {!isSellerPage && !isNotHomePage && (
         <NavbarMobileOverlay 
           isOpen={mobileMenuOpen} 
           onClose={() => setMobileMenuOpen(false)} 

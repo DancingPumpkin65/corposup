@@ -13,19 +13,98 @@ const normalizeGalleries = (galleries: Product["galleries"] | Product["galleries
   return [];
 };
 
-const MAGNIFIER_SIZE = 190;
-const MAGNIFIER_PREVIEW_WIDTH = 500;
-const MAGNIFIER_PREVIEW_HEIGHT = 600;
-const MAGNIFIER_PREVIEW_LEFT = 565;
-const MAGNIFIER_PREVIEW_TOP = 0;
+type MagnifierConfig = {
+  zoom?: number;
+  lensSize?: number;
+  previewWidth?: number;
+  previewHeight?: number;
+  previewLeft?: number;
+  previewTop?: number;
+};
+
+const DEFAULT_MAGNIFIER_CONFIG: Required<MagnifierConfig> = {
+  zoom: 2,
+  lensSize: 190,
+  previewWidth: 500,
+  previewHeight: 600,
+  previewLeft: 565,
+  previewTop: 0,
+};
+
+const MagnifierLens = ({
+  show,
+  x,
+  y,
+  size,
+  style,
+}: {
+  show: boolean;
+  x: number;
+  y: number;
+  size: number;
+  style?: React.CSSProperties;
+}) =>
+  show ? (
+    <div
+      className="magnify-lens bg-white bg-opacity-50"
+      data-gallery-role="magnifier-zoom"
+      style={{
+        position: "absolute",
+        pointerEvents: "none",
+        left: x - size / 2,
+        top: y - size / 2,
+        width: size,
+        height: size,
+        border: "2px solid #c7c6c58c",
+        ...style,
+      }}
+    />
+  ) : null;
+
+const Thumbnail = ({
+  img,
+  idx,
+  selected,
+  onClick,
+}: {
+  img: GalleryItem;
+  idx: number;
+  selected: boolean;
+  onClick: () => void;
+}) => (
+  <div
+    key={img.id || idx}
+    className={`fotorama__thumb-border${selected ? " ring-2 ring-orange-500" : ""}`}
+    style={{
+      margin: "0 4px",
+      border: selected ? "2px solid #fb923c" : "2px solid #e5e7eb",
+      borderRadius: 6,
+      cursor: "pointer",
+      overflow: "hidden",
+      width: 64,
+      height: 64,
+      boxSizing: "border-box",
+    }}
+    onClick={onClick}
+  >
+    <img
+      src={`http://127.0.0.1:8000/storage/${img.image_path}`}
+      alt={`gallery-thumb-${idx}`}
+      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+    />
+  </div>
+);
 
 const ProductGallery = ({
   galleries = [],
   productName = "",
+  magnifierConfig = {},
 }: {
   galleries: Product["galleries"] | Product["galleries"][];
   productName?: string;
+  magnifierConfig?: MagnifierConfig;
 }) => {
+  const config = { ...DEFAULT_MAGNIFIER_CONFIG, ...magnifierConfig };
   const galleryArr = normalizeGalleries(galleries);
   const [selectedImageIdx, setSelectedImageIdx] = useState(0);
   const [showMagnifier, setShowMagnifier] = useState(false);
@@ -40,9 +119,6 @@ const ProductGallery = ({
       </div>
     );
   }
-
-  const handlePrev = () => setSelectedImageIdx(i => (i > 0 ? i - 1 : galleryArr.length - 1));
-  const handleNext = () => setSelectedImageIdx(i => (i < galleryArr.length - 1 ? i + 1 : 0));
   const handleThumbClick = (idx: number) => setSelectedImageIdx(idx);
 
   // Magnifier logic
@@ -51,19 +127,16 @@ const ProductGallery = ({
     const frameRect = e.currentTarget.getBoundingClientRect();
     const imgRect = mainImgRef.current.getBoundingClientRect();
 
-    // Mouse position relative to frame
     const mouseX = e.clientX - frameRect.left;
     const mouseY = e.clientY - frameRect.top;
 
-    // Image position and size within frame
     const imgLeft = imgRect.left - frameRect.left;
     const imgTop = imgRect.top - frameRect.top;
     const imgWidth = imgRect.width;
     const imgHeight = imgRect.height;
 
-    const halfLens = MAGNIFIER_SIZE / 2;
+    const halfLens = config.lensSize / 2;
 
-    // Clamp lens center within image bounds
     const clampedX = Math.max(imgLeft + halfLens, Math.min(mouseX, imgLeft + imgWidth - halfLens));
     const clampedY = Math.max(imgTop + halfLens, Math.min(mouseY, imgTop + imgHeight - halfLens));
 
@@ -74,7 +147,7 @@ const ProductGallery = ({
   };
 
   const getLargeImageStyle = () => {
-    const zoom = 2;
+    const zoom = config.zoom;
     if (!mainImgRef.current) {
       return { width: "100%", height: "auto", objectFit: "initial" };
     }
@@ -86,9 +159,8 @@ const ProductGallery = ({
       originX = magnifierPos.x - (imgRect.left - frameRect.left);
       originY = magnifierPos.y - (imgRect.top - frameRect.top);
     }
-    // Calculate offset so lens center is centered in preview
-    const previewCenterX = MAGNIFIER_PREVIEW_WIDTH / 2;
-    const previewCenterY = MAGNIFIER_PREVIEW_HEIGHT / 2;
+    const previewCenterX = config.previewWidth / 2;
+    const previewCenterY = config.previewHeight / 2;
     const offsetX = previewCenterX - originX * zoom;
     const offsetY = previewCenterY - originY * zoom;
 
@@ -120,18 +192,6 @@ const ProductGallery = ({
       >
         <div className="fotorama__stage rounded-xl bg-white border shadow-sm" style={{ height: 556, width: 556 }}>
           {/* Fullscreen/Zoom/Prev/Next */}
-          <button
-            className={`fotorama__arr fotorama__arr--prev${galleryArr.length <= 1 ? " fotorama__arr--disabled" : ""}`}
-            tabIndex={-1}
-            aria-label="Previous"
-            data-gallery-role="arrow"
-            disabled={galleryArr.length <= 1}
-            style={{ display: galleryArr.length > 1 ? undefined : "none" }}
-            onClick={handlePrev}
-            type="button"
-          >
-            <div className="fotorama__arr__arr"></div>
-          </button>
           <div
             className="fotorama__stage__shaft mx-auto"
             tabIndex={0}
@@ -169,22 +229,7 @@ const ProductGallery = ({
                 style={{ maxHeight: 480, maxWidth: 480, objectFit: "contain" }}
                 draggable={false}
               />
-              {/* Magnifier lens */}
-              {showMagnifier && (
-                <div
-                  className="magnify-lens bg-white bg-opacity-50"
-                  data-gallery-role="magnifier-zoom"
-                  style={{
-                    position: "absolute",
-                    pointerEvents: "none",
-                    left: magnifierPos.x - MAGNIFIER_SIZE / 2,
-                    top: magnifierPos.y - MAGNIFIER_SIZE / 2,
-                    width: MAGNIFIER_SIZE,
-                    height: MAGNIFIER_SIZE,
-                    border: "2px solid #c7c6c58c",
-                  }}
-                />
-              )}
+              <MagnifierLens show={showMagnifier} x={magnifierPos.x} y={magnifierPos.y} size={config.lensSize} />
             </div>
             {/* Magnifier preview */}
             <div
@@ -192,10 +237,10 @@ const ProductGallery = ({
               data-gallery-role="magnifier"
               id="preview"
               style={{
-                width: MAGNIFIER_PREVIEW_WIDTH,
-                height: MAGNIFIER_PREVIEW_HEIGHT,
-                top: MAGNIFIER_PREVIEW_TOP,
-                left: MAGNIFIER_PREVIEW_LEFT,
+                width: config.previewWidth,
+                height: config.previewHeight,
+                top: config.previewTop,
+                left: config.previewLeft,
                 position: "absolute",
                 background: "#fff",
                 border: "1px solid #e5e7eb",
@@ -218,74 +263,22 @@ const ProductGallery = ({
               </div>
             </div>
           </div>
-          <button
-            className={`fotorama__arr fotorama__arr--next${galleryArr.length <= 1 ? " fotorama__arr--disabled" : ""}`}
-            tabIndex={-1}
-            aria-label="Next"
-            data-gallery-role="arrow"
-            disabled={galleryArr.length <= 1}
-            style={{ display: galleryArr.length > 1 ? undefined : "none" }}
-            onClick={handleNext}
-            type="button"
-          >
-            <div className="fotorama__arr__arr"></div>
-          </button>
         </div>
         {/* Thumbnails */}
         {galleryArr.length > 1 && (
           <div className="fotorama__nav-wrap" data-gallery-role="nav-wrap" style={{ marginTop: 16 }}>
             <div className="fotorama__nav" style={{ height: 82, display: "flex", alignItems: "center" }}>
-              <button
-                className={`fotorama__thumb__arr fotorama__thumb__arr--left${selectedImageIdx === 0 ? " fotorama__arr--disabled" : ""}`}
-                role="button"
-                aria-label="Previous"
-                data-gallery-role="arrow"
-                tabIndex={-1}
-                disabled={selectedImageIdx === 0}
-                onClick={handlePrev}
-                type="button"
-                style={{ marginRight: 8 }}
-              >
-                <div className="fotorama__thumb--icon"></div>
-              </button>
               <div className="fotorama__nav__shaft fotorama__grab" style={{ display: "flex", alignItems: "center" }}>
                 {galleryArr.map((img, idx) => (
-                  <div
+                  <Thumbnail
                     key={img.id || idx}
-                    className={`fotorama__thumb-border${selectedImageIdx === idx ? " ring-2 ring-orange-500" : ""}`}
-                    style={{
-                      margin: "0 4px",
-                      border: selectedImageIdx === idx ? "2px solid #fb923c" : "2px solid #e5e7eb",
-                      borderRadius: 6,
-                      cursor: "pointer",
-                      overflow: "hidden",
-                      width: 64,
-                      height: 64,
-                      boxSizing: "border-box",
-                    }}
+                    img={img}
+                    idx={idx}
+                    selected={selectedImageIdx === idx}
                     onClick={() => handleThumbClick(idx)}
-                  >
-                    <img
-                      src={`http://127.0.0.1:8000/storage/${img.image_path}`}
-                      alt={`gallery-thumb-${idx}`}
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                  </div>
+                  />
                 ))}
               </div>
-              <button
-                className={`fotorama__thumb__arr fotorama__thumb__arr--right${selectedImageIdx === galleryArr.length - 1 ? " fotorama__arr--disabled" : ""}`}
-                role="button"
-                aria-label="Next"
-                data-gallery-role="arrow"
-                tabIndex={-1}
-                disabled={selectedImageIdx === galleryArr.length - 1}
-                onClick={handleNext}
-                type="button"
-                style={{ marginLeft: 8 }}
-              >
-                <div className="fotorama__thumb--icon"></div>
-              </button>
             </div>
           </div>
         )}

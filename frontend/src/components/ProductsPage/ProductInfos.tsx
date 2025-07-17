@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useId } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "lucide-react";
 import { useProductss } from "@/hooks/useProductss";
@@ -10,7 +10,18 @@ import ProductShare from "@/components/ProductsPage/ProductInfos/ProductShare";
 import ProductPrice from "@/components/ProductsPage/ProductInfos/ProductPrice";
 import ProductTabs from "@/components/ProductsPage/ProductInfos/ProductTabs";
 import { Button } from "@/components/Shadcn/Button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/Shadcn/Dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/Shadcn/Dialog";
+import { Label } from "@/components/Shadcn/Label";
+import { RadioGroup, RadioGroupItem } from "@/components/Shadcn/RadioGroup";
+import { CheckIcon, RefreshCcwIcon } from "lucide-react";
 
 // Helper to normalize shippings to always be an array
 type Shipping = {
@@ -34,6 +45,7 @@ const ProductPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [deliveryOpen, setDeliveryOpen] = useState(false);
   const [selectedShippingIdx, setSelectedShippingIdx] = useState(0);
+  const id = useId();
 
   const increase = () => setQuantity((q) => q + 1);
   const decrease = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
@@ -107,46 +119,90 @@ const ProductPage = () => {
                 {normalizeShippings(product.shippings).length > 0 ? (
                   <Dialog open={deliveryOpen} onOpenChange={setDeliveryOpen}>
                     <DialogTrigger asChild>
-                      <button
-                        className="text-blue-500 hover:text-white hover:bg-blue-500 transition border border-blue-400 font-semibold rounded-xl px-4 py-3"
+                      <Button
+                        variant="outline"
+                        className="text-blue-500 text-[21px] hover:text-white hover:bg-blue-500 transition border border-2 border-blue-500 font-base rounded-xl px-10 py-7 border-radius-2xl"
                         type="button"
-                      > Tronsport: &nbsp;
-                        {
-                          normalizeShippings(product.shippings)[selectedShippingIdx].shipping_delivery_time
-                        } - {
-                          normalizeShippings(product.shippings)[selectedShippingIdx].shipping_name
-                        } - {
-                          normalizeShippings(product.shippings)[selectedShippingIdx].shipping_cost
-                        } MAD
-                      </button>
+                      >
+                        Mode de livraison
+                      </Button>
                     </DialogTrigger>
                     <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Choisissez une méthode de livraison</DialogTitle>
-                      </DialogHeader>
-                      <div className="flex flex-col gap-4 mt-4">
-                        {normalizeShippings(product.shippings).map((shipping, idx) => (
-                          <button
-                            key={shipping.id}
-                            className={`text-left border rounded p-3 hover:bg-blue-50 transition ${
-                              selectedShippingIdx === idx
-                                ? "border-blue-600 bg-blue-50"
-                                : "border-gray-200"
-                            }`}
-                            onClick={() => {
-                              setSelectedShippingIdx(idx);
-                              setDeliveryOpen(false);
-                            }}
-                          >
-                            <div className="font-semibold text-blue-700">{shipping.shipping_name}</div>
-                            <div className="text-sm text-gray-600">{shipping.shipping_description}</div>
-                            <div className="text-sm mt-1">
-                              <span className="font-semibold">Coût:</span> {shipping.shipping_cost} MAD
-                              {"  "} | <span className="font-semibold">Délai:</span> {shipping.shipping_delivery_time}
-                            </div>
-                          </button>
-                        ))}
+                      <div className="mb-2 flex flex-col gap-2">
+                        <DialogHeader>
+                          <DialogTitle className="text-left">Choisissez une méthode de livraison</DialogTitle>
+                          <DialogDescription className="text-left">
+                            Sélectionnez une option ci-dessous.
+                          </DialogDescription>
+                        </DialogHeader>
                       </div>
+                      <form className="space-y-5">
+                        <RadioGroup
+                          className="gap-2"
+                          defaultValue={String(selectedShippingIdx)}
+                          onValueChange={val => setSelectedShippingIdx(Number(val))}
+                        >
+                          {normalizeShippings(product.shippings).map((shipping, idx) => (
+                            <div
+                              key={shipping.id}
+                              className={`border-input has-data-[state=checked]:border-primary/50 has-data-[state=checked]:bg-accent relative flex w-full items-center gap-2 rounded-md border px-4 py-3 shadow-xs outline-none`}
+                            >
+                              <RadioGroupItem
+                                value={String(idx)}
+                                id={`${id}-${idx}`}
+                                aria-describedby={`${id}-${idx}-description`}
+                                className="order-1 after:absolute after:inset-0"
+                              />
+                              <div className="grid grow gap-1">
+                                <Label htmlFor={`${id}-${idx}`}>{shipping.shipping_name}</Label>
+                                <p
+                                  id={`${id}-${idx}-description`}
+                                  className="text-muted-foreground text-xs"
+                                >
+                                  {shipping.shipping_description}
+                                </p>
+                                <p className="text-muted-foreground text-xs">
+                                  <span className="font-semibold">Coût:</span> {shipping.shipping_cost} MAD
+                                  {"  "} | <span className="font-semibold">Délai:</span> {shipping.shipping_delivery_time}
+                                </p>
+                              </div>
+                            </div>
+                          ))}
+                        </RadioGroup>
+                        <div className="space-y-3">
+                          <p>
+                            <strong className="text-sm font-medium">Livraison inclut :</strong>
+                          </p>
+                          <ul className="text-muted-foreground space-y-2 text-sm">
+                            <li className="flex gap-2">
+                              <CheckIcon size={16} className="text-primary mt-0.5 shrink-0" aria-hidden="true" />
+                              Suivi de commande en ligne.
+                            </li>
+                            <li className="flex gap-2">
+                              <CheckIcon size={16} className="text-primary mt-0.5 shrink-0" aria-hidden="true" />
+                              Assistance client dédiée.
+                            </li>
+                            <li className="flex gap-2">
+                              <CheckIcon size={16} className="text-primary mt-0.5 shrink-0" aria-hidden="true" />
+                              Livraison sécurisée.
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="grid gap-2">
+                          <Button
+                            type="button"
+                            className="w-full"
+                            onClick={() => setDeliveryOpen(false)}
+                          >
+                            Valider la livraison
+                          </Button>
+                          <DialogClose asChild>
+                            <Button type="button" variant="ghost" className="w-full">
+                              Annuler
+                            </Button>
+                          </DialogClose>
+                        </div>
+                      </form>
                     </DialogContent>
                   </Dialog>
                 ) : (
@@ -154,10 +210,10 @@ const ProductPage = () => {
                 )}
               </div>
               <div className="mb-2">
-                <span className="font-bold">Unit :</span> {product.unit_id}
+                <span className="font-bold">Conditionnement :</span> 1 Pièce (pcs)
               </div>
               <div className="mb-2">
-                <span className="font-bold">Minimum number of units :</span> {product.product_minimum_commande}
+                <span className="font-bold">Minimun de commande :</span> {product.product_minimum_commande}
               </div>
             </div>
             {/* Quantity Selector and Buttons */}
@@ -167,16 +223,16 @@ const ProductPage = () => {
                     variant="ghost"
                     size="icon"
                     onClick={decrease}
-                    className="text-base font-bold text-gray-500 hover:text-blue-600 px-8"
+                    className="text-base font-bold text-gray-500 hover:bg-transparent px-8"
                 >
                     -
                 </Button>
-                <span className="px-3 text-blue-600 font-semibold text-lg">{quantity}</span>
+                <span className="w-6 text-center text-blue-600 font-semibold text-lg">{quantity}</span>
                 <Button
                     variant="ghost"
                     size="icon"
                     onClick={increase}
-                    className="text-lg font-bold text-gray-500 hover:text-blue-600 px-8"
+                    className="text-lg font-bold text-gray-500 hover:bg-transparent px-8"
                 >
                     +
                 </Button>
@@ -184,7 +240,7 @@ const ProductPage = () => {
               <Button className="bg-orange-500 text-lg text-white px-8 py-5 border border-orange-500 rounded font-semibold hover:bg-orange-600 transition">
                 Devis instantané
               </Button>
-              <Button className="bg-transparent text-lg text-orange-500 border border-orange-500 px-8 py-5 rounded font-semibold hover:bg-orange-200 transition">
+              <Button className="bg-transparent text-lg text-orange-500 border border-orange-500 px-8 py-5 rounded font-semibold hover:bg-orange-500 hover:text-white transition">
                 Ajouter au panier
               </Button>
             </div>

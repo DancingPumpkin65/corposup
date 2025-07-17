@@ -30,4 +30,5 @@ export const useCategories = () => {
     return () => { cancelled = true; };
   }, []);
   return { categories, loading };
+  console.log(categories);
 };
