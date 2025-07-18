@@ -182,7 +182,7 @@ const ProductGallery = ({
 
   return (
     <div
-      className="fotorama-item fotorama max-w-[600px] mx-auto"
+      className="fotorama-item fotorama max-w-[600px] w-full mx-auto"
       data-gallery-role="gallery"
       style={{ width: "100%" }}
     >
@@ -191,7 +191,7 @@ const ProductGallery = ({
         className="fotorama__wrap fotorama__wrap--css3 fotorama__wrap--slide fotorama__wrap--toggle-arrows"
         style={{ minWidth: 0, maxWidth: "100%" }}
       >
-        <div className="fotorama__stage rounded-xl bg-white border shadow-sm" style={{ height: 556, width: 556 }}>
+        <div className="fotorama__stage rounded-xl bg-white border shadow-sm w-full max-w-[556px] mx-auto" style={{ height: "auto" }}>
           {/* Fullscreen/Zoom/Prev/Next */}
           <div
             className="fotorama__stage__shaft mx-auto"
@@ -200,7 +200,8 @@ const ProductGallery = ({
             style={{
               transitionDuration: "300ms",
               transform: "translate3d(0px, 0px, 0px)",
-              width: 496,
+              width: "100%",
+              maxWidth: 496,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -220,14 +221,23 @@ const ProductGallery = ({
               className="fotorama__stage__frame fotorama__active fotorama_vertical_ratio fotorama__loaded fotorama__loaded--img"
               aria-hidden="false"
               data-active="true"
-              style={{ width: 496, height: 496, display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}
+              style={{
+                width: "100%",
+                maxWidth: 496,
+                height: "auto",
+                minHeight: 200,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative"
+              }}
             >
               <img
                 ref={mainImgRef}
                 src={imgtest}
                 alt={productName}
-                className="fotorama__img"
-                style={{ maxHeight: 480, maxWidth: 480, objectFit: "contain" }}
+                className="fotorama__img w-full max-w-[480px] max-h-[320px] sm:max-h-[480px] object-contain"
+                style={{ objectFit: "contain" }}
                 draggable={false}
               />
               <MagnifierLens show={showMagnifier} x={magnifierPos.x} y={magnifierPos.y} size={config.lensSize} />
@@ -238,11 +248,14 @@ const ProductGallery = ({
               data-gallery-role="magnifier"
               id="preview"
               style={{
-                width: config.previewWidth,
-                height: config.previewHeight,
-                top: config.previewTop,
-                left: config.previewLeft,
-                position: "absolute",
+                width: "90vw",
+                maxWidth: 320,
+                height: 240,
+                top: "auto",
+                left: "auto",
+                right: 0,
+                bottom: 0,
+                position: "fixed",
                 background: "#fff",
                 border: "1px solid #e5e7eb",
                 boxShadow: "0 2px 8px rgba(0,0,0,0.10)",

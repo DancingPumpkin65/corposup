@@ -71,38 +71,37 @@ const ProductPage = () => {
     <MainLayout>
       {/* Breadcrumb */}
       <ProductBreadcrumb product={product} />
-      <div className="max-w-7xl mx-auto w-full px-8 pt-4 pb-8 lg:px-8">
+      <div className="max-w-7xl mx-auto w-full px-2 sm:px-4 md:px-8 pt-4 pb-8">
         <div className="flex flex-col gap-8 md:flex-row h-auto">
           {/* Left: Gallery */}
-          <div className="md:w-1/2 flex flex-col items-center">
+          <div className="w-full md:w-1/2 flex flex-col items-center mb-6 md:mb-0">
             <ProductGallery galleries={product.galleries} productName={product.product_name} />
           </div>
           {/* Right: Product Info */}
-          <div className="md:w-1/2 flex flex-col justify-between">
+          <div className="w-full md:w-1/2 flex flex-col justify-between">
             {/* Product Name & Details */}
             <div>
-            <ProductShare />
-
-              <div className="flex w-full justify-between items-center">
-              <div className="flex text-left flex-wrap items-center gap-2 text-lg mb-4">
-                  
+              <ProductShare />
+              <div className="flex flex-col sm:flex-row w-full justify-between items-start sm:items-center">
+                <div className="flex text-left flex-wrap items-center gap-2 text-base sm:text-lg mb-2 sm:mb-4">
                   <a
                     href="#"
-                    className="text-orange-500 text-xl font-base uppercase"
+                    className="text-orange-500 text-lg sm:text-xl font-base uppercase"
                   >
                     {product.store?.store_name}
                   </a>
                 </div>
-                <div className="text-lg text-right text-gray-400 mb-[10px]">{product.product_ref}</div>
-
+                <div className="text-base sm:text-lg text-right text-gray-400 mb-2 sm:mb-[10px]">{product.product_ref}</div>
               </div>
-              <h1 className="text-4xl w-full uppercase font-base text-gray-700 mb-4">{product.product_name}, {product.details.brand}, {product.details.material}, {product.details.color} (1 Piece)<br /></h1>
-              
+              <h1 className="text-2xl sm:text-3xl md:text-4xl w-full uppercase font-base text-gray-700 mb-2 sm:mb-4 break-words">
+                {product.product_name}, {product.details.brand}, {product.details.material}, {product.details.color} (1 Piece)
+                <br />
+              </h1>
               {/* Price, Old Price, Discount */}
               <ProductPrice product={product} />
             </div>
             {/* Unit, Minimum, Delivery */}
-            <div className="text-lg text-gray-700 mb-8 rounded px-4 py-2">
+            <div className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 rounded px-2 sm:px-4 py-2">
               <div className="mb-2">
                 <Dialog open={deliveryOpen} onOpenChange={setDeliveryOpen}>
                   <DialogTrigger asChild>
@@ -184,17 +183,17 @@ const ProductPage = () => {
                     <DialogTrigger asChild>
                       <button
                         className="text-blue-500 transition border-none font-semibold"
-
-                        type="button">
-                      <span className="hover:underline">
-                        {
-                          normalizeShippings(product.shippings)[selectedShippingIdx].shipping_delivery_time
-                        } - {
-                          normalizeShippings(product.shippings)[selectedShippingIdx].shipping_name
-                        } - {
-                          normalizeShippings(product.shippings)[selectedShippingIdx].shipping_cost
-                        } MAD
-                      </span>
+                        type="button"
+                      >
+                        <span className="hover:underline">
+                          {
+                            normalizeShippings(product.shippings)[selectedShippingIdx].shipping_delivery_time
+                          } - {
+                            normalizeShippings(product.shippings)[selectedShippingIdx].shipping_name
+                          } - {
+                            normalizeShippings(product.shippings)[selectedShippingIdx].shipping_cost
+                          } MAD
+                        </span>
                       </button>
                     </DialogTrigger>
                     <DialogContent>
@@ -263,30 +262,30 @@ const ProductPage = () => {
               </div>
             </div>
             {/* Quantity Selector and Buttons */}
-            <div className="flex items-center justify-end gap-4 mt-2">
-              <div className="flex items-center border rounded px-2 py-1">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-4 mt-2">
+              <div className="flex items-center justify-between border rounded px-2 mx-auto py-1 w-[200px] sm:w-auto">
                 <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={decrease}
-                    className="text-base font-bold text-gray-500 hover:bg-transparent px-8"
+                  variant="ghost"
+                  size="icon"
+                  onClick={decrease}
+                  className="text-base font-bold text-gray-500 hover:bg-transparent px-6 sm:px-8"
                 >
-                    -
+                  -
                 </Button>
                 <span className="w-6 text-center text-blue-600 font-semibold text-lg">{quantity}</span>
                 <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={increase}
-                    className="text-lg font-bold text-gray-500 hover:bg-transparent px-8"
+                  variant="ghost"
+                  size="icon"
+                  onClick={increase}
+                  className="text-lg font-bold text-gray-500 hover:bg-transparent px-6 sm:px-8"
                 >
-                    +
+                  +
                 </Button>
               </div>
-              <Button className="bg-orange-500 text-lg text-white px-8 py-5 border border-orange-500 rounded font-semibold hover:bg-orange-600 transition">
+              <Button className="bg-orange-500 text-lg text-white px-4 sm:px-8 py-3 sm:py-5 border border-orange-500 rounded font-semibold hover:bg-orange-600 transition w-full sm:w-auto">
                 Devis instantané
               </Button>
-              <Button className="bg-transparent text-lg text-orange-500 border border-orange-500 px-8 py-5 rounded font-semibold hover:bg-orange-500 hover:text-white transition">
+              <Button className="bg-transparent text-lg text-orange-500 border border-orange-500 px-4 sm:px-8 py-3 sm:py-5 rounded font-semibold hover:bg-orange-500 hover:text-white transition w-full sm:w-auto">
                 Ajouter au panier
               </Button>
             </div>
