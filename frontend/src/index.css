@@ -50,6 +50,9 @@
   --shadow-2xl: 0px 2px 3px 0px hsl(0 0% 0% / 0.40);
   --tracking-normal: -0.025em;
   --spacing: 0.27rem;
+  --text-base-size: 2rem;
+  --text-sm: 1.875rem;
+  --text-lg: 2.125rem;
 }
 
 .dark {

@@ -11,7 +11,7 @@ import {
   VideoPlayerTimeDisplay,
   VideoPlayerTimeRange,
   VideoPlayerVolumeRange,
-} from '@/components/ui/kibo-ui/video-player';
+} from '@/components/Shadcn/VideoPlayer';
 import {
   Accordion,
   AccordionItem,
@@ -87,13 +87,13 @@ const ProductTabs = ({ product }: { product: Product }) => {
         <div className="w-full max-w-4xl mx-auto">
           {product.video_path ? (
             <div className="mt-4">
-              <VideoPlayer className="overflow-hidden rounded-[12px] border w-full max-w-2xl mx-auto">
+              <VideoPlayer className="w-full overflow-hidden rounded-[12px] border">
                 <VideoPlayerContent
                   crossOrigin=""
                   muted
                   preload="auto"
                   slot="media"
-                  src='https://stream.mux.com/DS00Spx1CV902MCtPj5WknGlR102V5HFkDe/high.mp4'
+                  src={`https://localhost:8000/storage/videos/${product.video_path}`}
                 />
                 <VideoPlayerControlBar >
                   <VideoPlayerPlayButton />

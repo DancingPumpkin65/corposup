@@ -1,17 +1,23 @@
-import { useCompanyInfo } from '@/components/Seller/Profile/CompanyInfo/useCompanyInfo';
 import CompanyAlerts from '@/components/Seller/Profile/CompanyInfo/CompanyAlerts';
 import CompanyInfoForm from '@/components/Seller/Profile/CompanyInfo/CompanyInfoForm';
 
-const CompanyInfoSection = () => {
-  const {
-    formData,
-    loading,
-    alert,
-    showWarning,
-    handleChange,
-    handleSubmit
-  } = useCompanyInfo();
+interface CompanyInfoSectionProps {
+  formData: any;
+  loading: boolean;
+  alert: any;
+  showWarning: boolean;
+  handleChange: (e: React.ChangeEvent<any>) => void;
+  handleSubmit: (e: React.FormEvent) => void;
+}
 
+const CompanyInfoSection = ({
+  formData,
+  loading,
+  alert,
+  showWarning,
+  handleChange,
+  handleSubmit,
+}: CompanyInfoSectionProps) => {
   return (
     <div className="p-6" id="company-info">
       <div className="mb-6">
