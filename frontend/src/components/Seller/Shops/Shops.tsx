@@ -14,6 +14,7 @@ import ShopForm from '@/components/Seller/Shops/ShopForm';
 import ShopView from '@/components/Seller/Shops/ShopView';
 import ShopAlerts from '@/components/Seller/Shops/ShopAlerts';
 import emptyStore from '@/assets/EmptyStore.svg';
+import { Loader } from 'lucide-react';
 
 const Shops = () => {
   const {
@@ -51,11 +52,11 @@ const Shops = () => {
         <header className="flex w-full h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
           <SidebarTrigger className="-ml-1" />
           <div className="flex items-center gap-2">
-            <h1 className="text-lg font-semibold">Boutiques</h1>
+            <h1 className="flex text-lg font-semibold">Boutiques</h1>
           </div>
         </header>
-        <div className="flex justify-center items-center min-h-[300px] p-4">
-          <div className="text-lg text-gray-600">Chargement...</div>
+        <div className="flex w-full max-w-[1100px] mx-auto justify-center items-center min-h-[300px] p-4">
+          <div className="flex text-lg text-gray-600"><Loader className="animate-spin mr-2" />Chargement...</div>
         </div>
       </SidebarInset>
     );
@@ -71,7 +72,7 @@ const Shops = () => {
             <h1 className="text-lg font-semibold">Boutiques</h1>
           </div>
         </header>
-        <div className="text-center w-full flex flex-col space-y-3 justify-center items-center bg-cover min-h-[400px] sm:min-h-[500px] p-4">
+        <div className="text-center w-full max-w-[1100px] mx-auto flex flex-col space-y-3 justify-center items-center bg-cover min-h-[400px] sm:min-h-[500px] p-4">
           <img src={emptyStore} className="w-auto h-32 sm:w-auto sm:h-48 md:w-auto md:h-64 lg:w-auto lg:h-80 text-gray-400" />
           <p className="text-base sm:text-lg text-gray-600 mb-4 max-w-md mx-auto">Il n'y a pas de boutiques.</p>
           <Button 
@@ -153,7 +154,7 @@ const Shops = () => {
           <h1 className="text-lg font-semibold">Boutiques</h1>
         </div>
       </header>
-      <div className="py-8 px-4 sm:py-8 sm:px-4">
+      <div className="w-full max-w-[1100px] mx-auto py-8 px-4 sm:py-8 sm:px-4">
         <div className="bg-white rounded-xl shadow-sm border p-6">
           {/* Header with Add Button */}
           <div className="flex justify-between items-center mb-6">

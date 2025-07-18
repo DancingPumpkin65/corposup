@@ -30,7 +30,7 @@ const ShopForm = ({
 
   return (
     <div>
-      <div className="flex flex-col xl:flex-row">
+      <div className="w-full max-w-[1100px] mx-auto flex flex-col xl:flex-row">
         {/* Form Section */}
         <div className="flex-1 py-4 sm:py-6 lg:py-8 px-4">
           <div className="bg-white rounded-xl shadow-sm border">

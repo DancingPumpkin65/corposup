@@ -12,10 +12,15 @@ const SignUp = lazy(() => import('@/pages/SignUp'));
 const ProductsPage = lazy(() => import('@/pages/ProductsPage'));
 const RoleBasedRedirect = lazy(() => import('@/pages/RoleBasedRedirect'));
 const ProductPage = lazy(() => import('@/components/ProductsPage/ProductInfos'));
+import { Loader } from 'lucide-react';
 
 export const AppRoutes = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={
+      <div className="flex justify-center items-center min-h-[300px]">
+        <Loader className="animate-spin mr-2" /> Chargement
+      </div>
+    }>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signin" element={<SignIn />} />

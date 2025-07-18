@@ -6,6 +6,7 @@ import {
   PasswordUpdateSection,
   ProfileInfoSection
 } from '@/components/Seller/Profile';
+import { Loader } from 'lucide-react';
 
 const Profile = () => {
   const { user, loading } = useCurrentUser();
@@ -13,7 +14,7 @@ const Profile = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-lg text-gray-600">Chargement des informations...</div>
+        <div className="text-lg text-gray-600"><Loader className="animate-spin mr-2" />Chargement des informations...</div>
       </div>
     );
   }
@@ -35,7 +36,7 @@ const Profile = () => {
           </div>
         </header>
         
-        <div className="flex flex-1 flex-col gap-8 py-8 px-4 sm:py-8 sm:px-4">
+        <div className="flex w-full max-w-[1000px] mx-auto flex-col gap-8 py-8 px-4 sm:py-8 sm:px-4">
           <div className="w-full space-y-4">
             
               {/* Company Information Section */}

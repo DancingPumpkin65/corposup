@@ -248,20 +248,31 @@ const ProductGallery = ({
               data-gallery-role="magnifier"
               id="preview"
               style={{
-                width: "90vw",
-                maxWidth: 320,
-                height: 240,
-                top: "auto",
-                left: "auto",
-                right: 0,
-                bottom: 0,
-                position: "fixed",
+                // Show beside the image on large screens, fixed bottom-right on mobile
+                width: config.previewWidth,
+                height: config.previewHeight,
+                top: 0,
+                left: 'calc(100% + 32px)',
+                position: "absolute",
                 background: "#fff",
                 border: "1px solid #e5e7eb",
                 boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
                 overflow: "hidden",
                 display: showMagnifier ? "block" : "none",
                 zIndex: 20,
+                // Responsive: fallback to fixed for small screens
+                ...(window.innerWidth < 1024
+                  ? {
+                      position: "fixed",
+                      left: "auto",
+                      right: 0,
+                      bottom: 0,
+                      top: "auto",
+                      width: "90vw",
+                      maxWidth: 320,
+                      height: 240,
+                    }
+                  : {}),
               }}
             >
               <div style={{ width: "100%", height: "100%", overflow: "hidden", position: "relative" }}>

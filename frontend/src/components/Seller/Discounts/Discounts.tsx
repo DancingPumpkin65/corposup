@@ -6,7 +6,8 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/Shadcn/Alert";
 import useDiscounts from "./useDiscounts";
 import DiscountsForm from "./DiscountsForm";
 import DiscountsTable from "./DiscountsTable";
-import emptyDiscount from "@/assets/EmptyShipping.svg"; // Add an empty state image for discounts
+import { Loader } from "lucide-react";
+import emptyDiscounts from "@/assets/EmptyDiscounts.svg";
 
 const Discounts = () => {
   const {
@@ -32,8 +33,8 @@ const Discounts = () => {
             <h1 className="text-lg font-semibold">Remises</h1>
           </div>
         </header>
-        <div className="flex justify-center items-center min-h-[300px] p-4">
-          <div className="text-lg text-gray-600">Chargement...</div>
+        <div className="flex w-full max-w-[1100px] mx-auto justify-center items-center min-h-[300px] p-4">
+          <div className="flex text-lg text-gray-600"><Loader className="animate-spin mr-2" />Chargement...</div>
         </div>
       </SidebarInset>
     );
@@ -49,21 +50,8 @@ const Discounts = () => {
             <h1 className="text-lg font-semibold">Remises</h1>
           </div>
         </header>
-        <div className="text-center w-full flex flex-col space-y-3 justify-center items-center bg-cover min-h-[400px] sm:min-h-[500px] p-4">
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke-width="1" 
-            stroke="currentColor" 
-            className="w-auto h-32 sm:w-auto sm:h-48 md:w-auto md:h-64 lg:w-auto lg:h-80 text-gray-400"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m9 14.25 6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0c1.1.128 1.907 1.077 1.907 2.185ZM9.75 9h.008v.008H9.75V9Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 4.5h.008v.008h-.008V13.5Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-            ></path>
-          </svg>
+        <div className="w-full max-w-[1100px] mx-auto text-center w-full flex flex-col space-y-3 justify-center items-center bg-cover min-h-[400px] sm:min-h-[500px] p-4">
+          <img src={emptyDiscounts} alt="Aucun produit" className="w-35 h-32 sm:w-auto sm:h-48 md:w-auto md:h-64 lg:w-auto lg:h-80 text-gray-400" />
           <p className="text-base sm:text-lg text-gray-600 mb-4 max-w-md mx-auto">
             Aucune remise configurée.
           </p>
@@ -88,7 +76,7 @@ const Discounts = () => {
             <h1 className="text-lg font-semibold">Remises</h1>
           </div>
         </header>
-        <div className="py-8 px-4 sm:py-8 sm:px-4">
+        <div className="w-full max-w-[1100px] mx-auto py-8 px-4 sm:py-8 sm:px-4">
           <div className="bg-white rounded-xl shadow-sm border p-6">
             <h2 className="text-2xl sm:text-2xl font-bold text-gray-900 mb-2">
               {editingDiscount ? "Modifier la remise" : "Créer une remise"}
@@ -126,7 +114,7 @@ const Discounts = () => {
           <h1 className="text-lg font-semibold">Remises</h1>
         </div>
       </header>
-      <div className="py-8 px-4 sm:py-8 sm:px-4">
+      <div className="w-full max-w-[1100px] mx-auto py-8 px-4 sm:py-8 sm:px-4">
         <div className="bg-white rounded-xl shadow-sm border p-6">
           <div className="flex justify-between items-center mb-6">
             <div>

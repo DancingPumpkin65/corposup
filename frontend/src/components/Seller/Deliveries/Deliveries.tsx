@@ -12,7 +12,8 @@ import {
 import { useDeliveries } from '@/components/Seller/Deliveries/useDeliveries';
 import DeliveryForm from '@/components/Seller/Deliveries/DeliveryForm';
 import DeliveriesTable from '@/components/Seller/Deliveries/DeliveriesTable';
-import emptyShipping from '@/assets/EmptyShipping.svg';
+import emptyDelivery from '@/assets/EmptyDelivery.svg';
+import { Loader } from 'lucide-react';
 
 const Deliveries = () => {
   const {
@@ -51,8 +52,8 @@ const Deliveries = () => {
             <h1 className="text-lg font-semibold">Services de livraison</h1>
           </div>
         </header>
-        <div className="flex justify-center items-center min-h-[300px] p-4">
-          <div className="text-lg text-gray-600">Chargement...</div>
+        <div className="flex max-w-[1000px] mx-auto justify-center items-center min-h-[300px] p-4">
+          <div className="flex text-lg text-gray-600"><Loader className="animate-spin mr-2" />Chargement...</div>
         </div>
       </SidebarInset>
     );
@@ -68,8 +69,8 @@ const Deliveries = () => {
             <h1 className="text-lg font-semibold">Services de livraison</h1>
           </div>
         </header>
-        <div className="text-center w-full flex flex-col space-y-3 justify-center items-center bg-cover min-h-[400px] sm:min-h-[500px] p-4">
-          <img src={ emptyShipping } className="w-auto h-32 sm:w-auto sm:h-48 md:w-auto md:h-64 lg:w-auto lg:h-80 text-gray-400" />
+        <div className="text-center max-w-[1000px] mx-auto flex flex-col space-y-3 justify-center items-center bg-cover min-h-[400px] sm:min-h-[500px] p-4">
+          <img src={emptyDelivery} alt="Aucun produit" className="m-0 p-0 w-35 h-32 sm:w-auto sm:h-48 md:w-auto md:h-64 lg:w-auto lg:h-80 text-gray-400" />
           <p className="text-base sm:text-lg text-gray-600 mb-4 max-w-md mx-auto">
             Aucun service de livraison configuré.
           </p>
@@ -146,7 +147,7 @@ const Deliveries = () => {
           <h1 className="text-lg font-semibold">Services de livraison</h1>
         </div>
       </header>
-      <div className="py-8 px-4 sm:py-8 sm:px-4">
+      <div className="w-full max-w-[1100px] mx-auto py-8 px-4 sm:py-8 sm:px-4">
         <div className="bg-white rounded-xl shadow-sm border p-6">
           <div className="flex justify-between items-center mb-6">
             <div>

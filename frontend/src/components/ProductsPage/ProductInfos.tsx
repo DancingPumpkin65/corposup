@@ -82,7 +82,7 @@ const ProductPage = () => {
             {/* Product Name & Details */}
             <div>
               <ProductShare />
-              <div className="flex flex-col sm:flex-row w-full justify-between items-start sm:items-center">
+              <div className="flex sm:flex-row w-full justify-between items-start sm:items-center">
                 <div className="flex text-left flex-wrap items-center gap-2 text-base sm:text-lg mb-2 sm:mb-4">
                   <a
                     href="#"

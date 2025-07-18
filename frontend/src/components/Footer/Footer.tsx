@@ -5,13 +5,13 @@ import { FaLock } from "react-icons/fa";
 
 const Footer = () => (
   <footer className="w-full bg-blue-600">
-    <div className="footer-content max-w-7xl mx-auto px-2 lg:px-8 pt-8 sm:pt-12 pb-6">
+    <div className="footer-content max-w-7xl mx-auto px-2 lg:px-8 pt-8 sm:pt-12 pb-2">
       <div className="footer-middle grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-[8px]">
         {/* About Us Block */}
         <div className="footer-block about-us">
           <div className="about-us-wrapper flex flex-col gap-4">
             <div className="footer-logo mb-2">
-              <img src={logoWhite} alt="CorpoSup Logo" className="w-[200px] sm:w-[250px]" />
+              <img src={logoWhite} alt="CorpoSup Logo" className="w-[160px] sm:w-[200px] md:w-[250px]" />
             </div>
             <div className="about-us text-white text-sm">
               <p>
@@ -54,11 +54,10 @@ const Footer = () => (
             <div className="paiement-card mt-4">
               <div className="secure-payment-block flex flex-col items-start">
                 <div className="note text-white text-xs mb-2">
-                  
                   <span><FaLock className="inline-block w-4 text-gray-500 mr-1 text-white" />Paiement 100 % sécurisé</span>
                 </div>
                 <div className="img">
-                  <img alt="Paiement 100 % sécurisé" src="https://static.electroplanet.ma/static/version1752279022/frontend/ep/shop/fr_FR/images/payment-card.png" className="w-32" />
+                  <img alt="Paiement 100 % sécurisé" src="https://static.electroplanet.ma/static/version1752279022/frontend/ep/shop/fr_FR/images/payment-card.png" className="w-24 sm:w-32" />
                 </div>
               </div>
             </div>
@@ -67,7 +66,7 @@ const Footer = () => (
         {/* Plus d'information Block */}
         <div className="footer-block footer-links-plus-informations">
           <div className="block ft-informations">
-            <div className="title text-white text-lg font-semibold mb-3">Plus d'information</div>
+            <div className="title text-white text-base sm:text-lg font-semibold mb-3">Plus d'information</div>
             <div className="content">
               <ul className="text-gray-300 space-y-1.5 text-sm">
                 <li><Link to="/about">Qui sommes nous ?</Link></li>
@@ -86,7 +85,7 @@ const Footer = () => (
         {/* Nos engagements de service Block */}
         <div className="footer-block footer-links-engagements">
           <div className="block ft-engagements">
-            <div className="title text-white text-lg font-semibold mb-3">Nos engagements de service</div>
+            <div className="title text-white text-base sm:text-lg font-semibold mb-3">Nos engagements de service</div>
             <div className="content">
               <ul className="text-gray-300 space-y-1.5 text-sm">
                 <li><Link to="/conseils">Conseils d'experts</Link></li>
@@ -103,7 +102,7 @@ const Footer = () => (
         {/* Nos Offres Block */}
         <div className="footer-block footer-links-nos-offres">
           <div className="block ft-nos-offres">
-            <div className="title text-white text-lg font-semibold mb-3">Nos Catégories</div>
+            <div className="title text-white text-base sm:text-lg font-semibold mb-3">Nos Catégories</div>
             <div className="content">
               <ul className="text-gray-300 space-y-1.5 text-sm">
                 <li><a href="/depliant" target="_blank" rel="noopener noreferrer">Agriculture et alimentation</a></li>
@@ -119,7 +118,7 @@ const Footer = () => (
           </div>
         </div>
       </div>
-      <Separator className="my-4" />
+      <Separator className="my-2" />
       {/* Copyright */}
       <div className="copyright">
         <div className="footer-copyright-content">
