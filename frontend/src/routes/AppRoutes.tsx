@@ -40,7 +40,7 @@ export const AppRoutes = () => {
         />
 
         <Route
-          path="/buyer"
+          path="/buyer/*"
           element={
             <ProtectedRoute requiredRole={USER_ROLES.BUYER}>
               <BuyerPage />

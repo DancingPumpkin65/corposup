@@ -212,7 +212,7 @@ export function SellerSidebar() {
                       >
                         <Link to={item.url} className="data-[active=true]:bg-white bg-white">
                           <item.icon />
-                          <span className="font-bold text-base">{item.title}</span>
+                          <span className="font-bold text-lg">{item.title}</span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>

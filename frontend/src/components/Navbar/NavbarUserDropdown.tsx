@@ -9,8 +9,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/Shadcn/DropdownMenu';
-import { getUserInitials, getUserDisplayName, getProfileImageUrl } from '@/utils/user';
+import { getUserDisplayName, getProfileImageUrl } from '@/utils/user';
 import authService from '@/services/authService';
+import { UserRoundIcon } from 'lucide-react';
 
 interface User {
   id: number;
@@ -46,7 +47,7 @@ const NavbarUserDropdown = ({ user }: NavbarUserDropdownProps) => {
             />
           ) : null}
           <AvatarFallback className="bg-blue-600 text-white font-semibold text-sm">
-            {getUserInitials(user)}
+            <UserRoundIcon size={16} className="opacity-60" aria-hidden="true" /> 
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
