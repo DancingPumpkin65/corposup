@@ -6,10 +6,6 @@ interface User {
   photo_profile?: string;
 }
 
-export const getUserInitials = (user: User): string => {
-  return `${user.firstname?.charAt(0) || ''}${user.lastname?.charAt(0) || ''}`.toUpperCase();
-};
-
 export const getUserDisplayName = (user: User): string => {
   return `${user.firstname || ''} ${user.lastname || ''}`.trim();
 };
