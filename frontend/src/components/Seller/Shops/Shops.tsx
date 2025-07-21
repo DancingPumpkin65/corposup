@@ -1,3 +1,4 @@
+import { Loader } from 'lucide-react';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/Shadcn/Button';
 import { SidebarInset, SidebarTrigger } from '@/components/Shadcn/Sidebar/sidebar';
@@ -14,7 +15,6 @@ import ShopForm from '@/components/Seller/Shops/ShopForm';
 import ShopView from '@/components/Seller/Shops/ShopView';
 import ShopAlerts from '@/components/Seller/Shops/ShopAlerts';
 import emptyStore from '@/assets/EmptyStore.svg';
-import { Loader } from 'lucide-react';
 
 const Shops = () => {
   const {

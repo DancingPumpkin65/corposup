@@ -8,7 +8,7 @@ const DiscountTypeSelect = ({
   setDiscountType: (v: "percentage" | "fixed") => void;
 }) => (
   <div className="space-y-2 col-span-1">
-    <Label className="block text-base font-medium">Type de remise *</Label>
+    <Label className="block text-lg font-medium">Type de remise *</Label>
     <Select value={discountType} onValueChange={v => setDiscountType(v as "percentage" | "fixed")}>
       <SelectTrigger className="w-full">
         <SelectValue placeholder="Pourcentage" />

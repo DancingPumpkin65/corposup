@@ -9,14 +9,15 @@ const DiscountValueField = ({
   formTouched: boolean;
 }) => (
   <div className="space-y-2 col-span-1">
-    <Label className="block text-base font-medium">Valeur de la remise *</Label>
+    <Label className="block text-lg font-medium">Valeur de la remise *</Label>
     <div className="flex items-center">
       <Input
         type="number"
-        className="w-full"
+        className="w-full h-[46px] mt-0"
         value={discountValue}
         onChange={(e) => setDiscountValue(e.target.value === "" ? "" : Number(e.target.value))}
         required
+        placeholder="0"
         min={0}
       />
       <span className="ml-2 font-bold">%</span>

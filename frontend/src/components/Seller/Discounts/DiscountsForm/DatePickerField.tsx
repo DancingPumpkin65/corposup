@@ -13,7 +13,7 @@ const DatePickerField = ({
   formTouched: boolean;
 }) => (
   <div className="space-y-2 col-span-1">
-    <Label className="block text-base font-medium">{label} *</Label>
+    <Label className="block text-lg font-medium">{label} *</Label>
     <Popover>
       <PopoverTrigger asChild>
         <Button

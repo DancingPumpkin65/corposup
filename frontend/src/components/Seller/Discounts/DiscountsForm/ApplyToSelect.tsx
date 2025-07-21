@@ -9,7 +9,7 @@ const ApplyToSelect = ({
   onChange: (v: "store" | "product") => void;
 }) => (
   <div className="space-y-2 col-span-1">
-    <Label className="block text-base font-medium">Appliquer à *</Label>
+    <Label className="block text-lg font-medium">Appliquer à *</Label>
     <Select value={value} onValueChange={v => onChange(v as "store" | "product")}>
       <SelectTrigger className="w-full">
         <SelectValue placeholder="Sélectionner" />

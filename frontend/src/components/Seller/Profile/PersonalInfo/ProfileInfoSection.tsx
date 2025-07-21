@@ -1,11 +1,10 @@
-import { AlertCircleIcon, CheckCircle2Icon } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/Shadcn/Alert';
 import { Button } from '@/components/Shadcn/Button';
 import { Input } from '@/components/Shadcn/Input';
 import { Label } from '@/components/Shadcn/Label';
 import { RadioGroup, RadioGroupItem } from '@/components/Shadcn/RadioGroup';
 import { type User } from '@/hooks/useCurrentUser';
 import { useProfileInfo } from '@/hooks/useProfileInfo';
+import PersonalInfoAlerts from '@/components/Seller/Profile/PersonalInfo/PersonalInfoAlerts';
 
 interface ProfileInfoSectionProps {
   user: User;
@@ -31,17 +30,7 @@ const ProfileInfoSection = ({ user }: ProfileInfoSectionProps) => {
       </div>
 
       {/* Success/Error Alert */}
-      {alert.show && (
-        <Alert className={`mb-6 ${alert.type === 'error' ? 'border-red-200 bg-red-50' : 'border-green-200 bg-green-50'}`}>
-          {alert.type === 'error' ? 
-            <AlertCircleIcon className="h-4 w-4 text-red-600" /> : 
-            <CheckCircle2Icon className="h-4 w-4 text-green-600" />
-          }
-          <AlertDescription className={alert.type === 'error' ? 'text-red-700' : 'text-green-700'}>
-            {alert.message}
-          </AlertDescription>
-        </Alert>
-      )}
+      <PersonalInfoAlerts alert={alert} />
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Name Fields */}

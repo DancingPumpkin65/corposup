@@ -18,7 +18,7 @@ const InputField = ({
 }: InputFieldProps) => {
   return (
     <div>
-      <Label htmlFor={id} className="text-sm sm:text-base">
+      <Label htmlFor={id} className="text-lg sm:text-lg">
         {label} {required && '*'}
       </Label>
       {isTextarea ? (
@@ -29,7 +29,7 @@ const InputField = ({
           placeholder={placeholder}
           rows={rows}
           required={required}
-          className="mt-1 text-sm sm:text-base resize-none"
+          className="mt-1 text-sm sm:text-lg resize-none"
         />
       ) : (
         <Input
@@ -41,7 +41,7 @@ const InputField = ({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           required={required}
-          className="mt-1 text-sm sm:text-base"
+          className="mt-1 text-lg sm:text-lg"
         />
       )}
     </div>

@@ -9,6 +9,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/Shadcn/Sidebar/sidebar"
+import {
+  User2
+} from "lucide-react"
 
 const DashboardIcon = () => (
   <svg
@@ -147,11 +150,20 @@ const RemiseIcon = () => (
   </svg>
 )
 
+const UserIcon = () => (
+  <User2 style={{ width: '24px', height: '24px' }} />
+)
+
 const sellerItems = [
   {
     title: "Vue d'ensemble",
     url: "/seller",
     icon: DashboardIcon,
+  },
+  {
+    title: "Profil", 
+    url: "/seller/profile", 
+    icon: UserIcon,
   },
   {
     title: "Annonces de produits",

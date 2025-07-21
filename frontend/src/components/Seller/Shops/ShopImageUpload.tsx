@@ -20,7 +20,7 @@ const ShopImageUpload = ({ isEdit, onFileChange, previewImage }: ShopImageUpload
           type="file"
           id={inputId}
           name={inputId}
-          accept="image/*"
+          accept="image/png, image/jpeg, image/jpg"
           onChange={(e) => onFileChange(e.target.files?.[0] || null)}
           className="hidden"
         />

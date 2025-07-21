@@ -16,7 +16,7 @@ const StoreOrProductSelect = ({
   <div className="space-y-2 col-span-1">
     {applyTo === "store" ? (
       <>
-        <Label className="block text-base font-medium">Boutiques *</Label>
+        <Label className="block text-lg font-medium">Boutiques *</Label>
         <Select value={store} onValueChange={setStore}>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Vos Boutiques" />

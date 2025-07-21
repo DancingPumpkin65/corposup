@@ -282,10 +282,10 @@ const ProductPage = () => {
                   +
                 </Button>
               </div>
-              <Button className="bg-orange-500 text-lg text-white px-4 sm:px-8 py-3 sm:py-5 border border-orange-500 rounded font-semibold hover:bg-orange-600 transition w-full sm:w-auto">
+              <Button className="bg-orange-500 text-lg text-white border border-orange-500 rounded font-semibold hover:bg-orange-600 transition w-full sm:w-auto">
                 Devis instantané
               </Button>
-              <Button className="bg-transparent text-lg text-orange-500 border border-orange-500 px-4 sm:px-8 py-3 sm:py-5 rounded font-semibold hover:bg-orange-500 hover:text-white transition w-full sm:w-auto">
+              <Button className="bg-transparent text-lg text-orange-500 border border-orange-500 rounded font-semibold hover:bg-orange-500 hover:text-white transition w-full sm:w-auto">
                 Ajouter au panier
               </Button>
             </div>

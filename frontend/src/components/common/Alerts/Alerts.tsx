@@ -1,30 +1,52 @@
-import { AlertCircleIcon, CheckCircle2Icon } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/Shadcn/Alert';
-
-interface AlertState {
-  show: boolean;
-  type: 'success' | 'error';
-  message: string;
-}
+import { toast } from "sonner";
+import { useEffect } from "react";
+import { type AlertState } from '@/hooks/useAlert';
 
 interface GenericAlertsProps {
   alert: AlertState;
 }
 
-const Alerts = ({ alert }: GenericAlertsProps) => {
-  if (!alert.show) return null;
+const toastOptions = {
+  position: "bottom-center" as const,
+  duration: 3500,
+  className: "rounded-lg shadow-lg border border-gray-200 bg-white text-gray-900 px-6 py-4 text-base font-medium",
+  style: {
+    boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.15)",
+    border: "1px solid #c0c1c2ff",
+    background: "#fff",
+    color: "#1f2937",
+    fontSize: "1rem",
+    fontWeight: 500,
+    padding: "1rem 1.5rem",
+    borderRadius: "0.75rem",
+    maxWidth: "400px"
+  },
+  classNames: {
+    success: "bg-green-50 text-green-800 border-green-200",
+    error: "bg-red-50 text-red-800 border-red-200",
+    info: "bg-blue-50 text-blue-800 border-blue-200",
+    warning: "bg-yellow-50 text-yellow-800 border-yellow-200",
+    closeButton: "hover:bg-gray-100 rounded-full"
+  }
+};
 
-  return (
-    <Alert className={`mb-6 ${alert.type === 'error' ? 'border-red-200 bg-red-50' : 'border-green-200 bg-green-50'}`}>
-      {alert.type === 'error' ? 
-        <AlertCircleIcon className="h-4 w-4 text-red-600" /> : 
-        <CheckCircle2Icon className="h-4 w-4 text-green-600" />
-      }
-      <AlertDescription className={alert.type === 'error' ? 'text-red-700' : 'text-green-700'}>
-        {alert.message}
-      </AlertDescription>
-    </Alert>
-  );
+const Alerts = ({ alert }: GenericAlertsProps) => {
+  useEffect(() => {
+    if (!alert.show) return;
+    if (alert.type === "error") {
+      toast.error(alert.message, toastOptions);
+    } else if (alert.type === "success") {
+      toast.success(alert.message, toastOptions);
+    } else if (alert.type === "info") {
+      toast.info(alert.message, toastOptions);
+    } else if (alert.type === "warning") {
+      toast.warning(alert.message, toastOptions);
+    } else {
+      toast(alert.message, toastOptions);
+    }
+  }, [alert.show, alert.type, alert.message]);
+
+  return null;
 };
 
 export default Alerts;

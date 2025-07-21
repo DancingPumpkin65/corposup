@@ -24,7 +24,7 @@ const DeliveryForm = ({
             <div className="p-4 sm:p-6">
               <div className="max-w-full">
                 <div className="mb-6 sm:mb-6">
-                  <h2 className="text-2xl sm:text-2xl font-bold text-gray-900 mb-2">
+                  <h2 className="text-3xl sm:text-3xl font-bold text-gray-900 mb-2">
                     {isEdit ? 'Modifier le service de livraison' : 'Créer un service de livraison'}
                   </h2>
                   <p className="text-sm sm:text-base text-gray-600">

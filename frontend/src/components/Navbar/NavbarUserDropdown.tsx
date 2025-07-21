@@ -18,6 +18,7 @@ interface User {
   firstname: string;
   lastname: string;
   email: string;
+  role: string;
   photo_profile?: string;
 }
 
@@ -60,7 +61,7 @@ const NavbarUserDropdown = ({ user }: NavbarUserDropdownProps) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link to="/seller/profile" className="flex items-center cursor-pointer">
+          <Link to={`/${user.role}/profile`} className="flex items-center cursor-pointer">
             <UserIcon className="mr-2 h-4 w-4" />
             <span>Profil</span>
           </Link>

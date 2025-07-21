@@ -21,7 +21,7 @@ const OrderHistory = () => {
             </div>
           ) : (
             <div className="bg-white rounded-xl shadow-sm border p-6">
-              <h2 className="text-2xl font-bold mb-4">Vos commandes</h2>
+              <h2 className="text-3xl font-bold mb-4">Vos commandes</h2>
               <p className="text-gray-600">Aucun historique de commandes pour l’instant.</p>
             </div>
           )}

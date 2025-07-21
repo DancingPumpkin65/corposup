@@ -20,3 +20,7 @@ export interface PasswordUpdateFormProps {
 export interface PasswordAlertsProps {
   alert: AlertState;
 }
+
+export interface PersonalInfoAlertsProps {
+  alert: AlertState;
+}

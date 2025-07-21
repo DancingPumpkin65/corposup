@@ -78,7 +78,7 @@ const Discounts = () => {
         </header>
         <div className="w-full max-w-[1100px] mx-auto py-8 px-4 sm:py-8 sm:px-4">
           <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-2xl sm:text-2xl font-bold text-gray-900 mb-2">
+            <h2 className="text-3xl sm:text-3xl font-bold text-gray-900 mb-2">
               {editingDiscount ? "Modifier la remise" : "Créer une remise"}
             </h2>
             <p className="pb-4">Configurez une remise pour vos clients</p>
@@ -118,7 +118,7 @@ const Discounts = () => {
         <div className="bg-white rounded-xl shadow-sm border p-6">
           <div className="flex justify-between items-center mb-6">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl sm:text-3xl font-bold text-gray-900 mb-2">
                 Mes Remises
               </h1>
               <p className="text-sm sm:text-base text-gray-600">

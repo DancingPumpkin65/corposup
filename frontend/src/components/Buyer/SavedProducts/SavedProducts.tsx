@@ -21,7 +21,7 @@ const SavedProducts = () => {
             </div>
           ) : (
             <div className="bg-white rounded-xl shadow-sm border p-6">
-              <h2 className="text-2xl font-bold mb-4">Vos produits sauvegardés</h2>
+              <h2 className="text-3xl font-bold mb-4">Vos produits sauvegardés</h2>
               <p className="text-gray-600">Aucun produit sauvegardé pour l’instant.</p>
             </div>
           )}
