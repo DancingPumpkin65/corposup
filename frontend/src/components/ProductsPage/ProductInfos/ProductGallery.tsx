@@ -191,7 +191,7 @@ const ProductGallery = ({
         className="fotorama__wrap fotorama__wrap--css3 fotorama__wrap--slide fotorama__wrap--toggle-arrows"
         style={{ minWidth: 0, maxWidth: "100%" }}
       >
-        <div className="fotorama__stage rounded-xl bg-white border shadow-sm w-full max-w-[556px] mx-auto" style={{ height: "auto" }}>
+        <div className="fotorama__stage rounded-xl bg-white border shadow-sm w-full max-w-[556px]" style={{ height: "auto" }}>
           {/* Fullscreen/Zoom/Prev/Next */}
           <div
             className="fotorama__stage__shaft mx-auto"

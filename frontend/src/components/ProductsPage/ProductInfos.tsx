@@ -1,4 +1,4 @@
-import { useState, useId } from "react";
+import { useState, useId, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "lucide-react";
 import { useProductss } from "@/hooks/useProductss";
@@ -10,6 +10,7 @@ import ProductShare from "@/components/ProductsPage/ProductInfos/ProductShare";
 import ProductPrice from "@/components/ProductsPage/ProductInfos/ProductPrice";
 import ProductTabs from "@/components/ProductsPage/ProductInfos/ProductTabs";
 import { Button } from "@/components/Shadcn/Button";
+import { Input } from "@/components/Shadcn/Input";
 import {
   Dialog,
   DialogClose,
@@ -21,6 +22,8 @@ import {
 } from "@/components/Shadcn/Dialog";
 import { Label } from "@/components/Shadcn/Label";
 import { RadioGroup, RadioGroupItem } from "@/components/Shadcn/RadioGroup";
+import { Textarea } from "@/components/Shadcn/Textarea";
+import ImgSock from "@/assets/StockImg.svg";
 
 // Helper to normalize shippings to always be an array
 type Shipping = {
@@ -44,12 +47,23 @@ const ProductPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [deliveryOpen, setDeliveryOpen] = useState(false);
   const [selectedShippingIdx, setSelectedShippingIdx] = useState(0);
+  const [quoteOpen, setQuoteOpen] = useState(false); // For devis instantané dialog
+  const [message, setMessage] = useState("");
+
   const id = useId();
 
   const increase = () => setQuantity((q) => q + 1);
   const decrease = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
 
   const product = products.find((p) => String(p.id) === String(productId)) as Product | undefined;
+
+  // Set initial quantity to product_minimum_commande if available
+  const initialQuantity = product?.product_minimum_commande ?? 1;
+  useEffect(() => {
+    if (product?.product_minimum_commande) {
+      setQuantity(product.product_minimum_commande);
+    }
+  }, [product?.product_minimum_commande]);
 
   if (loading) {
     return (
@@ -66,6 +80,10 @@ const ProductPage = () => {
       </div>
     );
   }
+
+  // Calculate total price (use product.product_price or similar)
+  const unitPrice = Number(product.product_price) || 0;
+  const totalPrice = unitPrice * quantity;
 
   return (
     <MainLayout>
@@ -100,8 +118,12 @@ const ProductPage = () => {
               {/* Price, Old Price, Discount */}
               <ProductPrice product={product} />
             </div>
+            <div className="flex">
+              <img src={ImgSock} alt="Stock" className="mr-2" width="25" height="25" />
+              <p className="font-semibold text-gray-800 text-base">En Stock || En rupture </p>
+            </div>
             {/* Unit, Minimum, Delivery */}
-            <div className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 rounded px-2 sm:px-4 py-2">
+            <div className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 rounded py-2">
               <div className="mb-2">
                 <Dialog open={deliveryOpen} onOpenChange={setDeliveryOpen}>
                   <DialogTrigger asChild>
@@ -277,14 +299,99 @@ const ProductPage = () => {
                   variant="ghost"
                   size="icon"
                   onClick={increase}
-                  className="text-lg font-bold text-gray-500 hover:bg-transparent px-6 sm:px-8"
+                  className="text-lg font-bold text-gray-500 hover:bg-transparent px-6 py-3 sm:px-8"
                 >
                   +
                 </Button>
               </div>
-              <Button className="bg-orange-500 text-lg text-white border border-orange-500 rounded font-semibold hover:bg-orange-600 transition w-full sm:w-auto">
-                Devis instantané
-              </Button>
+              {/* Devis instantané dialog trigger */}
+              <Dialog open={quoteOpen} onOpenChange={setQuoteOpen}>
+                <DialogTrigger asChild>
+                  <Button
+                    className="bg-orange-500 text-lg text-white border border-orange-500 rounded font-semibold hover:bg-orange-600 transition w-full sm:w-auto"
+                    type="button"
+                  >
+                    Devis instantané
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl h-auto p-0 overflow-hidden">
+                  <div className="flex flex-col md:flex-row w-full">
+                    {/* Left: Product image, name, total */}
+                    <div className="bg-gray-50 flex flex-col p-4 md:w-1/2 w-full border-b md:border-b-0 md:border-r">
+                      <img
+                        src={`http://127.0.0.1:8000/storage/${product.galleries[0]?.image_path}`}
+                        alt={product.product_name}
+                        className="justify-center items-centerw-72 h-72 object-cover rounded-lg mb-2"
+                      />
+                      <div className="font-semibold text-xl uppercase justify-start mb-1 text-start text-gray-700 break-words">
+                        {product.product_name}
+                      </div>
+                      <div className="text-orange-600 font-bold text-lg text-left">
+                        Total: {totalPrice.toLocaleString()} MAD
+                      </div>
+                    </div>
+                    {/* Right: Store info, quantity, message, send */}
+                    <div className="flex flex-col justify-between p-4 md:w-1/2 w-full">
+                      <div>
+                        <div className="font-base text-base mb-1">
+                          <a href="#" className="text-orange-500 text-lg sm:text-xl font-base uppercase">
+                            {product.store?.store_name}
+                          </a>
+                      </div>
+                        <div className="text-xs text-gray-600 mb-1">test@gmail.com</div>
+                        <div className="text-xs text-gray-600 mb-3">Casablanca</div>
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="text-sm">Quantité:</span>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={decrease}
+                            className="text-base font-bold text-gray-500 hover:bg-transparent px-2"
+                            type="button"
+                          >
+                            -
+                          </Button>
+                          <Input
+                            type="number"
+                            min={product.product_minimum_commande ?? 1}
+                            value={quantity}
+                            onChange={e => {
+                              const val = Math.max(Number(e.target.value), product.product_minimum_commande ?? 1);
+                              setQuantity(val);
+                            }}
+                            className="w-12 text-center border rounded h-8"
+                          />
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={increase}
+                            className="text-base font-bold text-gray-500 hover:bg-transparent px-2"
+                            type="button"
+                          >
+                            +
+                          </Button>
+                        </div>
+                        <Textarea
+                          placeholder="Écrivez un message pour le vendeur"
+                          value={message}
+                          onChange={e => setMessage(e.target.value)}
+                          className="w-full min-h-[60px] mb-3"
+                        />
+                      </div>
+                      <Button
+                        className="bg-orange-500 text-white w-full mt-2"
+                        type="button"
+                        onClick={() => {
+                          // TODO: handle send action
+                          setQuoteOpen(false);
+                        }}
+                      >
+                        Envoyer
+                      </Button>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
               <Button className="bg-transparent text-lg text-orange-500 border border-orange-500 rounded font-semibold hover:bg-orange-500 hover:text-white transition w-full sm:w-auto">
                 Ajouter au panier
               </Button>

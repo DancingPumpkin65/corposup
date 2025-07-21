@@ -65,7 +65,7 @@ const Navbar = () => {
 
           {/* Right Section */}
           <div className="flex items-center gap-6">
-            {!isSellerPage && !isNotHomePage && <NavbarIcons />}
+            <NavbarIcons />
 
             {/* User Profile or Login Button */}
             {isAuthenticated && currentUser ? (
