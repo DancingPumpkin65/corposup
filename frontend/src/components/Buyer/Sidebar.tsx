@@ -12,15 +12,13 @@ import {
 import {
   ShoppingBag,
   User2,
-  Truck,
   Heart,
   ShoppingCart
 } from "lucide-react";
 
 const buyerItems = [
   { title: "Profil", url: "/buyer/profile", icon: User2 },
-  { title: "Historique de commandes", url: "/buyer/orders", icon: ShoppingBag },
-  { title: "Suivi des devis", url: "/buyer/tracking", icon: Truck },
+  { title: "Suivi des devis", url: "/buyer/orders", icon: ShoppingBag },
   { title: "Produits sauvegardés", url: "/buyer/saved", icon: Heart },
   { title: "Panier", url: "/buyer/cart", icon: ShoppingCart },
 ];

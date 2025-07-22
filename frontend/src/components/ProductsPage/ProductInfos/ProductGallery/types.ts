@@ -12,4 +12,3 @@ export type MagnifierConfig = {
   previewLeft?: number;
   previewTop?: number;
 };
-

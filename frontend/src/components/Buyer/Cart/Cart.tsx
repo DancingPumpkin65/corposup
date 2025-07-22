@@ -176,6 +176,13 @@ const Cart = () => {
 											))
 										)}
 									</TableBody>
+                                    {/* <tbody aria-hidden="true" className="table-row"></tbody>
+                                    <TableFooter className="bg-transparent">
+                                    <TableRow className="hover:bg-transparent">
+                                        <TableCell colSpan={4}>Total</TableCell>
+                                        <TableCell className="text-right">$2,500.00</TableCell>
+                                    </TableRow>
+                                    </TableFooter> */}
 								</Table>
 							</div>
 							{/* Mise à jour button always below the table */}

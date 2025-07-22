@@ -4,8 +4,7 @@ import { BuyerSidebar } from '@/components/Buyer/Sidebar';
 import { Routes, Route } from 'react-router-dom';
 import { 
   OrderHistory, 
-  Profile, 
-  OrderTracking, 
+  Profile,
   SavedProducts, 
   Cart 
 } from '@/components/Buyer';
@@ -19,10 +18,9 @@ const BuyerPage = () => {
           <Routes>
             <Route path="orders" element={<OrderHistory />} />
             <Route path="profile" element={<Profile />} />
-            <Route path="tracking" element={<OrderTracking />} />
             <Route path="saved" element={<SavedProducts />} />
             <Route path="cart" element={<Cart />} />
-            <Route index element={<OrderHistory />} />
+            <Route index element={<Profile />} />
           </Routes>
         </div>
       </SidebarProvider>

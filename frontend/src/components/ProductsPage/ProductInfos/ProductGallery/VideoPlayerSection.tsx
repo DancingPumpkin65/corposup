@@ -13,7 +13,6 @@ import {
 
 const VideoPlayerSection = ({
   video_path,
-  video_description,
 }: {
   video_path?: string;
   video_description?: string;
@@ -37,9 +36,6 @@ const VideoPlayerSection = ({
         <VideoPlayerVolumeRange />
       </VideoPlayerControlBar>
     </VideoPlayer>
-    {video_description && (
-      <div className="text-sm text-gray-500 mt-2">{video_description}</div>
-    )}
   </div>
 );
 

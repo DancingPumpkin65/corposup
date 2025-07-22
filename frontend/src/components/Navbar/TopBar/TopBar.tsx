@@ -41,7 +41,7 @@ const TopBar = ({ currency, setCurrency, language, setLanguage }: TopBarProps) =
             {/* Currency */}
             <div className="relative border-0 md:border-r-2 pr-0 md:pr-6">
               <Select value={currency} onValueChange={setCurrency}>
-                <SelectTrigger className="w-[90px] border-0 text-white text-sm hover:bg-blue-700 focus:ring-0 focus:ring-offset-0">
+                <SelectTrigger className="w-[90px] py-1 border-0 text-white text-sm hover:bg-blue-700 focus:ring-0 focus:ring-offset-0">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="min-w-[90px]">
@@ -58,7 +58,7 @@ const TopBar = ({ currency, setCurrency, language, setLanguage }: TopBarProps) =
             {/* Language */}
             <div className="relative border-0 md:border-r-2 pr-0 md:pr-6">
               <Select value={language} onValueChange={setLanguage}>
-                <SelectTrigger className="w-[70px] border-0 text-white text-sm hover:bg-blue-700 focus:ring-0 focus:ring-offset-0">
+                <SelectTrigger className="w-[70px] py-1 border-0 text-white text-sm hover:bg-blue-700 focus:ring-0 focus:ring-offset-0">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="min-w-[70px] translate-x-1">

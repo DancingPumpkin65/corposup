@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import logoWhite from '@/assets/LogoWhite.svg';
 import { Separator } from '@/components/Shadcn/Separator';
-import { FaLock } from "react-icons/fa";
 
 const Footer = () => (
   <footer className="w-full bg-blue-600">
@@ -49,16 +48,6 @@ const Footer = () => (
                     </a>
                   </li>
                 </ul>
-              </div>
-            </div>
-            <div className="paiement-card mt-4">
-              <div className="secure-payment-block flex flex-col items-start">
-                <div className="note text-white text-xs mb-2">
-                  <span><FaLock className="inline-block w-4 text-gray-500 mr-1 text-white" />Paiement 100 % sécurisé</span>
-                </div>
-                <div className="img">
-                  <img alt="Paiement 100 % sécurisé" src="https://static.electroplanet.ma/static/version1752279022/frontend/ep/shop/fr_FR/images/payment-card.png" className="w-24 sm:w-32" />
-                </div>
               </div>
             </div>
           </div>
