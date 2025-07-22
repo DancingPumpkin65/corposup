@@ -1,6 +1,10 @@
 import { useState, useRef } from "react";
 import { type Product } from "@/components/ProductsPage/types";
 import imgtest from '@/assets/Item.jpg';
+import Thumbnail from '@/components/ProductsPage/ProductInfos/ProductGallery/Thumbnail';
+import MagnifierLens from '@/components/ProductsPage/ProductInfos/ProductGallery/MagnifierLens';
+import MagnifierPreview from '@/components/ProductsPage/ProductInfos/ProductGallery/MagnifierPreview';
+import VideoPlayerSection from '@/components/ProductsPage/ProductInfos/ProductGallery/VideoPlayerSection';
 
 type GalleryItem = {
   id: number;
@@ -32,97 +36,44 @@ const DEFAULT_MAGNIFIER_CONFIG: Required<MagnifierConfig> = {
   previewTop: 0,
 };
 
-const MagnifierLens = ({
-  show,
-  x,
-  y,
-  size,
-  style,
-}: {
-  show: boolean;
-  x: number;
-  y: number;
-  size: number;
-  style?: React.CSSProperties;
-}) =>
-  show ? (
-    <div
-      className="magnify-lens bg-white bg-opacity-50"
-      data-gallery-role="magnifier-zoom"
-      style={{
-        position: "absolute",
-        pointerEvents: "none",
-        left: x - size / 2,
-        top: y - size / 2,
-        width: size,
-        height: size,
-        border: "2px solid #c7c6c58c",
-        ...style,
-      }}
-    />
-  ) : null;
-
-const Thumbnail = ({
-  img,
-  idx,
-  selected,
-  onClick,
-}: {
-  img: GalleryItem;
-  idx: number;
-  selected: boolean;
-  onClick: () => void;
-}) => (
-  <div
-    key={img.id || idx}
-    className={`fotorama__thumb-border${selected ? " ring-2 ring-orange-500" : ""}`}
-    style={{
-      margin: "0 4px",
-      border: selected ? "2px solid #fb923c" : "2px solid #e5e7eb",
-      borderRadius: 6,
-      cursor: "pointer",
-      overflow: "hidden",
-      width: 64,
-      height: 64,
-      boxSizing: "border-box",
-    }}
-    onClick={onClick}
-  >
-    <img
-      src={imgtest}
-      alt={`gallery-thumb-${idx}`}
-      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-    />
-  </div>
-);
+const VIDEO_THUMB_ID = -1;
 
 const ProductGallery = ({
   galleries = [],
   productName = "",
   magnifierConfig = {},
+  video_path,
+  video_description,
 }: {
   galleries: Product["galleries"] | Product["galleries"][];
   productName?: string;
   magnifierConfig?: MagnifierConfig;
+  video_path?: string;
+  video_description?: string;
 }) => {
   const config = { ...DEFAULT_MAGNIFIER_CONFIG, ...magnifierConfig };
   const galleryArr = normalizeGalleries(galleries);
+  const galleryWithVideo = video_path
+    ? [...galleryArr, { id: VIDEO_THUMB_ID, product_id: 0, image_path: "" }]
+    : galleryArr;
   const [selectedImageIdx, setSelectedImageIdx] = useState(0);
   const [showMagnifier, setShowMagnifier] = useState(false);
   const [magnifierPos, setMagnifierPos] = useState({ x: 0, y: 0 });
   const mainImgRef = useRef<HTMLImageElement>(null);
   const previewImgRef = useRef<HTMLImageElement>(null);
 
-  if (!galleryArr.length) {
+  if (!galleryWithVideo.length) {
     return (
       <div className="w-full h-80 flex items-center justify-center bg-gray-100 rounded-lg border">
         <span className="text-gray-400">Aucune image</span>
       </div>
     );
   }
-  const handleThumbClick = (idx: number) => setSelectedImageIdx(idx);
+  const handleThumbClick = (idx: number) => {
+    setSelectedImageIdx(idx);
+    setShowMagnifier(false);
+  };
 
-  // Magnifier logic
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!mainImgRef.current) return;
     const frameRect = e.currentTarget.getBoundingClientRect();
@@ -150,7 +101,7 @@ const ProductGallery = ({
   const getLargeImageStyle = () => {
     const zoom = config.zoom;
     if (!mainImgRef.current) {
-      return { width: "100%", height: "auto", objectFit: "initial" };
+      return "w-full h-auto object-[initial]";
     }
     const imgRect = mainImgRef.current.getBoundingClientRect();
     const frameRect = mainImgRef.current.parentElement?.getBoundingClientRect();
@@ -166,134 +117,76 @@ const ProductGallery = ({
     const offsetY = previewCenterY - originY * zoom;
 
     return showMagnifier
-      ? {
-          transform: `scale(${zoom})`,
-          transformOrigin: "top left",
-          width: "100%",
-          height: "auto",
-          position: "absolute",
-          left: offsetX,
-          top: offsetY,
-          objectFit: "initial",
-          transition: "none",
-        }
-      : { width: "100%", height: "auto", objectFit: "initial" };
+      ? `absolute left-[${offsetX}px] top-[${offsetY}px] w-full h-auto object-[initial] scale-[${zoom}] origin-top-left transition-none`
+      : "w-full h-auto object-[initial]";
   };
+
+  const isVideoSelected = video_path && selectedImageIdx === galleryWithVideo.length - 1;
 
   return (
     <div
       className="fotorama-item fotorama max-w-[600px] w-full mx-auto"
       data-gallery-role="gallery"
-      style={{ width: "100%" }}
     >
       <div data-gallery-role="fotorama__focusable-start" tabIndex={-1}></div>
-      <div
-        className="fotorama__wrap fotorama__wrap--css3 fotorama__wrap--slide fotorama__wrap--toggle-arrows"
-        style={{ minWidth: 0, maxWidth: "100%" }}
-      >
-        <div className="fotorama__stage rounded-xl bg-white border shadow-sm w-full max-w-[556px]" style={{ height: "auto" }}>
-          {/* Fullscreen/Zoom/Prev/Next */}
+      <div className="fotorama__wrap fotorama__wrap--css3 fotorama__wrap--slide fotorama__wrap--toggle-arrows">
+        <div className="fotorama__stage rounded-xl bg-white border shadow-sm w-full max-w-[556px]">
           <div
             className="fotorama__stage__shaft mx-auto"
             tabIndex={0}
             data-gallery-role="stage-shaft"
-            style={{
-              transitionDuration: "300ms",
-              transform: "translate3d(0px, 0px, 0px)",
-              width: "100%",
-              maxWidth: 496,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-            }}
             onMouseMove={e => {
-              setShowMagnifier(true);
-              handleMouseMove(e);
+              if (!isVideoSelected) {
+                setShowMagnifier(true);
+                handleMouseMove(e);
+              }
             }}
             onMouseLeave={() => setShowMagnifier(false)}
             onMouseEnter={e => {
-              setShowMagnifier(true);
-              handleMouseMove(e);
+              if (!isVideoSelected) {
+                setShowMagnifier(true);
+                handleMouseMove(e);
+              }
             }}
           >
             <div
-              className="fotorama__stage__frame fotorama__active fotorama_vertical_ratio fotorama__loaded fotorama__loaded--img"
-              aria-hidden="false"
-              data-active="true"
-              style={{
-                width: "100%",
-                maxWidth: 496,
-                height: "auto",
-                minHeight: 200,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "relative"
-              }}
+              className="fotorama__stage__frame fotorama__active fotorama_vertical_ratio fotorama__loaded fotorama__loaded--img flex items-center justify-center relative w-full max-w-[496px] min-h-[200px]"
             >
-              <img
-                ref={mainImgRef}
-                src={imgtest}
-                alt={productName}
-                className="fotorama__img w-full max-w-[480px] max-h-[320px] sm:max-h-[480px] object-contain"
-                style={{ objectFit: "contain" }}
-                draggable={false}
-              />
-              <MagnifierLens show={showMagnifier} x={magnifierPos.x} y={magnifierPos.y} size={config.lensSize} />
-            </div>
-            {/* Magnifier preview */}
-            <div
-              className={`magnifier-preview${showMagnifier ? "" : " magnify-hidden"}`}
-              data-gallery-role="magnifier"
-              id="preview"
-              style={{
-                // Show beside the image on large screens, fixed bottom-right on mobile
-                width: config.previewWidth,
-                height: config.previewHeight,
-                top: 0,
-                left: 'calc(100% + 32px)',
-                position: "absolute",
-                background: "#fff",
-                border: "1px solid #e5e7eb",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
-                overflow: "hidden",
-                display: showMagnifier ? "block" : "none",
-                zIndex: 20,
-                // Responsive: fallback to fixed for small screens
-                ...(window.innerWidth < 1024
-                  ? {
-                      position: "fixed",
-                      left: "auto",
-                      right: 0,
-                      bottom: 0,
-                      top: "auto",
-                      width: "90vw",
-                      maxWidth: 320,
-                      height: 240,
-                    }
-                  : {}),
-              }}
-            >
-              <div style={{ width: "100%", height: "100%", overflow: "hidden", position: "relative" }}>
-                <img
-                  ref={previewImgRef}
-                  src={imgtest}
-                  id="magnifier-item-0-large"
-                  className={`magnifier-large${showMagnifier ? " w-full" : " magnify-hidden"}`}
-                  style={getLargeImageStyle()}
-                  alt={productName}
-                  draggable={false}
+              {isVideoSelected ? (
+                <VideoPlayerSection
+                  video_path={video_path}
+                  video_description={video_description}
                 />
-              </div>
+              ) : (
+                <>
+                  <img
+                    ref={mainImgRef}
+                    src={imgtest}
+                    alt={productName}
+                    className="fotorama__img w-full max-w-[480px] max-h-[320px] sm:max-h-[480px] object-contain"
+                    draggable={false}
+                  />
+                  <MagnifierLens show={showMagnifier} x={magnifierPos.x} y={magnifierPos.y} size={config.lensSize} />
+                </>
+              )}
             </div>
+            {!isVideoSelected && (
+              <MagnifierPreview
+                showMagnifier={showMagnifier}
+                config={config}
+                previewImgRef={previewImgRef}
+                getLargeImageStyle={getLargeImageStyle}
+                productName={productName}
+                imgSrc={imgtest}
+              />
+            )}
           </div>
         </div>
         {/* Thumbnails */}
-        {galleryArr.length > 1 && (
+        {galleryWithVideo.length > 0 && (
           <div className="fotorama__nav-wrap" data-gallery-role="nav-wrap">
-            <div className="fotorama__nav" style={{ height: 82, display: "flex", alignItems: "end" }}>
-              <div className="fotorama__nav__shaft fotorama__grab" style={{ display: "flex", alignItems: "center" }}>
+            <div className="fotorama__nav flex items-end h-[82px]">
+              <div className="fotorama__nav__shaft fotorama__grab flex items-center">
                 {galleryArr.map((img, idx) => (
                   <Thumbnail
                     key={img.id || idx}
@@ -303,6 +196,15 @@ const ProductGallery = ({
                     onClick={() => handleThumbClick(idx)}
                   />
                 ))}
+                {video_path && (
+                  <Thumbnail
+                    key="video-thumb"
+                    idx={galleryWithVideo.length - 1}
+                    selected={selectedImageIdx === galleryWithVideo.length - 1}
+                    onClick={() => handleThumbClick(galleryWithVideo.length - 1)}
+                    isVideo
+                  />
+                )}
               </div>
             </div>
           </div>

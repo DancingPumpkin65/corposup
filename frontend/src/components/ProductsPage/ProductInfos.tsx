@@ -93,7 +93,9 @@ const ProductPage = () => {
         <div className="flex flex-col gap-8 md:flex-row h-auto">
           {/* Left: Gallery */}
           <div className="w-full md:w-1/2 flex flex-col items-center mb-6 md:mb-0">
-            <ProductGallery galleries={product.galleries} productName={product.product_name} />
+            <ProductGallery galleries={product.galleries} productName={product.product_name}
+            video_path="https://stream.mux.com/DS00Spx1CV902MCtPj5WknGlR102V5HFkDe/high.mp4"
+  video_description="Présentation du produit" />
           </div>
           {/* Right: Product Info */}
           <div className="w-full md:w-1/2 flex flex-col justify-between">
@@ -308,7 +310,7 @@ const ProductPage = () => {
               <Dialog open={quoteOpen} onOpenChange={setQuoteOpen}>
                 <DialogTrigger asChild>
                   <Button
-                    className="bg-orange-500 text-lg text-white border border-orange-500 rounded font-semibold hover:bg-orange-600 transition w-full sm:w-auto"
+                    className="px-3 py-2 bg-orange-500 text-lg text-white border border-orange-500 rounded font-semibold hover:bg-orange-600 transition w-full sm:w-auto"
                     type="button"
                   >
                     Devis instantané
@@ -392,7 +394,7 @@ const ProductPage = () => {
                   </div>
                 </DialogContent>
               </Dialog>
-              <Button className="bg-transparent text-lg text-orange-500 border border-orange-500 rounded font-semibold hover:bg-orange-500 hover:text-white transition w-full sm:w-auto">
+              <Button className="px-3 py-2 bg-transparent text-lg text-orange-500 border border-orange-500 rounded font-semibold hover:bg-orange-500 hover:text-white transition w-full sm:w-auto">
                 Ajouter au panier
               </Button>
             </div>

@@ -1,18 +1,6 @@
 import { useState } from "react";
 import { type Product } from "@/components/ProductsPage/types";
 import {
-  VideoPlayer,
-  VideoPlayerContent,
-  VideoPlayerControlBar,
-  VideoPlayerMuteButton,
-  VideoPlayerPlayButton,
-  VideoPlayerSeekBackwardButton,
-  VideoPlayerSeekForwardButton,
-  VideoPlayerTimeDisplay,
-  VideoPlayerTimeRange,
-  VideoPlayerVolumeRange,
-} from '@/components/Shadcn/VideoPlayer';
-import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
@@ -27,7 +15,7 @@ type Review = {
   comment: string;
 };
 
-const TABS = ["description", "specification", "video", "reviews"] as const;
+const TABS = ["description", "specification", "reviews", "return"] as const;
 type TabType = typeof TABS[number];
 
 const ProductTabs = ({ product }: { product: Product }) => {
@@ -82,40 +70,6 @@ const ProductTabs = ({ product }: { product: Product }) => {
         </div>
       );
     }
-    if (tab === "video") {
-      return (
-        <div className="w-full max-w-4xl mx-auto">
-          {product.video_path ? (
-            <div className="mt-4">
-              <VideoPlayer className="w-full overflow-hidden rounded-[12px] border">
-                <VideoPlayerContent
-                  crossOrigin=""
-                  muted
-                  preload="auto"
-                  slot="media"
-                  src={`https://localhost:8000/storage/videos/${product.video_path}`}
-                />
-                <VideoPlayerControlBar >
-                  <VideoPlayerPlayButton />
-                  <VideoPlayerSeekBackwardButton />
-                  <VideoPlayerSeekForwardButton />
-                  <VideoPlayerTimeRange />
-                  <VideoPlayerTimeDisplay showDuration />
-                  <VideoPlayerMuteButton />
-                  <VideoPlayerVolumeRange />
-                </VideoPlayerControlBar>
-              </VideoPlayer>
-              <h2 className="font-semibold mt-2">Description de la vidéo</h2>
-              {product.video_description && (
-                <div className="text-sm text-gray-500 mt-2">{product.video_description}</div>
-              )}
-            </div>
-          ) : (
-            <p>Aucune vidéo disponible.</p>
-          )}
-        </div>
-      );
-    }
     if (tab === "reviews") {
       return (
         <div className="w-full max-w-4xl mx-auto">
@@ -135,8 +89,18 @@ const ProductTabs = ({ product }: { product: Product }) => {
         </div>
       );
     }
+
+    if (tab === "return") {
+        return (
+          <div className="w-full max-w-4xl mx-auto">
+            <p className="whitespace-pre-line">Still no policy return</p>
+          </div>
+        );
+      }
+
     return null;
   };
+
 
   return (
     <div className="mt-10">
