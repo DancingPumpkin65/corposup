@@ -1,9 +1,5 @@
 import React from "react";
-
-type MagnifierConfig = {
-  previewWidth: number;
-  previewHeight: number;
-};
+import { type MagnifierConfig } from "./types";
 
 const MagnifierPreview = ({
   showMagnifier,

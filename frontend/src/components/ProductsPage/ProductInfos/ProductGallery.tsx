@@ -5,12 +5,7 @@ import Thumbnail from '@/components/ProductsPage/ProductInfos/ProductGallery/Thu
 import MagnifierLens from '@/components/ProductsPage/ProductInfos/ProductGallery/MagnifierLens';
 import MagnifierPreview from '@/components/ProductsPage/ProductInfos/ProductGallery/MagnifierPreview';
 import VideoPlayerSection from '@/components/ProductsPage/ProductInfos/ProductGallery/VideoPlayerSection';
-
-type GalleryItem = {
-  id: number;
-  product_id: number;
-  image_path: string;
-};
+import { type GalleryItem } from "@/components/ProductsPage/ProductInfos/ProductGallery/types";
 
 const normalizeGalleries = (galleries: Product["galleries"] | Product["galleries"][]) => {
   if (Array.isArray(galleries)) return galleries as GalleryItem[];

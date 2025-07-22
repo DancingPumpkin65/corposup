@@ -20,7 +20,7 @@ import {
 const buyerItems = [
   { title: "Profil", url: "/buyer/profile", icon: User2 },
   { title: "Historique de commandes", url: "/buyer/orders", icon: ShoppingBag },
-  { title: "Suivi de commande", url: "/buyer/tracking", icon: Truck },
+  { title: "Suivi des devis", url: "/buyer/tracking", icon: Truck },
   { title: "Produits sauvegardés", url: "/buyer/saved", icon: Heart },
   { title: "Panier", url: "/buyer/cart", icon: ShoppingCart },
 ];

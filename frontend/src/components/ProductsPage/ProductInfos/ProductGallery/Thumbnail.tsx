@@ -1,10 +1,5 @@
 import imgtest from '@/assets/Item.jpg';
-
-type GalleryItem = {
-  id: number;
-  product_id: number;
-  image_path: string;
-};
+import { type GalleryItem } from "./types";
 
 const Thumbnail = ({
   img,
