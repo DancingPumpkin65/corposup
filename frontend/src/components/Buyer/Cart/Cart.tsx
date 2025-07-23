@@ -1,10 +1,15 @@
 import { SidebarInset, SidebarTrigger } from "@/components/Shadcn/Sidebar/sidebar";
 import { Loader } from "lucide-react";
-import { useState } from "react";
+import { Trash2, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/Shadcn/Button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/Shadcn/Table";
-import { Trash2, MoreHorizontal } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/Shadcn/DropdownMenu";
+import { useSelector, useDispatch } from "react-redux";
+import { type RootState, type AppDispatch } from "@/store";
+import {
+  setEditQty,
+  setShowUpdate,
+} from "@/store/cartSlice";
 
 // mock data
 const cartProducts = [
@@ -29,21 +34,15 @@ const cartProducts = [
 ];
 
 const Cart = () => {
-	const [loading] = useState(false);
-	const [editQty, setEditQty] = useState<{ [id: number]: number }>({});
-	const [_, setShowUpdate] = useState<{ [id: number]: boolean }>({});
+	const dispatch = useDispatch<AppDispatch>();
+	const loading = useSelector((state: RootState) => state.cart.loading);
+	const editQty = useSelector((state: RootState) => state.cart.editQty);
+	const showUpdate = useSelector((state: RootState) => state.cart.showUpdate);
 
 	const handleQtyChange = (id: number, value: number) => {
-		setEditQty((prev) => ({ ...prev, [id]: value }));
-		setShowUpdate((prev) => ({ ...prev, [id]: true }));
+		dispatch(setEditQty({ id, value }));
+		dispatch(setShowUpdate({ id, value: true }));
 	};
-
-	// const handleUpdate = (id: number) => {
-	// 	setShowUpdate((prev) => ({ ...prev, [id]: false }));
-	// };
-
-	// const handleRemove = (id: number) => {
-	// };
 
 	return (
 		<SidebarInset>

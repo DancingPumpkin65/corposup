@@ -10,7 +10,7 @@ export const useProductss = () => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const res = await axios.get('http://127.0.0.1:8000/api/categories/44/products');
+        const res = await axios.get('http://127.0.0.1:8000/api/categories/13/products');
         console.log('Fetched products:', res.data);
         setProducts(res.data || []);
       } catch (error) {

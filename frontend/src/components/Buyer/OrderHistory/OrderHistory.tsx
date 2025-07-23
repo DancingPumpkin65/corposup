@@ -1,14 +1,12 @@
 import { SidebarInset, SidebarTrigger } from "@/components/Shadcn/Sidebar/sidebar";
 import { Loader } from "lucide-react";
-import { useId, useState } from "react";
+import { useId } from "react";
 import {
   type ColumnDef,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  type PaginationState,
-  type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 import {
@@ -42,6 +40,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/Shadcn/Table";
+import { useSelector, useDispatch } from "react-redux";
+import { type RootState, type AppDispatch } from "@/store";
+import {
+  setOrderPagination,
+  setOrderSorting
+} from "@/store/orderHistorySlice";
 
 type Order = {
   id: string;
@@ -86,35 +90,24 @@ const columns: ColumnDef<Order>[] = [
   },
 ];
 
-const mockOrders: Order[] = [
-  { id: "ORD-001", date: "2024-06-01", status: "Envoyée", total: "49.99€" },
-  { id: "ORD-002", date: "2024-05-28", status: "En attente", total: "19.99€" },
-  { id: "ORD-003", date: "2024-05-15", status: "Envoyée", total: "29.99€" },
-  { id: "ORD-004", date: "2024-05-10", status: "En attente", total: "99.99€" },
-  { id: "ORD-005", date: "2024-04-30", status: "Envoyée", total: "15.00€" },
-];
-
 const OrderHistory = () => {
-  const [loading] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const loading = useSelector((state: RootState) => state.orderHistory.loading);
+  const pagination = useSelector((state: RootState) => state.orderHistory.pagination);
+  const sorting = useSelector((state: RootState) => state.orderHistory.sorting);
+  const data = useSelector((state: RootState) => state.orderHistory.data);
+
   const id = useId();
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 5,
-  });
-  const [sorting, setSorting] = useState<SortingState>([
-    { id: "date", desc: true },
-  ]);
-  const [data] = useState<Order[]>(mockOrders);
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    onSortingChange: setSorting,
+    onSortingChange: (sort) => dispatch(setOrderSorting(sort)),
     enableSortingRemoval: false,
     getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
+    onPaginationChange: (pag) => dispatch(setOrderPagination(pag)),
     state: {
       sorting,
       pagination,
