@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PaginationState, SortingState } from "@tanstack/react-table";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { type PaginationState, type SortingState } from "@tanstack/react-table";
 
 type Order = {
   id: string;
