@@ -2,16 +2,17 @@ import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./cartSlice";
 import orderHistoryReducer from "./orderHistorySlice";
 import deliveriesReducer from "./deliveriesSlice";
-// ...other imports...
+import discountsReducer from "./discountsSlice";
+import productsReducer from "./productsSlice";
 
 const store = configureStore({
   reducer: {
     cart: cartReducer,
     orderHistory: orderHistoryReducer,
     deliveries: deliveriesReducer,
-    // ...other reducers...
+    discounts: discountsReducer,
+    products: productsReducer,
   },
-  // ...middleware, etc...
 });
 
 export type RootState = ReturnType<typeof store.getState>;
