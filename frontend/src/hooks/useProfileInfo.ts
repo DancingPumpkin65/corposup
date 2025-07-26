@@ -1,6 +1,13 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import apiClient from '@/services/apiClient';
-import { type User } from './useCurrentUser';
+import { useSelector, useDispatch } from "react-redux";
+import { type RootState, type AppDispatch } from "@/store";
+import {
+  setProfileFormData,
+  setProfileLoading,
+  setProfileAlert,
+  setProfileSelectedImage,
+} from "@/store/profileInfoSlice";
 
 interface ProfileInfo {
   firstname: string;
@@ -18,46 +25,37 @@ interface AlertState {
   message: string;
 }
 
-export const useProfileInfo = (user: User) => {
-  const [formData, setFormData] = useState<ProfileInfo>({
-    firstname: user.firstname || '',
-    lastname: user.lastname || '',
-    email: user.email || '',
-    role: user.role || 'buyer',
-    phone: user.phone || '',
-    city: user.city || ''
-  });
-  
-  const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState<AlertState>({
-    show: false,
-    type: 'success',
-    message: ''
-  });
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+export const useProfileInfo = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const formData = useSelector((state: RootState) => state.profileInfo.formData);
+  const loading = useSelector((state: RootState) => state.profileInfo.loading);
+  const alert: AlertState = useSelector((state: RootState) => state.profileInfo.alert);
+  const selectedImage = useSelector((state: RootState) => state.profileInfo.selectedImage);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Initialize formData if needed
+  // (You may want to dispatch setProfileFormData here if user changes)
+
   const handleChange = (field: keyof ProfileInfo, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    dispatch(setProfileFormData({ ...formData, [field]: value }));
     if (alert.show) {
-      setAlert(prev => ({ ...prev, show: false }));
+      dispatch(setProfileAlert({ ...alert, show: false }));
     }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setSelectedImage(file);
+      dispatch(setProfileSelectedImage(file));
       if (alert.show) {
-        setAlert(prev => ({ ...prev, show: false }));
+        dispatch(setProfileAlert({ ...alert, show: false }));
       }
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-
+    dispatch(setProfileLoading(true));
     try {
       if (selectedImage) {
         const formDataToSend = new FormData();
@@ -69,24 +67,18 @@ export const useProfileInfo = (user: User) => {
         formDataToSend.append('city', formData.city);
         formDataToSend.append('photo_profile', selectedImage);
         formDataToSend.append('_method', 'PUT');
-
         const response = await apiClient.post('/update-profile', formDataToSend, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+          headers: { 'Content-Type': 'multipart/form-data' },
         });
-
-        setAlert({
+        dispatch(setProfileAlert({
           show: true,
           type: 'success',
           message: 'Profil et photo mis à jour avec succès!'
-        });
-
-        setSelectedImage(null);
+        }));
+        dispatch(setProfileSelectedImage(null));
         if (fileInputRef.current) {
           fileInputRef.current.value = '';
         }
-
         localStorage.setItem('user', JSON.stringify(response.data.user));
       } else {
         const dataToSend = {
@@ -97,34 +89,27 @@ export const useProfileInfo = (user: User) => {
           phone: formData.phone,
           city: formData.city
         };
-
         const response = await apiClient.put('/update-profile', dataToSend, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
         });
-
-        setAlert({
+        dispatch(setProfileAlert({
           show: true,
           type: 'success',
           message: 'Profil mis à jour avec succès!'
-        });
-
+        }));
         localStorage.setItem('user', JSON.stringify(response.data.user));
       }
-      
       setTimeout(() => {
-        setAlert(prev => ({ ...prev, show: false }));
+        dispatch(setProfileAlert({ ...alert, show: false }));
       }, 5000);
     } catch (error) {
-      console.error('Profile update error:', error);
-      setAlert({
+      dispatch(setProfileAlert({
         show: true,
         type: 'error',
         message: 'Erreur lors de la mise à jour du profil'
-      });
+      }));
     } finally {
-      setLoading(false);
+      dispatch(setProfileLoading(false));
     }
   };
 

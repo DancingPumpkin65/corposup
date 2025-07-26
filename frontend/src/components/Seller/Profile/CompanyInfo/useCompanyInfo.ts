@@ -1,5 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import apiClient from '@/services/apiClient';
+import { useSelector, useDispatch } from "react-redux";
+import { type RootState, type AppDispatch } from "@/store";
+import {
+  setCompanyFormData,
+  setCompanyLoading,
+  setCompanyDataLoaded,
+  setCompanyAlert,
+  setCompanyShowWarning,
+} from "@/store/companyInfoSlice";
 
 export interface CompanyInfo {
   company_name: string;
@@ -21,46 +30,31 @@ interface AlertState {
 }
 
 export const useCompanyInfo = () => {
-  const [formData, setFormData] = useState<CompanyInfo>({
-    company_name: '',
-    company_phone: '',
-    sector: '',
-    website: '',
-    address1: '',
-    address2: '',
-    ice_number: '',
-    legal_form: '',
-    city: '',
-    country: ''
-  });
-  
-  const [loading, setLoading] = useState(false);
-  const [dataLoaded, setDataLoaded] = useState(false);
-  const [alert, setAlert] = useState<AlertState>({
-    show: false,
-    type: 'success',
-    message: ''
-  });
-  const [showWarning, setShowWarning] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const formData = useSelector((state: RootState) => state.companyInfo.formData);
+  const loading = useSelector((state: RootState) => state.companyInfo.loading);
+  const dataLoaded = useSelector((state: RootState) => state.companyInfo.dataLoaded);
+  const alert: AlertState = useSelector((state: RootState) => state.companyInfo.alert);
+  const showWarning = useSelector((state: RootState) => state.companyInfo.showWarning);
 
   useEffect(() => {
     fetchCompanyInfo();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    // Only check for completeness after data is loaded
     if (dataLoaded) {
       const isComplete = formData.company_name && formData.company_phone && formData.sector;
-      setShowWarning(!isComplete);
+      dispatch(setCompanyShowWarning(!isComplete));
     }
-  }, [formData, dataLoaded]);
+  }, [formData, dataLoaded, dispatch]);
 
   const fetchCompanyInfo = async () => {
     try {
       const response = await apiClient.get('/my-company');
       if (response.data && response.data.company) {
         const company = response.data.company;
-        setFormData({
+        dispatch(setCompanyFormData({
           company_name: company.company_name || '',
           company_phone: company.company_phone || '',
           sector: company.sector || '',
@@ -71,39 +65,35 @@ export const useCompanyInfo = () => {
           legal_form: company.legal_form || '',
           city: company.city || '',
           country: company.country || ''
-        });
+        }));
       }
-    } catch (error) {
-      console.log('No company info found yet', error);
     } finally {
-      setDataLoaded(true);
+      dispatch(setCompanyDataLoaded(true));
     }
   };
 
   const handleChange = (field: keyof CompanyInfo, value: string) => {
-    setFormData((prev: CompanyInfo) => ({ ...prev, [field]: value }));
+    dispatch(setCompanyFormData({ ...formData, [field]: value }));
     if (alert.show) {
-      setAlert((prev: typeof alert) => ({ ...prev, show: false }));
+      dispatch(setCompanyAlert({ ...alert, show: false }));
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-
+    dispatch(setCompanyLoading(true));
     try {
       await apiClient.post('/complete-company-info', formData);
-      setAlert({
+      dispatch(setCompanyAlert({
         show: true,
         type: 'success',
         message: 'Informations de l\'entreprise mises à jour avec succès!'
-      });
-      
+      }));
       setTimeout(() => {
-        setAlert((prev: typeof alert) => ({ ...prev, show: false }));
+        dispatch(setCompanyAlert({ ...alert, show: false }));
       }, 3000);
     } finally {
-      setLoading(false);
+      dispatch(setCompanyLoading(false));
     }
   };
 
