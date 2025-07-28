@@ -4,6 +4,11 @@ import orderHistoryReducer from "./orderHistorySlice";
 import deliveriesReducer from "./deliveriesSlice";
 import discountsReducer from "./discountsSlice";
 import productsReducer from "./productsSlice";
+import signInReducer from "./signInSlice";
+import signUpReducer from "./signUpSlice";
+import profileInfoReducer from "./profileInfoSlice";
+import companyInfoReducer from "./companyInfoSlice";
+import passwordUpdateReducer from "./passwordUpdateSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +17,11 @@ const store = configureStore({
     deliveries: deliveriesReducer,
     discounts: discountsReducer,
     products: productsReducer,
+    signIn: signInReducer,
+    signUp: signUpReducer,
+    profileInfo: profileInfoReducer,
+    companyInfo: companyInfoReducer,
+    passwordUpdate: passwordUpdateReducer,
   },
 });
 
