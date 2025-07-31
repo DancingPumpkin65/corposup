@@ -3,7 +3,18 @@ import { useState } from 'react';
 export interface AlertState {
   show: boolean;
   type: 'success' | 'error';
+  title: string;
   message: string;
+  errors?: {
+    email?: string[];
+    password?: string[];
+    phone?: string[];
+    firstName?: string[];
+    lastName?: string[];
+    role?: string[];
+    password_confirmation?: string[];
+    // ...add other fields as needed
+  };
 }
 
 export const useAlert = () => {

@@ -9,6 +9,7 @@ import signUpReducer from "./signUpSlice";
 import profileInfoReducer from "./profileInfoSlice";
 import companyInfoReducer from "./companyInfoSlice";
 import passwordUpdateReducer from "./passwordUpdateSlice";
+import shopsReducer from './shopsSlice';
 
 const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ const store = configureStore({
     signUp: signUpReducer,
     profileInfo: profileInfoReducer,
     companyInfo: companyInfoReducer,
+    shops: shopsReducer,
     passwordUpdate: passwordUpdateReducer,
   },
 });

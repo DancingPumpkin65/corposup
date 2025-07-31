@@ -9,6 +9,11 @@ export interface Category {
     id: number;
     category_name: string;
     category_parent_id: number;
+    children: {
+      id: number;
+      category_name: string;
+      category_parent_id: number;
+    };
   };
 }
 

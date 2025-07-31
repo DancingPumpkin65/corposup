@@ -62,8 +62,15 @@ class AuthService {
   }
 
   getUser(): User | null {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
+    const userStr = localStorage.getItem('user');
+    if (!userStr || userStr === 'undefined') {
+      return null;
+    }
+    try {
+      return JSON.parse(userStr);
+    } catch (e) {
+      return null;
+    }
   }
 
   isAuthenticated(): boolean {

@@ -20,7 +20,7 @@ class Category extends Model
     // The relationship with the child categories.
     public function children()
     {
-        return $this->hasMany(Category::class, 'category_parent_id');
+        return $this->hasMany(Category::class, 'category_parent_id')->with('children');
     }
 
     public function products()
